@@ -1,0 +1,481 @@
+.about {
+
+  padding:100px 0;
+  background:#0b1326;
+
+}
+
+
+/* =========================
+   TITLE
+========================= */
+
+
+.section-title {
+
+  text-align:center;
+
+  font-size:48px;
+
+  font-weight:900;
+
+  color:#ffffff;
+
+  margin-bottom:12px;
+
+}
+
+
+
+.title-line {
+
+  width:45px;
+
+  height:4px;
+
+  background:#635bff;
+
+  margin:0 auto 50px;
+
+  border-radius:10px;
+
+}
+
+
+
+
+/* =========================
+   MAIN LAYOUT
+========================= */
+
+
+.about-container {
+
+  display:grid;
+
+  grid-template-columns:2fr .8fr;
+
+  gap:50px;
+
+  align-items:start;
+
+}
+
+
+
+
+.about-left {
+
+  display:flex;
+
+  flex-direction:column;
+
+  gap:30px;
+
+}
+
+
+
+
+
+/* =========================
+   ABOUT CARDS
+========================= */
+
+
+.about-card {
+
+  background:#202c42;
+
+  padding:28px;
+
+  border-radius:16px;
+
+  transition:
+  background .35s ease,
+  border .35s ease;
+
+  border:1px solid transparent;
+
+}
+
+
+
+
+
+.about-card:hover {
+
+  background:#293750;
+
+  border-color:rgba(99,102,241,.35);
+
+}
+
+
+
+
+
+/* =========================
+   HEADINGS + ICONS
+========================= */
+
+
+.about-card h3 {
+
+  display:flex;
+
+  align-items:center;
+
+  gap:12px;
+
+  color:white;
+
+  font-size:20px;
+
+  font-weight:800;
+
+  margin-bottom:18px;
+
+}
+
+
+
+
+
+.about-icon {
+
+  color:#635bff;
+
+  font-size:24px;
+
+  display:inline-flex;
+
+  transition:
+
+  color .3s ease,
+
+  transform .3s ease;
+
+}
+
+
+
+
+
+.about-card:hover .about-icon {
+
+  color:#ffffff;
+
+  transform:scale(1.2);
+
+}
+
+
+
+
+/* =========================
+   TEXT
+========================= */
+
+
+.about-card p {
+
+  color:#d5ddf5;
+
+  font-size:16px;
+
+  line-height:1.8;
+
+  margin:0;
+
+}
+
+
+
+
+/* =========================
+   SPECIALITIES LIST
+========================= */
+
+
+.about-card ul {
+
+  list-style:none;
+
+  padding:0;
+
+  margin:0;
+
+}
+
+
+
+
+.about-card li {
+
+  position:relative;
+
+  padding-left:30px;
+
+  margin-bottom:18px;
+
+  color:#d5ddf5;
+
+  font-size:16px;
+
+  cursor:pointer;
+
+  transition:.25s ease;
+
+}
+
+
+
+
+
+.about-card li::before {
+
+  content:"✓";
+
+  position:absolute;
+
+  left:0;
+
+  color:#635bff;
+
+  font-weight:900;
+
+  transition:.25s ease;
+
+}
+
+
+
+
+
+.about-card li:hover {
+
+  color:white;
+
+  padding-left:35px;
+
+}
+
+
+
+
+
+.about-card li:hover::before {
+
+  color:white;
+
+}
+
+
+
+
+
+.about-card li:active {
+
+  transform:scale(.95);
+
+}
+
+
+
+
+
+/* =========================
+   RIGHT STAT CARD
+========================= */
+
+
+.stats-card {
+
+  background:
+
+  linear-gradient(
+
+    180deg,
+
+    #5b4bff,
+
+    #4936d8
+
+  );
+
+
+  border-radius:18px;
+
+
+  padding:35px 20px;
+
+
+  height:max-content;
+
+
+  position:sticky;
+
+
+  top:160px;
+
+
+}
+
+
+
+
+
+/* =========================
+   STAT CONTENT
+========================= */
+
+
+.stat {
+
+  text-align:center;
+
+  margin-bottom:40px;
+
+}
+
+
+
+
+
+.stat:last-child {
+
+  margin-bottom:0;
+
+}
+
+
+
+
+
+.stat h2 {
+
+  font-size:42px;
+
+  font-weight:900;
+
+  color:white;
+
+  margin:0 0 8px;
+
+}
+
+
+
+
+
+.stat p {
+
+  color:white;
+
+  font-size:14px;
+
+  opacity:.9;
+
+}
+
+
+
+
+
+/* =========================
+   SCROLL FLOAT EFFECT
+========================= */
+
+
+.stats-card {
+
+  animation:none;
+
+}
+
+
+
+
+
+/* =========================
+   TABLET
+========================= */
+
+
+@media(max-width:900px){
+
+
+.about-container {
+
+  grid-template-columns:1fr;
+
+}
+
+
+
+.stats-card {
+
+  position:relative;
+
+  top:0;
+
+}
+
+
+
+}
+
+
+
+
+
+/* =========================
+   MOBILE
+========================= */
+
+
+@media(max-width:500px){
+
+
+.about {
+
+  padding:70px 0;
+
+}
+
+
+
+.section-title {
+
+  font-size:36px;
+
+}
+
+
+
+.about-card {
+
+  padding:22px;
+
+}
+
+
+
+.about-card h3 {
+
+  font-size:18px;
+
+}
+
+
+
+.stat h2 {
+
+  font-size:36px;
+
+}
+
+
+
+}

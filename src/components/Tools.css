@@ -1,0 +1,33 @@
+.tools-heading {
+  font-size: clamp(28px, 4vw, 42px);
+  font-weight: 600;
+  margin: 18px 0 12px;
+}
+
+.tools-sub {
+  color: var(--text-dim);
+  font-size: 16px;
+  max-width: 480px;
+  margin-bottom: 44px;
+}
+
+.tools-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.tool-pill {
+  padding: 12px 20px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  font-size: 14px;
+  color: var(--text-dim);
+  background: var(--surface);
+  transition: border-color 0.25s ease, color 0.25s ease, transform 0.25s ease;
+}
+.tool-pill:hover {
+  border-color: var(--mint);
+  color: var(--text);
+  transform: translateY(-2px);
+}
