@@ -1,196 +1,200 @@
-import {
-  AnimatePresence,
-  motion,
-} from 'framer-motion'
-
-import {
-  Link,
-  useSearchParams,
-} from 'react-router-dom'
-
-import {
-  categories,
-  projects,
-} from '../data/projects.js'
+import { motion } from 'framer-motion'
+import { Link } from 'react-router-dom'
 
 import './Work.css'
 
-export default function Work() {
-  const [
-    searchParameters,
-    setSearchParameters,
-  ] = useSearchParams()
 
-  const requestedCategory =
-    searchParameters.get('category')
+const works = [
 
-  const validCategory =
-    categories.some(
-      category =>
-        category.value === requestedCategory
-    )
+{
+image:"/images/portfolio/SEO/Backlink.png",
 
-  const activeCategory =
-    validCategory
-      ? requestedCategory
-      : 'all'
+slug:"full-stack-seo",
 
-  const filteredProjects =
-  activeCategory === 'all'
-    ? projects.filter(
-        project => project.featured === true
-      )
-    : projects
-        .filter(
-          project =>
-            project.category === activeCategory
-        )
-        .slice(0, 2)
+category:"SEO",
 
-  const changeCategory = category => {
-    if (category === 'all') {
-      setSearchParameters({})
-    } else {
-      setSearchParameters({
-        category,
-      })
-    }
-  }
+title:"Full Stack SEO",
 
-  return (
-    <section
-      className="work-section"
-      id="portfolio"
-    >
-      <div className="container work-container">
-        <motion.div
-          className="work-heading"
-          initial={{
-            opacity: 0,
-            y: 25,
-          }}
-          whileInView={{
-            opacity: 1,
-            y: 0,
-          }}
-          viewport={{
-            once: true,
-            amount: 0.3,
-          }}
-          transition={{
-            duration: 0.65,
-            ease: [0.22, 1, 0.36, 1],
-          }}
-        >
-          <p className="work-eyebrow">
-            Selected Work
-          </p>
+description:
+"Comprehensive SEO strategy covering on-page, off-page, and technical optimization across fashion, events, jewellery, and electronics brands"
+},
 
-          <h2>My Portfolio</h2>
+{
+image:"/images/google-ads.jpg",
+category:"Paid Ads",
+title:"Google Ads Campaign",
+description:
+"Developed and optimized Google Ads campaigns driving quality traffic, consistent lead generation, and measurable ROI"
+},
 
-          <span
-            className="work-title-line"
-            aria-hidden="true"
-          />
-        </motion.div>
+{
+image:"/images/social-media.jpg",
+category:"Social Media",
+title:"Social Media Growth",
+description:
+"Instagram growth strategies combining content optimization, influencer partnerships, and engagement tactics"
+},
 
-        <div className="work-filters">
-          {categories.map(category => (
-            <button
-              type="button"
-              key={category.value}
-              className={
-                activeCategory === category.value
-                  ? 'work-filter active'
-                  : 'work-filter'
-              }
-              onClick={() =>
-                changeCategory(category.value)
-              }
-            >
-              {category.label}
-            </button>
-          ))}
-        </div>
+{
+image:"/images/content.jpg",
+category:"Content",
+title:"Content Marketing Strategy",
+description:
+"Data-driven content marketing strategies improving brand authority, organic reach and engagement"
+},
 
-        <motion.div
-          className="work-grid"
-          layout
-        >
-          <AnimatePresence mode="popLayout">
-            {filteredProjects.map(project => (
-              <motion.article
-                className="work-card"
-                key={project.id}
-                layout
-                initial={{
-                  opacity: 0,
-                  y: 25,
-                  scale: 0.97,
-                }}
-                animate={{
-                  opacity: 1,
-                  y: 0,
-                  scale: 1,
-                }}
-                exit={{
-                  opacity: 0,
-                  y: 15,
-                  scale: 0.97,
-                }}
-                transition={{
-                  duration: 0.4,
-                  ease: [0.22, 1, 0.36, 1],
-                }}
-              >
-                <Link
-                className="work-card-link"
-                to={
-                  activeCategory === 'all'
-                  ? `/?category=${project.category}#portfolio`
-                  : `/portfolio/${project.slug}`
-                }
-                aria-label={
-                  activeCategory === 'all'
-                  ? `View ${project.categoryLabel} projects`
-                  : `View full details for ${project.title}`
-                  }
+{
+image:"/images/design.jpg",
+category:"Brand Design",
+title:"Logo & Collateral Design",
+description:
+"Brand-aligned logos and collateral crafted for fashion, tech, and retail clients"
+},
+
+{
+image:"/images/meta-ads.jpg",
+category:"Meta Ads",
+title:"Meta Ads Optimization",
+description:
+"Optimized Meta campaigns with audience segmentation, creative testing and conversion tracking"
+}
+
+
+]
+
+
+export default function Work(){
+
+
+return(
+
+<section className="work-section" id="portfolio">
+
+
+<div className="container work-container">
+
+
+<div className="work-heading">
+
+<p className="work-eyebrow">
+Selected Work
+</p>
+
+
+<h2>
+My Portfolio
+</h2>
+
+
+<span className="work-title-line"/>
+
+
+</div>
+
+
+
+<div className="work-grid">
+
+
+{
+works.map((work,index)=>(
+
+
+<motion.article
+
+className="work-card"
+
+key={index}
+
+initial={{
+opacity:0,
+y:30
+}}
+
+whileInView={{
+opacity:1,
+y:0
+}}
+
+viewport={{
+once:true
+}}
+
+transition={{
+duration:.5,
+delay:index*.1
+}}
+
 >
-                >
-                  <img
-                    src={project.image}
-                    alt={`${project.title} screenshot`}
-                    loading="lazy"
-                  />
 
-                  <span className="work-card-badge">
-                    {project.categoryLabel}
-                  </span>
 
-                  <span className="work-card-overlay">
-                    <span className="work-card-category">
-                      {project.subtitle}
-                    </span>
+<img 
+src={work.image}
+alt={work.title}
+/>
 
-                    <strong>
-                      {project.title}
-                    </strong>
 
-                    <span className="work-view-project">
-                      {activeCategory === 'all'
-                      ? `View ${project.categoryLabel} Projects`
-                      : 'View Full Details'}
-                      <span aria-hidden="true">
-                        →
-                        </span>
-                        </span>
-                  </span>
-                </Link>
-              </motion.article>
-            ))}
-          </AnimatePresence>
-        </motion.div>
-      </div>
-    </section>
-  )
+
+<div className="work-overlay">
+
+
+<span>
+{work.category}
+</span>
+
+
+<h3>
+{work.title}
+</h3>
+
+
+<p>
+{work.description}
+</p>
+
+
+<Link to={`/portfolio/${work.slug}`}>
+View Project →
+</Link>
+
+
+</div>
+
+
+
+</motion.article>
+
+
+))
+}
+
+
+
+</div>
+
+
+
+<div className="work-button-wrapper">
+
+<Link 
+to="/portfolio"
+className="work-load-button"
+>
+
+Load My Portfolio →
+
+</Link>
+
+</div>
+
+
+
+</div>
+
+
+</section>
+
+
+)
+
 }

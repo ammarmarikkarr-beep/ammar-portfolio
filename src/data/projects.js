@@ -29,9 +29,9 @@ export const projects = [
 {
   id: 1,
   featured: true,
-  slug: 'backlink-strategy',
-  title: 'Backlink Strategy',
-  subtitle: 'Off-Page SEO and Link Building',
+  slug: 'full-stack-seo',
+  title: 'Full Stack SEO',
+  subtitle: 'Search Engine Optimization',
   category: 'seo',
   categoryLabel: 'SEO',
 
