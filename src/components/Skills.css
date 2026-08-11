@@ -1,8 +1,8 @@
-/* =========================
-   SKILLS SECTION
-========================= */
+/* =========================================
+   TECH STACK SECTION
+========================================= */
 
-.skills-section {
+.tech-stack-section {
   position: relative;
 
   padding: 105px 24px;
@@ -11,321 +11,430 @@
 
   background:
     radial-gradient(
-      circle at 10% 15%,
-      rgba(82, 70, 200, 0.08),
-      transparent 34%
+      circle at 15% 20%,
+      rgba(82, 70, 200, 0.07),
+      transparent 35%
     ),
     radial-gradient(
-      circle at 90% 85%,
+      circle at 85% 80%,
       rgba(38, 170, 200, 0.05),
-      transparent 36%
+      transparent 35%
     ),
     #101a2d;
 }
 
-.skills-container {
+.tech-stack-container {
   position: relative;
+
+  max-width: 1160px;
+
+  margin: 0 auto;
 }
 
 
-/* =========================
-   SECTION HEADING
-========================= */
+/* =========================================
+   HEADING
+========================================= */
 
-.skills-section-heading {
-  margin-bottom: 55px;
-
+.tech-stack-heading {
   text-align: center;
+
+  margin-bottom: 50px;
 }
 
-.skills-section-heading p {
-  margin: 0 0 11px;
-
-  color: #8d8cff;
-
-  font-size: 14px;
-  font-weight: 700;
-
-  letter-spacing: 0.15em;
-
-  text-transform: uppercase;
-}
-
-.skills-section-heading h2 {
-  margin: 0;
-
-  color: #ffffff;
-
-  font-size: clamp(40px, 5vw, 58px);
-  font-weight: 800;
-
-  line-height: 1.1;
-
-  letter-spacing: -0.04em;
-}
-
-.skills-section-heading h2 span {
-  color: #7c79ff;
-}
-
-
-/* =========================
-   TWO-COLUMN LAYOUT
-========================= */
-
-.skills-columns {
-  display: grid;
-
-  grid-template-columns:
-    repeat(2, minmax(0, 1fr));
-
-  gap: 42px;
-}
-
-.skills-column {
-  min-width: 0;
-}
-
-
-/* =========================
-   CATEGORY HEADING
-========================= */
-
-.skills-column-heading {
-  margin-bottom: 37px;
-
-  display: flex;
-  align-items: center;
-
-  gap: 12px;
-}
-
-.skills-column-heading h3 {
+.tech-stack-heading h2 {
   margin: 0;
 
   color: #f5f7ff;
 
-  font-size: 24px;
+  font-size: clamp(40px, 5vw, 58px);
+
   font-weight: 800;
 
-  line-height: 1.2;
+  line-height: 1.1;
 
-  letter-spacing: -0.025em;
+  letter-spacing: -0.045em;
 }
 
-.skills-category-icon {
-  width: 35px;
-  height: 35px;
+.tech-stack-heading h2 span {
+  color: #7c79ff;
+}
+
+.tech-stack-heading-line {
+  width: 60px;
+  height: 4px;
+
+  margin: 27px auto 35px;
+
+  border-radius: 999px;
+
+  background: #625cff;
+
+  box-shadow:
+    0 0 20px rgba(98, 92, 255, 0.45);
+}
+
+.tech-stack-heading p {
+  margin: 0;
+
+  color: #aeb8ca;
+
+  font-size: 17px;
+
+  font-weight: 500;
+
+  letter-spacing: -0.01em;
+}
+
+
+/* =========================================
+   FILTER BUTTONS
+========================================= */
+
+.tech-filter-buttons {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  flex-wrap: wrap;
+
+  gap: 15px;
+
+  margin-bottom: 56px;
+}
+
+.tech-filter-btn {
+  min-height: 40px;
+
+  padding: 9px 27px;
+
+  border: 1px solid #48556b;
+
+  border-radius: 15px;
+
+  outline: none;
+
+  background: transparent;
+
+  color: #c2cad8;
+
+  font-family: inherit;
+
+  font-size: 14px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    background 0.25s ease,
+    color 0.25s ease,
+    border-color 0.25s ease,
+    box-shadow 0.25s ease,
+    transform 0.25s ease;
+}
+
+.tech-filter-btn:hover {
+  color: #ffffff;
+
+  border-color: #625cff;
+
+  background: rgba(98, 92, 255, 0.08);
+
+  transform: translateY(-2px);
+}
+
+.tech-filter-btn.active {
+  color: #ffffff;
+
+  border-color: #625cff;
+
+  background: #4b45c6;
+
+  box-shadow:
+    0 7px 22px rgba(76, 69, 198, 0.35);
+}
+
+
+/* =========================================
+   SKILLS GRID
+========================================= */
+
+.tech-skills-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 16px;
+}
+
+
+/* =========================================
+   SKILL CARD
+========================================= */
+
+.tech-skill-card {
+  position: relative;
+
+  min-width: 0;
+
+  padding: 10px 16px;
+
+  border-radius: 15px;
+
+  background: #0c162a;
+
+  box-shadow:
+    0 8px 22px rgba(3, 10, 25, 0.22);
+
+  transition:
+    transform 0.25s ease,
+    background 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.tech-skill-card:hover {
+  transform: translateY(-3px);
+
+  background: #0e1930;
+
+  box-shadow:
+    0 12px 28px rgba(3, 10, 25, 0.35);
+}
+
+
+/* =========================================
+   CARD CONTENT
+========================================= */
+
+.tech-skill-card-top {
+  min-width: 0;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 15px;
+}
+
+
+/* =========================================
+   ICON
+========================================= */
+
+.tech-skill-icon {
+  width: 56px;
+  height: 56px;
 
   flex-shrink: 0;
 
-  display: inline-flex;
+  display: flex;
+
   align-items: center;
+
   justify-content: center;
+
+  border-radius: 50%;
+
+  background: #dce5fb;
 }
 
-.skills-category-icon svg {
-  width: 100%;
-  height: 100%;
+.tech-skill-icon img {
+  width: 30px;
+  height: 30px;
+
+  object-fit: contain;
 
   display: block;
 }
 
-.skills-category-icon.technical {
-  color: #625cff;
+
+/* =========================================
+   SKILL INFORMATION
+========================================= */
+
+.tech-skill-info {
+  min-width: 0;
+
+  flex: 1;
 }
 
-.skills-category-icon.creative {
-  color: #6d5cff;
-}
-
-
-/* =========================
-   SKILLS LIST
-========================= */
-
-.skills-list {
+.tech-skill-name-row {
   display: flex;
-  flex-direction: column;
 
-  gap: 39px;
-}
-
-.skills-item-information {
-  margin-bottom: 13px;
-
-  display: flex;
   align-items: center;
+
   justify-content: space-between;
 
-  gap: 20px;
+  gap: 10px;
+
+  margin-bottom: 13px;
 }
 
-.skills-item-name {
-  color: rgba(255, 255, 255, 0.93);
+.tech-skill-name {
+  min-width: 0;
 
-  font-size: 16px;
-  font-weight: 700;
+  overflow: hidden;
+
+  color: #f2f4f9;
+
+  font-size: 14px;
+
+  font-weight: 800;
+
+  white-space: nowrap;
+
+  text-overflow: ellipsis;
 }
 
-.skills-item-percentage {
+.tech-skill-percentage {
+  flex-shrink: 0;
+
   color: #655fff;
 
-  font-size: 15px;
+  font-size: 13px;
+
   font-weight: 800;
 }
 
 
-/* =========================
-   PROGRESS BARS
-========================= */
+/* =========================================
+   PROGRESS BAR
+========================================= */
 
-.skills-progress-track {
+.tech-progress-track {
   width: 100%;
-  height: 8px;
+
+  height: 4px;
 
   overflow: hidden;
 
   border-radius: 999px;
 
-  background: #344158;
+  background: #e1e7f4;
 }
 
-.skills-progress-fill {
-  position: relative;
-
+.tech-progress-fill {
   height: 100%;
 
   border-radius: inherit;
 }
 
-.skills-progress-fill.technical {
-  background:
-    linear-gradient(
-      90deg,
-      #19c79b 0%,
-      #09b8c8 100%
-    );
-}
 
-.skills-progress-fill.creative {
-  background:
-    linear-gradient(
-      90deg,
-      #18c795 0%,
-      #08b6c9 100%
-    );
-}
-
-.skills-progress-fill::after {
-  content: "";
-
-  position: absolute;
-  inset: 0;
-
-  border-radius: inherit;
-
-  background:
-    linear-gradient(
-      90deg,
-      transparent,
-      rgba(255, 255, 255, 0.2),
-      transparent
-    );
-
-  transform: translateX(-100%);
-
-  animation:
-    skillsShine 3.5s ease-in-out infinite;
-}
-
-@keyframes skillsShine {
-  0%,
-  65% {
-    transform: translateX(-100%);
-  }
-
-  100% {
-    transform: translateX(100%);
-  }
-}
-
-
-/* =========================
+/* =========================================
    TABLET
-========================= */
+========================================= */
 
-@media (max-width: 900px) {
-  .skills-section {
+@media (max-width: 1000px) {
+
+  .tech-stack-section {
     padding: 90px 22px;
   }
 
-  .skills-columns {
-    grid-template-columns: 1fr;
-
-    gap: 65px;
+  .tech-skills-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
   }
 
-  .skills-column {
-    max-width: 720px;
-
-    width: 100%;
-
-    margin: 0 auto;
-  }
 }
 
 
-/* =========================
+/* =========================================
    MOBILE
-========================= */
+========================================= */
 
-@media (max-width: 560px) {
-  .skills-section {
+@media (max-width: 650px) {
+
+  .tech-stack-section {
     padding: 75px 18px;
   }
 
-  .skills-section-heading {
-    margin-bottom: 45px;
+  .tech-stack-heading {
+    margin-bottom: 40px;
   }
 
-  .skills-section-heading h2 {
-    font-size: 40px;
+  .tech-stack-heading h2 {
+    font-size: 38px;
   }
 
-  .skills-column-heading {
-    margin-bottom: 30px;
-  }
-
-  .skills-column-heading h3 {
-    font-size: 21px;
-  }
-
-  .skills-category-icon {
-    width: 31px;
-    height: 31px;
-  }
-
-  .skills-list {
-    gap: 32px;
-  }
-
-  .skills-item-name {
+  .tech-stack-heading p {
     font-size: 15px;
+
+    line-height: 1.6;
   }
 
-  .skills-item-percentage {
-    font-size: 14px;
+  .tech-stack-heading-line {
+    margin-top: 22px;
+    margin-bottom: 25px;
   }
+
+  .tech-filter-buttons {
+    justify-content: flex-start;
+
+    gap: 9px;
+
+    margin-bottom: 40px;
+  }
+
+  .tech-filter-btn {
+    padding: 8px 15px;
+
+    border-radius: 12px;
+
+    font-size: 12px;
+  }
+
+  .tech-skills-grid {
+    grid-template-columns: 1fr;
+
+    gap: 12px;
+  }
+
+  .tech-skill-card {
+    padding: 10px 14px;
+  }
+
 }
 
 
-/* =========================
+/* =========================================
+   SMALL MOBILE
+========================================= */
+
+@media (max-width: 400px) {
+
+  .tech-stack-heading h2 {
+    font-size: 34px;
+  }
+
+  .tech-filter-buttons {
+    justify-content: center;
+  }
+
+  .tech-skill-icon {
+    width: 52px;
+    height: 52px;
+  }
+
+  .tech-skill-icon img {
+    width: 27px;
+    height: 27px;
+  }
+
+}
+
+
+/* =========================================
    REDUCED MOTION
-========================= */
+========================================= */
 
 @media (prefers-reduced-motion: reduce) {
-  .skills-progress-fill::after {
-    animation: none;
+
+  .tech-filter-btn,
+  .tech-skill-card {
+    transition: none;
   }
 }

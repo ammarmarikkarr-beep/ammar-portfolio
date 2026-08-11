@@ -1,220 +1,336 @@
 import './Skills.css'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
+import { useState } from 'react'
 
-const technicalSkills = [
+const skills = [
+  // Video Editing
   {
-    name: 'SEO & SEM',
+    name: 'CapCut',
+    percentage: 90,
+    category: 'Video Editing',
+    icon: 'https://cdn.simpleicons.org/capcut/000000',
+    color: '#18c795',
+  },
+  {
+    name: 'Adobe Premiere Pro',
+    percentage: 75,
+    category: 'Video Editing',
+    icon: 'https://cdn.simpleicons.org/adobepremierepro/000000',
+    color: '#8b5cf6',
+  },
+  {
+    name: 'DaVinci Resolve',
+    percentage: 70,
+    category: 'Video Editing',
+    icon: 'https://cdn.simpleicons.org/davinciresolve/000000',
+    color: '#06b6d4',
+  },
+
+  // Graphic Design
+  {
+    name: 'Canva',
+    percentage: 95,
+    category: 'Graphic Design',
+    icon: 'https://cdn.simpleicons.org/canva/000000',
+    color: '#18c795',
+  },
+  {
+    name: 'Adobe Photoshop',
     percentage: 85,
+    category: 'Graphic Design',
+    icon: 'https://cdn.simpleicons.org/adobephotoshop/000000',
+    color: '#0ea5e9',
   },
   {
-    name: 'PPC',
+    name: 'Adobe Illustrator',
     percentage: 80,
+    category: 'Graphic Design',
+    icon: 'https://cdn.simpleicons.org/adobeillustrator/000000',
+    color: '#f59e0b',
   },
+
+  // Digital Marketing
   {
-    name: 'Marketing Analytics',
-    percentage: 80,
-  },
-  {
-    name: 'Tracking & Optimization',
+    name: 'Google Ads',
     percentage: 85,
+    category: 'Digital Marketing',
+    icon: 'https://cdn.simpleicons.org/googleads/000000',
+    color: '#4285f4',
+  },
+  {
+    name: 'Meta Ads',
+    percentage: 80,
+    category: 'Digital Marketing',
+    icon: 'https://cdn.simpleicons.org/meta/000000',
+    color: '#6366f1',
+  },
+  {
+    name: 'Google Analytics',
+    percentage: 85,
+    category: 'Digital Marketing',
+    icon: 'https://cdn.simpleicons.org/googleanalytics/000000',
+    color: '#f59e0b',
+  },
+  {
+    name: 'Google Tag Manager',
+    percentage: 80,
+    category: 'Digital Marketing',
+    icon: 'https://cdn.simpleicons.org/googletagmanager/000000',
+    color: '#2563eb',
+  },
+  {
+    name: 'Google Search Console',
+    percentage: 85,
+    category: 'Digital Marketing',
+    icon: 'https://cdn.simpleicons.org/googlesearchconsole/000000',
+    color: '#22c55e',
+  },
+  {
+    name: 'SEMrush',
+    percentage: 80,
+    category: 'Digital Marketing',
+    icon: 'https://cdn.simpleicons.org/semrush/000000',
+    color: '#ff642d',
+  },
+
+  // Business Solutions
+  {
+    name: 'Zoho CRM',
+    percentage: 75,
+    category: 'Business Solutions',
+    icon: 'https://cdn.simpleicons.org/zoho/000000',
+    color: '#ef4444',
+  },
+  {
+    name: 'Microsoft Excel',
+    percentage: 80,
+    category: 'Business Solutions',
+    icon: 'https://cdn.simpleicons.org/microsoftexcel/000000',
+    color: '#16a34a',
+  },
+  {
+    name: 'Notion',
+    percentage: 75,
+    category: 'Business Solutions',
+    icon: 'https://cdn.simpleicons.org/notion/000000',
+    color: '#111827',
+  },
+
+  // Web Development
+  {
+    name: 'WordPress',
+    percentage: 85,
+    category: 'Web Development',
+    icon: 'https://cdn.simpleicons.org/wordpress/000000',
+    color: '#21759b',
+  },
+  {
+    name: 'React',
+    percentage: 65,
+    category: 'Web Development',
+    icon: 'https://cdn.simpleicons.org/react/000000',
+    color: '#06b6d4',
+  },
+  {
+    name: 'HTML & CSS',
+    percentage: 80,
+    category: 'Web Development',
+    icon: 'https://cdn.simpleicons.org/html5/000000',
+    color: '#f97316',
   },
 ]
 
-const creativeSkills = [
-  {
-    name: 'Content Creation',
-    percentage: 85,
-  },
-  {
-    name: 'Copywriting',
-    percentage: 80,
-  },
-  {
-    name: 'Campaign Design',
-    percentage: 80,
-  },
-  {
-    name: 'Video Editing',
-    percentage: 60,
-  },
+const categories = [
+  'All Skills',
+  'Video Editing',
+  'Graphic Design',
+  'Digital Marketing',
+  'Business Solutions',
+  'Web Development',
 ]
 
-const fadeUp = {
-  hidden: {
-    opacity: 0,
-    y: 30,
-  },
-
-  visible: {
-    opacity: 1,
-    y: 0,
-
-    transition: {
-      duration: 0.7,
-      ease: [0.22, 1, 0.36, 1],
-    },
-  },
-}
-
-function CodeIcon() {
+function SkillIcon({ skill }) {
   return (
-    <svg
-      viewBox="0 0 24 24"
-      aria-hidden="true"
-    >
-      <path
-        d="M8 9L5 12L8 15M16 9L19 12L16 15M14 5L10 19"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2.2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
+    <div className="tech-skill-icon">
+      <img
+        src={skill.icon}
+        alt=""
+        loading="lazy"
       />
-    </svg>
+    </div>
   )
 }
 
-function PaletteIcon() {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      aria-hidden="true"
-    >
-      <path
-        d="M12 3C6.9 3 3 6.6 3 11.1C3 15.5 6.5 19 10.8 19H12C12.9 19 13.4 18 12.9 17.3C12.5 16.6 13 15.8 13.8 15.8H16.2C19 15.8 21 13.8 21 11.1C21 6.6 17.1 3 12 3Z"
-        fill="currentColor"
-      />
-
-      <circle cx="8" cy="10" r="1.2" fill="#111827" />
-      <circle cx="11" cy="7" r="1.2" fill="#111827" />
-      <circle cx="15" cy="8" r="1.2" fill="#111827" />
-      <circle cx="17" cy="11" r="1.2" fill="#111827" />
-    </svg>
-  )
-}
-
-function SkillColumn({
-  title,
-  icon,
-  skills,
-  type,
-}) {
+function SkillCard({ skill, index }) {
   return (
     <motion.article
-      className="skills-column"
-      variants={fadeUp}
+      className="tech-skill-card"
+      layout
+      initial={{
+        opacity: 0,
+        y: 20,
+      }}
+      animate={{
+        opacity: 1,
+        y: 0,
+      }}
+      exit={{
+        opacity: 0,
+        scale: 0.95,
+      }}
+      transition={{
+        duration: 0.35,
+        delay: index * 0.04,
+      }}
     >
-      <div className="skills-column-heading">
-        <span
-          className={`skills-category-icon ${type}`}
-          aria-hidden="true"
-        >
-          {icon}
-        </span>
+      <div className="tech-skill-card-top">
 
-        <h3>{title}</h3>
-      </div>
+        <SkillIcon skill={skill} />
 
-      <div className="skills-list">
-        {skills.map((skill, index) => (
-          <div
-            className="skills-item"
-            key={skill.name}
-          >
-            <div className="skills-item-information">
-              <span className="skills-item-name">
-                {skill.name}
-              </span>
+        <div className="tech-skill-info">
+          <div className="tech-skill-name-row">
+            <span className="tech-skill-name">
+              {skill.name}
+            </span>
 
-              <span className="skills-item-percentage">
-                {skill.percentage}%
-              </span>
-            </div>
-
-            <div
-              className="skills-progress-track"
-              role="progressbar"
-              aria-label={skill.name}
-              aria-valuemin="0"
-              aria-valuemax="100"
-              aria-valuenow={skill.percentage}
-            >
-              <motion.div
-                className={`skills-progress-fill ${type}`}
-                initial={{
-                  width: 0,
-                }}
-                whileInView={{
-                  width: `${skill.percentage}%`,
-                }}
-                viewport={{
-                  once: true,
-                  amount: 0.5,
-                }}
-                transition={{
-                  duration: 1,
-                  delay: index * 0.12,
-                  ease: [0.22, 1, 0.36, 1],
-                }}
-              />
-            </div>
+            <span className="tech-skill-percentage">
+              {skill.percentage}%
+            </span>
           </div>
-        ))}
+
+          <div className="tech-progress-track">
+            <motion.div
+              className="tech-progress-fill"
+              style={{
+                background: skill.color,
+              }}
+              initial={{
+                width: 0,
+              }}
+              whileInView={{
+                width: `${skill.percentage}%`,
+              }}
+              viewport={{
+                once: true,
+                amount: 0.5,
+              }}
+              transition={{
+                duration: 1,
+                delay: index * 0.05,
+                ease: [0.22, 1, 0.36, 1],
+              }}
+            />
+          </div>
+        </div>
+
       </div>
     </motion.article>
   )
 }
 
 export default function Skills() {
+  const [activeCategory, setActiveCategory] =
+    useState('All Skills')
+
+  const filteredSkills =
+    activeCategory === 'All Skills'
+      ? skills
+      : skills.filter(
+          (skill) =>
+            skill.category === activeCategory
+        )
+
   return (
     <section
-      className="skills-section"
+      className="tech-stack-section"
       id="skills"
     >
-      <div className="container skills-container">
+      <div className="container tech-stack-container">
+
+        {/* Heading */}
         <motion.div
-          className="skills-section-heading"
-          variants={fadeUp}
-          initial="hidden"
-          whileInView="visible"
+          className="tech-stack-heading"
+          initial={{
+            opacity: 0,
+            y: 25,
+          }}
+          whileInView={{
+            opacity: 1,
+            y: 0,
+          }}
           viewport={{
             once: true,
             amount: 0.3,
           }}
+          transition={{
+            duration: 0.7,
+          }}
         >
-          <p>What I Bring</p>
-
           <h2>
-            My <span>Skills</span>
+            Tech Stack &amp; <span>Proficiency</span>
           </h2>
+
+          <div className="tech-stack-heading-line" />
+
+          <p>
+            Master Tools Across Creative, Design &amp;
+            Business Solutions
+          </p>
         </motion.div>
 
+        {/* Category Buttons */}
         <motion.div
-          className="skills-columns"
-          initial="hidden"
-          whileInView="visible"
+          className="tech-filter-buttons"
+          initial={{
+            opacity: 0,
+            y: 20,
+          }}
+          whileInView={{
+            opacity: 1,
+            y: 0,
+          }}
           viewport={{
             once: true,
-            amount: 0.15,
+            amount: 0.2,
           }}
           transition={{
-            staggerChildren: 0.18,
+            duration: 0.6,
+            delay: 0.1,
           }}
         >
-          <SkillColumn
-            title="Technical Skills"
-            icon={<CodeIcon />}
-            skills={technicalSkills}
-            type="technical"
-          />
-
-          <SkillColumn
-            title="Creative Skills"
-            icon={<PaletteIcon />}
-            skills={creativeSkills}
-            type="creative"
-          />
+          {categories.map((category) => (
+            <button
+              key={category}
+              className={
+                activeCategory === category
+                  ? 'tech-filter-btn active'
+                  : 'tech-filter-btn'
+              }
+              onClick={() =>
+                setActiveCategory(category)
+              }
+            >
+              {category}
+            </button>
+          ))}
         </motion.div>
+
+        {/* Skills Grid */}
+        <motion.div
+          className="tech-skills-grid"
+          layout
+        >
+          <AnimatePresence mode="popLayout">
+            {filteredSkills.map((skill, index) => (
+              <SkillCard
+                key={skill.name}
+                skill={skill}
+                index={index}
+              />
+            ))}
+          </AnimatePresence>
+        </motion.div>
+
       </div>
     </section>
   )
