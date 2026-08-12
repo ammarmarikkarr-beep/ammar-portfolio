@@ -1,34 +1,22 @@
-import './Skills.css'
+import './Tools.css'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useState } from 'react'
 
-// Only show this many cards sharp (3 rows x 3 cols) — everything after
-// this is rendered permanently blurred, no toggle/button.
-const VISIBLE_COUNT = 9
+// All icons are local JPEGs at /public/images/icons/{Tool Name}.jpeg —
+// filename matches the tool's display name exactly, including spaces.
+function getIconSrc(name) {
+  return `/images/icons/${encodeURIComponent(name)}.jpeg`
+}
 
-// Icons we host locally in /public/images/icons/{slug}.svg
-// (Canva, CapCut, Adobe apps, VS Code, OpenAI dropped their icons from
-// simple-icons at their own request, so those still fall back to the CDN.)
-const LOCAL_ICON_SLUGS = new Set([
-  'meta',
-  'tiktok',
-  'googleads',
-  'googleanalytics',
-  'googlesearchconsole',
-  'googletagmanager',
-  'semrush',
-  'zoho',
-  'wordpress',
-  'googlegemini',
-  'claude',
-])
-
-function getIconUrl(slug, color) {
-  if (LOCAL_ICON_SLUGS.has(slug)) {
-    return `/images/icons/${slug}.svg`
-  }
-  const hex = color.replace('#', '')
-  return `https://cdn.simpleicons.org/${slug}/${hex}`
+// Proficiency tiers — one color function drives both the % label and
+// the progress-bar fill, so a card's color always reflects skill level
+// rather than the tool's brand color.
+function getTierColor(percentage) {
+  if (percentage >= 90) return '#22c55e' // Strong / Expert
+  if (percentage >= 80) return '#4ade80' // Advanced
+  if (percentage >= 60) return '#eab308' // Good
+  if (percentage >= 40) return '#f97316' // Intermediate
+  return '#ef4444' // Basic
 }
 
 const skills = [
@@ -68,7 +56,7 @@ const skills = [
     percentage: 80,
     category: 'Graphic Design',
     slug: 'adobelightroom',
-    color: '#3df5ff',
+    color: '#31a8ff',
   },
 
   // Digital Marketing
@@ -205,11 +193,19 @@ const categories = [
   'AI Tools',
 ]
 
+// How many cards render fully sharp before the preview-blur kicks in
+// (3 columns x 3 rows = 9)
+const SHARP_COUNT = 9
+
+// Cap the entrance stagger so long lists don't feel sluggish
+const MAX_STAGGER_INDEX = 8
+const STAGGER_STEP = 0.035
+
 function SkillIcon({ skill }) {
   return (
     <div className="tech-skill-icon">
       <img
-        src={getIconUrl(skill.slug, skill.color)}
+        src={getIconSrc(skill.name)}
         alt=""
         loading="lazy"
       />
@@ -217,26 +213,38 @@ function SkillIcon({ skill }) {
   )
 }
 
-function SkillCard({ skill, index }) {
+function SkillCard({ skill, index, previewLevel = 0 }) {
+  const isPreview = previewLevel > 0
+  const delay = Math.min(index, MAX_STAGGER_INDEX) * STAGGER_STEP
+  const tierColor = getTierColor(skill.percentage)
+
   return (
     <motion.article
-      className="tech-skill-card"
+      className={
+        isPreview
+          ? `tech-skill-card tech-skill-preview level-${previewLevel}`
+          : 'tech-skill-card'
+      }
+      aria-hidden={isPreview ? true : undefined}
       layout
       initial={{
         opacity: 0,
-        y: 20,
+        y: 14,
+        scale: 0.96,
       }}
       animate={{
         opacity: 1,
         y: 0,
+        scale: 1,
       }}
       exit={{
         opacity: 0,
-        scale: 0.95,
+        scale: 0.96,
       }}
       transition={{
-        duration: 0.35,
-        delay: index * 0.04,
+        duration: 0.3,
+        delay,
+        ease: [0.22, 1, 0.36, 1],
       }}
     >
       <div className="tech-skill-card-top">
@@ -249,7 +257,10 @@ function SkillCard({ skill, index }) {
               {skill.name}
             </span>
 
-            <span className="tech-skill-percentage">
+            <span
+              className="tech-skill-percentage"
+              style={{ color: tierColor }}
+            >
               {skill.percentage}%
             </span>
           </div>
@@ -258,21 +269,17 @@ function SkillCard({ skill, index }) {
             <motion.div
               className="tech-progress-fill"
               style={{
-                background: skill.color,
+                background: tierColor,
               }}
               initial={{
                 width: 0,
               }}
-              whileInView={{
+              animate={{
                 width: `${skill.percentage}%`,
               }}
-              viewport={{
-                once: true,
-                amount: 0.5,
-              }}
               transition={{
-                duration: 1,
-                delay: index * 0.05,
+                duration: 0.7,
+                delay: delay + 0.15,
                 ease: [0.22, 1, 0.36, 1],
               }}
             />
@@ -284,28 +291,22 @@ function SkillCard({ skill, index }) {
   )
 }
 
-export default function Skills() {
+export default function Tools() {
   const [activeCategory, setActiveCategory] =
     useState('All Skills')
 
-  // No more "view all" expand state — extra rows are always blurred.
+  const isAllSkills = activeCategory === 'All Skills'
 
-  const filteredSkills =
-    activeCategory === 'All Skills'
-      ? skills
-      : skills.filter(
-          (skill) =>
-            skill.category === activeCategory
-        )
-
-  const visibleSkills = filteredSkills.slice(0, VISIBLE_COUNT)
-  const extraSkills = filteredSkills.slice(VISIBLE_COUNT)
-  const hasExtra = extraSkills.length > 0
+  const filteredSkills = isAllSkills
+    ? skills
+    : skills.filter(
+        (skill) => skill.category === activeCategory
+      )
 
   return (
     <section
       className="tech-stack-section"
-      id="skills"
+      id="tools"
     >
       <div className="container tech-stack-container">
 
@@ -377,43 +378,42 @@ export default function Skills() {
           ))}
         </motion.div>
 
-        {/* Skills Grid - first 9, always sharp (3 rows x 3 cols) */}
+        {/* Skills Grid — grid itself stays mounted across category
+            switches; only the cards inside animate in/out, so
+            switching tabs reflows smoothly instead of the whole
+            section fading to black. */}
         <motion.div
-          className="tech-skills-grid"
+          className={
+            isAllSkills
+              ? 'tech-skills-grid-wrapper has-preview'
+              : 'tech-skills-grid-wrapper'
+          }
           layout
         >
-          <AnimatePresence mode="popLayout">
-            {visibleSkills.map((skill, index) => (
-              <SkillCard
-                key={skill.name}
-                skill={skill}
-                index={index}
-              />
-            ))}
-          </AnimatePresence>
-        </motion.div>
+          <motion.div className="tech-skills-grid" layout>
+            <AnimatePresence mode="popLayout">
+              {filteredSkills.map((skill, index) => {
+                let previewLevel = 0
 
-        {/* Extra rows - permanently blurred, decorative only, no button */}
-        {hasExtra && (
-          <div className="tech-skills-extra-wrapper">
-            <motion.div
-              className="tech-skills-grid tech-skills-grid-blurred"
-              layout
-            >
-              <AnimatePresence mode="popLayout">
-                {extraSkills.map((skill, index) => (
+                if (isAllSkills && index >= SHARP_COUNT) {
+                  previewLevel = Math.min(
+                    Math.floor((index - SHARP_COUNT) / 3) + 1,
+                    4
+                  )
+                }
+
+                return (
                   <SkillCard
                     key={skill.name}
                     skill={skill}
                     index={index}
+                    previewLevel={previewLevel}
                   />
-                ))}
-              </AnimatePresence>
-            </motion.div>
-
-            <div className="tech-skills-fade" />
-          </div>
-        )}
+                )
+              })}
+            </AnimatePresence>
+          </motion.div>
+        </motion.div>
 
       </div>
     </section>

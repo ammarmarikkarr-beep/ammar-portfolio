@@ -159,6 +159,47 @@
 
 
 /* =========================================
+   SKILLS GRID WRAPPER
+   - min-height ALWAYS applies (not just on the
+     "All Skills" preview tab), so a category
+     with 1-2 cards (e.g. Video Editing) doesn't
+     collapse the section and yank the layout
+     upward when you switch tabs.
+   - the ::after gradient only fades out the
+     extra preview rows in "All Skills"
+========================================= */
+
+.tech-skills-grid-wrapper {
+  position: relative;
+
+  min-height: 260px;
+}
+
+.tech-skills-grid-wrapper.has-preview {
+  min-height: 420px;
+}
+
+.tech-skills-grid-wrapper.has-preview::after {
+  content: '';
+
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  height: 160px;
+
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    #101a2d 80%
+  );
+
+  pointer-events: none;
+}
+
+
+/* =========================================
    SKILLS GRID
 ========================================= */
 
@@ -168,48 +209,9 @@
   grid-template-columns:
     repeat(3, minmax(0, 1fr));
 
+  align-content: start;
+
   gap: 16px;
-}
-
-
-/* =========================================
-   EXTRA (PERMANENTLY BLURRED) ROWS
-========================================= */
-
-.tech-skills-extra-wrapper {
-  position: relative;
-
-  margin-top: 16px;
-
-  border-radius: 15px;
-
-  overflow: hidden;
-}
-
-.tech-skills-grid-blurred {
-  filter: blur(7px);
-
-  opacity: 0.6;
-
-  pointer-events: none;
-
-  user-select: none;
-}
-
-/* Soft fade at the bottom so the blurred rows trail off instead of
-   ending abruptly — purely decorative, no button, no toggle. */
-.tech-skills-fade {
-  position: absolute;
-  inset: 0;
-
-  pointer-events: none;
-
-  background: linear-gradient(
-    to bottom,
-    rgba(16, 26, 45, 0) 0%,
-    rgba(16, 26, 45, 0.55) 55%,
-    rgba(16, 26, 45, 0.92) 100%
-  );
 }
 
 
@@ -234,7 +236,9 @@
   transition:
     transform 0.25s ease,
     background 0.25s ease,
-    box-shadow 0.25s ease;
+    box-shadow 0.25s ease,
+    filter 0.35s ease,
+    opacity 0.35s ease;
 }
 
 .tech-skill-card:hover {
@@ -244,6 +248,47 @@
 
   box-shadow:
     0 12px 28px rgba(3, 10, 25, 0.35);
+}
+
+
+/* =========================================
+   PREVIEW / BLUR STATE
+   (cards after the first 9 in "All Skills")
+========================================= */
+
+.tech-skill-card.tech-skill-preview {
+  pointer-events: none;
+
+  user-select: none;
+}
+
+.tech-skill-card.tech-skill-preview:hover {
+  transform: none;
+
+  background: #0c162a;
+
+  box-shadow:
+    0 8px 22px rgba(3, 10, 25, 0.22);
+}
+
+.tech-skill-card.tech-skill-preview.level-1 {
+  filter: blur(2px);
+  opacity: 0.55;
+}
+
+.tech-skill-card.tech-skill-preview.level-2 {
+  filter: blur(4px);
+  opacity: 0.35;
+}
+
+.tech-skill-card.tech-skill-preview.level-3 {
+  filter: blur(6px);
+  opacity: 0.2;
+}
+
+.tech-skill-card.tech-skill-preview.level-4 {
+  filter: blur(8px);
+  opacity: 0.1;
 }
 
 
@@ -264,6 +309,9 @@
 
 /* =========================================
    ICON
+
+   All logos are local JPEGs served from
+   /public/images/icons/{Tool Name}.jpeg.
 ========================================= */
 
 .tech-skill-icon {
@@ -280,12 +328,12 @@
 
   border-radius: 50%;
 
-  background: #f2f5fc;
+  background: #eef2fb;
 }
 
 .tech-skill-icon img {
-  width: 28px;
-  height: 28px;
+  width: 30px;
+  height: 30px;
 
   object-fit: contain;
 
@@ -334,11 +382,12 @@
 .tech-skill-percentage {
   flex-shrink: 0;
 
-  color: #655fff;
-
   font-size: 13px;
 
   font-weight: 800;
+
+  /* color is set inline per-card based on proficiency tier
+     (Expert/Advanced/Good/Intermediate/Basic) */
 }
 
 
@@ -378,6 +427,18 @@
   .tech-skills-grid {
     grid-template-columns:
       repeat(2, minmax(0, 1fr));
+  }
+
+  .tech-skills-grid-wrapper {
+    min-height: 210px;
+  }
+
+  .tech-skills-grid-wrapper.has-preview {
+    min-height: 400px;
+  }
+
+  .tech-skills-grid-wrapper.has-preview::after {
+    height: 190px;
   }
 
 }
@@ -438,6 +499,18 @@
     padding: 10px 14px;
   }
 
+  .tech-skills-grid-wrapper {
+    min-height: 140px;
+  }
+
+  .tech-skills-grid-wrapper.has-preview {
+    min-height: 480px;
+  }
+
+  .tech-skills-grid-wrapper.has-preview::after {
+    height: 220px;
+  }
+
 }
 
 
@@ -477,5 +550,9 @@
   .tech-filter-btn,
   .tech-skill-card {
     transition: none;
+  }
+
+  .tech-skill-card.tech-skill-preview {
+    filter: none;
   }
 }
