@@ -5,10 +5,27 @@ export default function Footer() {
     <footer className="footer">
       <div className="container footer-inner">
         <span>© {new Date().getFullYear()} Ammar Marikkar. All rights reserved.</span>
+
         <div className="footer-links">
-          <a href="https://linkedin.com" target="_blank" rel="noreferrer">LinkedIn</a>
-          <a href="https://instagram.com" target="_blank" rel="noreferrer">Instagram</a>
-          <a href="mailto:hello@ammarmarikkar.com">Email</a>
+          <a
+            href="https://www.linkedin.com/in/ammar-marikkar-2b941a269/"
+            target="_blank"
+            rel="noreferrer"
+          >
+            LinkedIn
+          </a>
+
+          <a
+            href="https://www.instagram.com/ammar_marikkar/"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Instagram
+          </a>
+
+          <a href="mailto:mrkikammar456@gmail.com">
+            Email
+          </a>
         </div>
       </div>
     </footer>
