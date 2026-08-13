@@ -242,14 +242,14 @@
   color: #ffffff;
   font-size: clamp(52px, 5.2vw, 74px);
   font-weight: 800;
-  line-height: 1.2;        /* FIX: increased from 1.06 so descenders (g, y, p) aren't clipped */
+  line-height: 1.2;
   letter-spacing: -0.04em;
-  overflow: visible;       /* FIX: ensure nothing gets cropped */
+  overflow: visible;
 }
 
 .hero-title span {
   display: block;
-  padding-bottom: 0.12em;  /* FIX: extra room below the line for the "g" tail */
+  padding-bottom: 0.12em;
   color: transparent;
   background: linear-gradient(
     90deg,
@@ -261,7 +261,7 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   text-shadow: 0 0 32px rgba(107, 99, 255, 0.25);
-  line-height: 1.25;        /* FIX: matches parent, gives the descender breathing room */
+  line-height: 1.25;
 }
 
 /* SUBTITLE / EYEBROW */
@@ -344,8 +344,8 @@
 
 /* =========================
    RIGHT SIDE PHOTO (DESKTOP)
-   - BIGGER IMAGE SIZE
-   - REDUCED MASK (subtle edge fade only)
+   - ZOOMED IN MORE
+   - MOVED SLIGHTLY DOWN
 ========================= */
 
 .hero-person {
@@ -358,6 +358,7 @@
   align-items: center;
   justify-content: center;
   pointer-events: none;
+  transform: translateY(30px);   /* NEW: nudges the whole photo container down */
 }
 
 .hero-person-image {
@@ -366,17 +367,12 @@
   max-height: 760px;
   display: block;
   object-fit: cover;
-  object-position: center 10%;
-  transform: scale(1.15);
+  object-position: center 14%;   /* shifted slightly to keep framing balanced after zoom */
+  transform: scale(1.32);        /* zoomed in more, was 1.15 */
 
   filter: brightness(0.96) contrast(1.04) saturate(1.05);
   mix-blend-mode: normal;
 
-  /* 
-     REDUCED MASK:
-     Light fade only at the very edges (3-4%) 
-     instead of hard-erasing 12-14% off every side.
-  */
   -webkit-mask-image:
     linear-gradient(to right, transparent 0%, black 4%, black 96%, transparent 100%),
     linear-gradient(to bottom, transparent 0%, black 3%, black 97%, transparent 100%);
@@ -393,9 +389,9 @@
 }
 
 @keyframes personFloat {
-  0% { transform: scale(1.15) translateY(0); }
-  50% { transform: scale(1.15) translateY(-7px); }
-  100% { transform: scale(1.15) translateY(0); }
+  0% { transform: scale(1.32) translateY(0); }
+  50% { transform: scale(1.32) translateY(-7px); }
+  100% { transform: scale(1.32) translateY(0); }
 }
 
 /* Hide mobile-specific backdrop on desktop */
@@ -430,11 +426,11 @@
     display: none;
   }
 
-  /* Display mobile backdrop element — pushed down */
+  /* Mobile backdrop element */
   .hero-mobile-person-backdrop {
     display: block;
     position: absolute;
-    top: 40px;              /* pushed down */
+    top: 40px;
     left: 0;
     right: 0;
     width: 100%;
@@ -480,14 +476,14 @@
   .hero-left {
     position: relative;
     z-index: 5;
-    margin-top: 160px;      /* pushed down (was 120px) — content moved down with image */
+    margin-top: 240px;      /* pushed down further so face is visible (was 160px) */
     max-width: 640px;
     text-align: center;
   }
 
   .hero-title {
     font-size: clamp(38px, 9vw, 54px);
-    line-height: 1.22;      /* FIX: descender room on mobile too */
+    line-height: 1.22;
     margin-bottom: 16px;
   }
 
@@ -530,7 +526,7 @@
   }
 
   .hero-mobile-person-backdrop {
-    top: 30px;               /* pushed down */
+    top: 30px;
     height: 60vh;
     min-height: 380px;
   }
@@ -541,13 +537,13 @@
   }
 
   .hero-left {
-    margin-top: 140px;       /* pushed down (was 100px) */
+    margin-top: 220px;      /* pushed down further (was 140px) */
   }
 
   .hero-title {
     margin-bottom: 14px;
     font-size: clamp(32px, 8.5vw, 42px);
-    line-height: 1.25;       /* FIX: extra room for descender */
+    line-height: 1.25;
   }
 
   .hero-eyebrow {
