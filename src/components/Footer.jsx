@@ -23,7 +23,11 @@ export default function Footer() {
             Instagram
           </a>
 
-          <a href="mailto:mrkikammar456@gmail.com">
+          <a
+            href="https://mail.google.com/mail/?view=cm&fs=1&to=mrkikammar456@gmail.com"
+            target="_blank"
+            rel="noreferrer"
+          >
             Email
           </a>
         </div>
