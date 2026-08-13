@@ -437,7 +437,7 @@
 
   /* zoom in on face/shoulders instead
      of showing the full portrait */
-  object-position: center 8%;
+  object-position: center 45%;
   transform: scale(1.55);
 
   /* lighter desaturation so it reads
