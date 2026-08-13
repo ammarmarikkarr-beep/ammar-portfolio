@@ -437,8 +437,8 @@
 
   /* zoom in on face/shoulders instead
      of showing the full portrait */
-  object-position: center 45%;
-  transform: scale(1.55);
+  object-position: center 8%;
+  transform: scale(1.2);
 
   /* lighter desaturation so it reads
      as a tinted photo, not a dark
@@ -518,13 +518,13 @@
 
 @keyframes personFloat {
   0% {
-    transform: scale(1.55) translateY(0);
+    transform: scale(1.2) translateY(0);
   }
   50% {
-    transform: scale(1.565) translateY(-6px);
+    transform: scale(1.215) translateY(-6px);
   }
   100% {
-    transform: scale(1.55) translateY(0);
+    transform: scale(1.2) translateY(0);
   }
 }
 
@@ -983,7 +983,7 @@
        face/shoulders fill the frame instead of
        floating in empty space. */
     object-position: center 0%;
-    transform: scale(1.35);
+    transform: scale(1.6);
     transform-origin: center top;
 
     /* keep the face bright/true to the
