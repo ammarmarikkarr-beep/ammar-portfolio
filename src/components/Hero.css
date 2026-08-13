@@ -5,48 +5,27 @@
 .hero-background {
   position: absolute;
   inset: 0;
-
   z-index: 0;
-
   overflow: hidden;
   pointer-events: none;
-
-  background: #000000;
+  background: #06050e;
 }
 
 .hero-background-image {
   position: absolute;
-
   width: 112%;
   height: 112%;
-
   max-width: none;
-
   left: -6%;
   top: -6%;
-
   object-fit: cover;
-
-  /* toned down so the animated background reads
-     as a subtle shift, not a saturated color wash */
-  filter: brightness(0.9) saturate(0.8);
-
+  filter: brightness(0.85) saturate(0.85);
   transform: translate3d(0, 0, 0) scale(1);
-
   will-change: transform;
   backface-visibility: hidden;
   transform-style: preserve-3d;
-
   animation: backgroundAir 22s cubic-bezier(0.45, 0, 0.55, 1) infinite;
 }
-
-
-/* =========================
-   SOFT AIR MOVEMENT
-   (loops back to start = no
-   dead-stop reversal, so it
-   never "sticks")
-========================= */
 
 @keyframes backgroundAir {
   0% {
@@ -66,7 +45,6 @@
   }
 }
 
-
 /* =========================
    HERO SECTION
 ========================= */
@@ -74,191 +52,108 @@
 .hero {
   position: relative;
   min-height: 100svh;
-
-  padding: 145px 24px 70px;
-
+  padding: 130px 32px 70px;
   display: flex;
   align-items: center;
-
+  justify-content: center;
   overflow: hidden;
   isolation: isolate;
-
   background:
     radial-gradient(
-      circle at 78% 20%,
-      rgba(104, 72, 220, 0.32) 0%,
-      rgba(82, 57, 175, 0.15) 28%,
-      transparent 55%
+      circle at 78% 25%,
+      rgba(104, 72, 220, 0.38) 0%,
+      rgba(82, 57, 175, 0.2) 30%,
+      transparent 60%
     ),
     radial-gradient(
-      circle at 12% 82%,
-      rgba(65, 89, 190, 0.24) 0%,
-      rgba(49, 62, 142, 0.1) 30%,
-      transparent 52%
+      circle at 15% 75%,
+      rgba(65, 89, 190, 0.28) 0%,
+      rgba(49, 62, 142, 0.14) 32%,
+      transparent 55%
     ),
     linear-gradient(
       135deg,
-      #0c0a1c 0%,
-      #14102a 48%,
-      #211640 100%
+      #0a0818 0%,
+      #120e26 48%,
+      #1e143b 100%
     );
 }
 
-
 /* =========================
-   ANIMATED BACKGROUND (orbs)
+   ANIMATED ORBS
 ========================= */
 
 .hero-orb {
   position: absolute;
-
   border-radius: 50%;
-
   pointer-events: none;
-
   transform: translate3d(0, 0, 0);
-
   will-change: transform, opacity;
   backface-visibility: hidden;
-  transform-style: preserve-3d;
 }
-
-
-/* Right purple glow */
 
 .hero-orb-one {
-  width: 760px;
-  height: 760px;
-
-  top: -260px;
-  right: -170px;
-
-  /* reduced from 0.46 - was too saturated/visible */
-  opacity: 0.3;
-
-  background:
-    radial-gradient(
-      circle,
-      rgba(117, 82, 235, 0.32) 0%,
-      rgba(92, 64, 195, 0.14) 34%,
-      rgba(67, 47, 145, 0.05) 52%,
-      transparent 72%
-    );
-
-  animation:
-    heroOrbOne 34s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+  width: 800px;
+  height: 800px;
+  top: -240px;
+  right: -120px;
+  opacity: 0.38;
+  background: radial-gradient(
+    circle,
+    rgba(117, 82, 235, 0.38) 0%,
+    rgba(92, 64, 195, 0.18) 35%,
+    transparent 70%
+  );
+  animation: heroOrbOne 34s cubic-bezier(0.45, 0, 0.55, 1) infinite;
 }
-
-
-/* Left blue-purple glow */
 
 .hero-orb-two {
-  width: 720px;
-  height: 720px;
-
-  bottom: -320px;
-  left: -240px;
-
-  /* reduced from 0.38 */
-  opacity: 0.26;
-
-  background:
-    radial-gradient(
-      circle,
-      rgba(71, 94, 210, 0.28) 0%,
-      rgba(62, 73, 170, 0.12) 36%,
-      rgba(46, 52, 120, 0.04) 54%,
-      transparent 73%
-    );
-
-  animation:
-    heroOrbTwo 40s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+  width: 760px;
+  height: 760px;
+  bottom: -300px;
+  left: -220px;
+  opacity: 0.3;
+  background: radial-gradient(
+    circle,
+    rgba(71, 94, 210, 0.32) 0%,
+    rgba(62, 73, 170, 0.15) 36%,
+    transparent 70%
+  );
+  animation: heroOrbTwo 40s cubic-bezier(0.45, 0, 0.55, 1) infinite;
 }
-
-
-/* Center glow */
 
 .hero-orb-three {
-  width: 560px;
-  height: 560px;
-
-  top: 27%;
-  left: 44%;
-
-  /* reduced from 0.2 */
-  opacity: 0.14;
-
-  background:
-    radial-gradient(
-      circle,
-      rgba(101, 80, 205, 0.2) 0%,
-      rgba(77, 61, 160, 0.07) 38%,
-      transparent 70%
-    );
-
-  animation:
-    heroOrbThree 46s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+  width: 600px;
+  height: 600px;
+  top: 25%;
+  left: 40%;
+  opacity: 0.18;
+  background: radial-gradient(
+    circle,
+    rgba(101, 80, 205, 0.24) 0%,
+    rgba(77, 61, 160, 0.09) 38%,
+    transparent 70%
+  );
+  animation: heroOrbThree 46s cubic-bezier(0.45, 0, 0.55, 1) infinite;
 }
 
-
-/* =========================
-   ORB ANIMATIONS
-   (each returns to its own
-   start value at 100%, and
-   uses a mid-point so the
-   drift reads as circular
-   rather than back-and-forth)
-
-   Peak opacities also lowered
-   to match the reduced base
-   opacities above.
-========================= */
-
 @keyframes heroOrbOne {
-  0% {
-    opacity: 0.26;
-    transform: translate3d(0, 0, 0) scale(1);
-  }
-  50% {
-    opacity: 0.36;
-    transform: translate3d(-36px, 28px, 0) scale(1.06);
-  }
-  100% {
-    opacity: 0.26;
-    transform: translate3d(0, 0, 0) scale(1);
-  }
+  0% { opacity: 0.32; transform: translate3d(0, 0, 0) scale(1); }
+  50% { opacity: 0.44; transform: translate3d(-36px, 28px, 0) scale(1.06); }
+  100% { opacity: 0.32; transform: translate3d(0, 0, 0) scale(1); }
 }
 
 @keyframes heroOrbTwo {
-  0% {
-    opacity: 0.2;
-    transform: translate3d(0, 0, 0) scale(1);
-  }
-  50% {
-    opacity: 0.3;
-    transform: translate3d(30px, -24px, 0) scale(1.05);
-  }
-  100% {
-    opacity: 0.2;
-    transform: translate3d(0, 0, 0) scale(1);
-  }
+  0% { opacity: 0.26; transform: translate3d(0, 0, 0) scale(1); }
+  50% { opacity: 0.36; transform: translate3d(30px, -24px, 0) scale(1.05); }
+  100% { opacity: 0.26; transform: translate3d(0, 0, 0) scale(1); }
 }
 
 @keyframes heroOrbThree {
-  0% {
-    opacity: 0.1;
-    transform: translate3d(0, 0, 0) scale(0.96);
-  }
-  50% {
-    opacity: 0.18;
-    transform: translate3d(24px, -18px, 0) scale(1.05);
-  }
-  100% {
-    opacity: 0.1;
-    transform: translate3d(0, 0, 0) scale(0.96);
-  }
+  0% { opacity: 0.14; transform: translate3d(0, 0, 0) scale(0.96); }
+  50% { opacity: 0.22; transform: translate3d(24px, -18px, 0) scale(1.05); }
+  100% { opacity: 0.14; transform: translate3d(0, 0, 0) scale(0.96); }
 }
-
 
 /* =========================
    PHOTO GLOW
@@ -266,58 +161,29 @@
 
 .hero-photo-glow {
   position: absolute;
-
   z-index: 1;
-
-  /* shrunk + blurred harder so its own
-     circular edge doesn't read as a ring
-     behind the photo (the red oval mark) */
-  width: 560px;
-  height: 560px;
-
-  right: -60px;
+  width: 640px;
+  height: 640px;
+  right: 2%;
   top: 50%;
-
-  transform:
-    translateY(-50%);
-
+  transform: translateY(-50%);
   border-radius: 50%;
-
   pointer-events: none;
-
-  background:
-    radial-gradient(
-      circle,
-      rgba(112, 91, 255, 0.22) 0%,
-      rgba(92, 69, 215, 0.12) 30%,
-      rgba(70, 50, 160, 0.05) 50%,
-      transparent 72%
-    );
-
-  filter: blur(70px);
-
-  will-change: transform, opacity;
-  backface-visibility: hidden;
-
-  animation:
-    photoGlow 12s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+  background: radial-gradient(
+    circle,
+    rgba(112, 91, 255, 0.3) 0%,
+    rgba(92, 69, 215, 0.16) 30%,
+    transparent 70%
+  );
+  filter: blur(85px);
+  animation: photoGlow 12s cubic-bezier(0.45, 0, 0.55, 1) infinite;
 }
 
 @keyframes photoGlow {
-  0% {
-    opacity: 0.35;
-    transform: translateY(-50%) scale(0.97);
-  }
-  50% {
-    opacity: 0.5;
-    transform: translateY(-50%) scale(1.05);
-  }
-  100% {
-    opacity: 0.35;
-    transform: translateY(-50%) scale(0.97);
-  }
+  0% { opacity: 0.45; transform: translateY(-50%) scale(0.97); }
+  50% { opacity: 0.65; transform: translateY(-50%) scale(1.06); }
+  100% { opacity: 0.45; transform: translateY(-50%) scale(0.97); }
 }
-
 
 /* =========================
    DARK OVERLAY
@@ -326,718 +192,396 @@
 .hero-overlay {
   position: absolute;
   inset: 0;
-
   z-index: 2;
-
   pointer-events: none;
-
   background:
     linear-gradient(
       90deg,
-      rgba(5, 5, 13, 0.12) 0%,
-      rgba(5, 5, 13, 0.01) 45%,
-      rgba(5, 5, 13, 0.03) 100%
+      rgba(6, 5, 14, 0.12) 0%,
+      transparent 50%,
+      rgba(6, 5, 14, 0.05) 100%
     ),
     linear-gradient(
       180deg,
-      rgba(5, 5, 13, 0.01) 0%,
-      transparent 65%,
-      rgba(5, 5, 13, 0.28) 100%
+      rgba(6, 5, 14, 0.05) 0%,
+      transparent 60%,
+      rgba(6, 5, 14, 0.35) 100%
     );
 }
 
-
 /* =========================
-   HERO CONTAINER
+   DESKTOP CONTAINER
 ========================= */
 
 .hero-container {
   position: relative;
-
-  z-index: 3;
-
+  z-index: 4;
   width: 100%;
-
+  max-width: 1380px;
+  margin: 0 auto;
   display: grid;
-
-  grid-template-columns:
-    minmax(0, 1fr)
-    minmax(400px, 520px);
-
+  grid-template-columns: minmax(0, 1fr) minmax(500px, 660px);
   align-items: center;
-
-  gap: 25px;
+  gap: 40px;
 }
-
 
 /* =========================
    LEFT CONTENT
 ========================= */
 
 .hero-left {
-  max-width: 760px;
-
+  max-width: 680px;
   position: relative;
-
   z-index: 5;
 }
 
-
-/* =========================
-   PERSON IMAGE
-========================= */
-
-.hero-person {
-  position: absolute;
-
-  z-index: 1;
-
-  right: 0;
-  top: 0;
-  bottom: 0;
-
-  width: 46%;
-  min-width: 480px;
-
-  display: flex;
-
-  align-items: flex-end;
-  justify-content: center;
-
-  pointer-events: none;
-}
-
-
-/*
-  The image is intentionally NOT
-  inside a card or border. Instead,
-  a mask fades its own edges to
-  transparent and a luminosity blend
-  lets the hero's dark/purple tones
-  show through the photo, so it reads
-  as part of the background rather
-  than a pasted-on cutout.
-
-  NOTE: a right-side fade was added
-  below (previously missing), which
-  was the cause of the hard vertical
-  edge/ring marked in red — the mask
-  faded left/top/bottom but had a
-  hard, unfaded right edge sitting
-  right against the photo-glow circle.
-*/
-
-.hero-person-image {
-  width: 100%;
-  height: 100%;
-
-  display: block;
-
-  object-fit: cover;
-
-  /* zoom in on face/shoulders instead
-     of showing the full portrait */
-  object-position: center 8%;
-  transform: scale(1.2);
-
-  /* lighter desaturation so it reads
-     as a tinted photo, not a dark
-     silhouette */
-  filter:
-    grayscale(0.35)
-    brightness(0.98)
-    contrast(1.04)
-    saturate(1.05);
-
-  /* lets the dark hero background
-     multiply through the image tones
-     instead of sitting on top of it */
-  mix-blend-mode: luminosity;
-
-  /* fade the photo's edges to nothing
-     so there's no hard rectangle —
-     left + top fade the most since
-     that's where it meets the text
-     and the top of the section, and
-     right is now faded too so it
-     doesn't show a hard edge against
-     the glow circle behind it */
-  -webkit-mask-image:
-    linear-gradient(
-      to left,
-      black 60%,
-      transparent 100%
-    ),
-    linear-gradient(
-      to right,
-      black 92%,
-      transparent 100%
-    ),
-    linear-gradient(
-      to top,
-      black 78%,
-      transparent 100%
-    ),
-    linear-gradient(
-      to bottom,
-      black 88%,
-      transparent 100%
-    );
-  -webkit-mask-composite: source-in, source-in, source-in;
-  mask-image:
-    linear-gradient(
-      to left,
-      black 60%,
-      transparent 100%
-    ),
-    linear-gradient(
-      to right,
-      black 92%,
-      transparent 100%
-    ),
-    linear-gradient(
-      to top,
-      black 78%,
-      transparent 100%
-    ),
-    linear-gradient(
-      to bottom,
-      black 88%,
-      transparent 100%
-    );
-  mask-composite: intersect, intersect, intersect;
-
-  transform-origin: center 20%;
-
-  will-change: transform;
-  backface-visibility: hidden;
-
-  animation:
-    personFloat 9s cubic-bezier(0.45, 0, 0.55, 1) infinite;
-}
-
-@keyframes personFloat {
-  0% {
-    transform: scale(1.2) translateY(0);
-  }
-  50% {
-    transform: scale(1.215) translateY(-6px);
-  }
-  100% {
-    transform: scale(1.2) translateY(0);
-  }
-}
-
-
-/* =========================
-   SMALL HEADING
-========================= */
-
-.hero-eyebrow {
-  margin: 0 0 19px;
-
-  color: rgba(192, 201, 255, 0.9);
-
-  font-size: 15px;
-  font-weight: 700;
-
-  line-height: 1.4;
-
-  letter-spacing: 0.11em;
-
-  text-transform: uppercase;
-}
-
-
-/* =========================
-   MAIN TITLE
-========================= */
-
+/* MAIN TITLE */
 .hero-title {
-  max-width: 820px;
-
-  margin: 0 0 25px;
-
+  max-width: 780px;
+  margin: 0 0 16px;
   color: #ffffff;
-
-  font-size: clamp(
-    54px,
-    5.2vw,
-    72px
-  );
-
+  font-size: clamp(52px, 5.2vw, 74px);
   font-weight: 800;
-
-  line-height: 1.04;
-
-  letter-spacing: -0.055em;
+  line-height: 1.06;
+  letter-spacing: -0.04em;
 }
 
 .hero-title span {
   display: block;
-
   color: transparent;
-
-  background:
-    linear-gradient(
-      90deg,
-      #777aff 0%,
-      #9295ff 48%,
-      #b3a9ff 100%
-    );
-
+  background: linear-gradient(
+    90deg,
+    #6d72ff 0%,
+    #888cff 45%,
+    #b2a7ff 100%
+  );
   background-clip: text;
-
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-
-  text-shadow:
-    0 0 32px
-    rgba(107, 99, 255, 0.13);
+  text-shadow: 0 0 32px rgba(107, 99, 255, 0.25);
 }
 
+/* SUBTITLE / EYEBROW */
+.hero-eyebrow {
+  margin: 0 0 22px;
+  color: #9499ff;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
 
-/* =========================
-   DESCRIPTION
-========================= */
-
+/* DESCRIPTION */
 .hero-sub {
-  max-width: 575px;
-
-  margin: 0 0 37px;
-
-  color: rgba(255, 255, 255, 0.72);
-
-  font-size: 17px;
+  max-width: 560px;
+  margin: 0 0 36px;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 16px;
   font-weight: 400;
-
-  line-height: 1.72;
+  line-height: 1.68;
 }
 
-
-/* =========================
-   BUTTONS
-========================= */
-
+/* BUTTON ACTIONS */
 .hero-actions {
   display: flex;
   flex-wrap: wrap;
-
-  gap: 15px;
+  gap: 16px;
 }
 
 .hero-actions .btn {
-  min-height: 53px;
-
-  padding: 15px 27px;
-
+  min-height: 52px;
+  padding: 14px 30px;
   display: inline-flex;
-
   align-items: center;
   justify-content: center;
-
-  gap: 11px;
-
+  gap: 10px;
   border-radius: 14px;
-
   font-size: 15px;
   font-weight: 700;
-
   line-height: 1;
-
   text-decoration: none;
-
-  transition:
-    background-color 220ms ease,
-    border-color 220ms ease,
-    box-shadow 220ms ease;
+  transition: all 220ms ease;
 }
 
-
-/* Primary button */
-
+/* Primary Button */
 .hero-btn-primary {
   color: #ffffff;
-
-  border:
-    1px solid
-    rgba(255, 255, 255, 0.15);
-
-  background:
-    linear-gradient(
-      135deg,
-      #6366ed 0%,
-      #5052d5 100%
-    );
-
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: linear-gradient(
+    135deg,
+    #5956f4 0%,
+    #4542dd 100%
+  );
   box-shadow:
-    0 15px 36px
-    rgba(76, 70, 205, 0.3),
-    inset 0 1px 0
-    rgba(255, 255, 255, 0.12);
+    0 14px 34px rgba(76, 70, 205, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);
 }
 
 .hero-btn-primary:hover {
   box-shadow:
-    0 18px 44px
-    rgba(76, 70, 205, 0.4),
-    inset 0 1px 0
-    rgba(255, 255, 255, 0.17);
+    0 18px 44px rgba(76, 70, 205, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25);
 }
 
-
-/* Glass button */
-
+/* Glass Button */
 .hero-btn-glass {
-  color: rgba(255, 255, 255, 0.92);
-
-  border:
-    1px solid
-    rgba(255, 255, 255, 0.15);
-
-  background:
-    rgba(255, 255, 255, 0.075);
-
-  box-shadow:
-    inset 0 1px 0
-    rgba(255, 255, 255, 0.06);
-
+  color: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(12px);
-
   -webkit-backdrop-filter: blur(12px);
 }
 
 .hero-btn-glass:hover {
-  border-color:
-    rgba(255, 255, 255, 0.24);
-
-  background:
-    rgba(255, 255, 255, 0.105);
+  border-color: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.14);
 }
 
+/* =========================
+   RIGHT SIDE PHOTO (DESKTOP)
+   - BIGGER IMAGE SIZE
+   - 4 BORDER LINE ERASE MASK
+========================= */
+
+.hero-person {
+  position: relative;
+  z-index: 4;
+  width: 100%;
+  max-width: 660px; /* BIGGER CONTAINER ON DESKTOP */
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.hero-person-image {
+  width: 100%;
+  height: auto;
+  max-height: 760px; /* BIGGER MAX HEIGHT */
+  display: block;
+  object-fit: cover;
+  object-position: center 10%;
+  transform: scale(1.15); /* ENLARGED PORTRAIT */
+
+  /* Keep natural face color tones */
+  filter: brightness(0.96) contrast(1.04) saturate(1.05);
+  mix-blend-mode: normal;
+
+  /* 
+     4-BORDER LINE ERASE MASK:
+     Applies strict linear gradient masks to all 4 edges:
+     - Left (0%-14%) & Right (86%-100%)
+     - Top (0%-12%) & Bottom (85%-100%)
+     Only the intersection is shown, completely erasing all 4 box border lines!
+  */
+  -webkit-mask-image:
+    linear-gradient(to right, transparent 0%, black 14%, black 86%, transparent 100%),
+    linear-gradient(to bottom, transparent 0%, black 12%, black 85%, transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(to right, transparent 0%, black 14%, black 86%, transparent 100%),
+    linear-gradient(to bottom, transparent 0%, black 12%, black 85%, transparent 100%);
+  mask-composite: intersect;
+
+  transform-origin: center center;
+  will-change: transform;
+  backface-visibility: hidden;
+  animation: personFloat 9s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+}
+
+@keyframes personFloat {
+  0% { transform: scale(1.15) translateY(0); }
+  50% { transform: scale(1.15) translateY(-7px); }
+  100% { transform: scale(1.15) translateY(0); }
+}
+
+/* Hide mobile-specific backdrop on desktop */
+.hero-mobile-person-backdrop {
+  display: none;
+}
 
 /* =========================
-   TABLET
+   TABLET / MEDIUM SCREENS
 ========================= */
 
 @media (max-width: 1100px) {
   .hero-container {
-    grid-template-columns:
-      minmax(0, 1fr)
-      minmax(340px, 430px);
-  }
-
-  .hero-person {
-    width: 50%;
-    min-width: 380px;
-  }
-
-  .hero-photo-glow {
-    right: -150px;
+    grid-template-columns: minmax(0, 1fr) minmax(440px, 520px);
+    gap: 30px;
   }
 }
 
-
 /* =========================
-   TABLET / SMALL DESKTOP
+   MOBILE & TABLET STACKED VIEW
+   (Exact match to mobile reference image)
 ========================= */
 
 @media (max-width: 980px) {
   .hero {
-    padding:
-      130px 24px 70px;
+    padding: 100px 24px 60px;
+    min-height: 100svh;
+    align-items: flex-start;
+  }
+
+  /* Hide desktop photo container in mobile */
+  .hero-person {
+    display: none;
+  }
+
+  /* Display mobile backdrop element */
+  .hero-mobile-person-backdrop {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 64vh;
+    min-height: 420px;
+    z-index: 1;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .hero-mobile-person-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 5%;
+    transform: scale(1.1);
+    filter: brightness(0.85) contrast(1.04);
+    mix-blend-mode: normal;
+
+    /* Smooth vertical fade out down into background */
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      black 45%,
+      rgba(0, 0, 0, 0.7) 75%,
+      transparent 100%
+    );
+    mask-image: linear-gradient(
+      to bottom,
+      black 45%,
+      rgba(0, 0, 0, 0.7) 75%,
+      transparent 100%
+    );
   }
 
   .hero-container {
     display: flex;
-
-    justify-content: center;
-
+    flex-direction: column;
+    align-items: center;
     text-align: center;
+    width: 100%;
+    gap: 0;
   }
 
   .hero-left {
-    max-width: 700px;
+    position: relative;
+    z-index: 5;
+    margin-top: 120px; /* Position title across the face/chest level like in screenshot */
+    max-width: 640px;
+    text-align: center;
   }
 
   .hero-title {
-    font-size: clamp(
-      49px,
-      8vw,
-      59px
-    );
+    font-size: clamp(38px, 9vw, 54px);
+    line-height: 1.1;
+    margin-bottom: 16px;
+  }
+
+  .hero-eyebrow {
+    font-size: 14px;
+    letter-spacing: 0.1em;
+    margin-bottom: 18px;
+    color: #9aa0ff;
   }
 
   .hero-sub {
-    margin-right: auto;
+    font-size: 16px;
+    line-height: 1.65;
     margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 32px;
   }
 
   .hero-actions {
     justify-content: center;
-  }
-
-  .hero-person {
-    position: relative;
-
-    top: auto;
-    right: auto;
-    bottom: auto;
-
-    width: 430px;
-    height: 520px;
-    min-width: 0;
-
-    margin-top: 5px;
-
-    order: 2;
-  }
-
-  .hero-person-image {
-    object-fit: contain;
-    object-position: center bottom;
-
-    /* stacked layout: image is centered
-       under the text now, so only fade
-       top/bottom, not the sides */
-    -webkit-mask-image:
-      linear-gradient(
-        to top,
-        black 75%,
-        transparent 100%
-      ),
-      linear-gradient(
-        to bottom,
-        black 88%,
-        transparent 100%
-      );
-    -webkit-mask-composite: source-in;
-    mask-image:
-      linear-gradient(
-        to top,
-        black 75%,
-        transparent 100%
-      ),
-      linear-gradient(
-        to bottom,
-        black 88%,
-        transparent 100%
-      );
-    mask-composite: intersect;
   }
 
   .hero-photo-glow {
     width: 480px;
     height: 480px;
-
     right: 50%;
     top: auto;
     bottom: 20px;
-
     transform: translateX(50%);
   }
 }
 
-
 /* =========================
-   MOBILE
+   MOBILE PHONES
 ========================= */
 
 @media (max-width: 560px) {
   .hero {
-    padding: 90px 22px 55px;
-
-    min-height: 100svh;
-
-    display: block;
-
-    background:
-      radial-gradient(
-        circle at 80% 15%,
-        rgba(104, 72, 220, 0.24) 0%,
-        transparent 50%
-      ),
-      radial-gradient(
-        circle at 15% 85%,
-        rgba(65, 89, 190, 0.16) 0%,
-        transparent 50%
-      ),
-      linear-gradient(
-        160deg,
-        #100b23 0%,
-        #180f2e 55%,
-        #241748 100%
-      );
+    padding: 85px 18px 50px;
   }
 
-  .hero-container {
-    display: block;
-
-    gap: 0;
-
-    text-align: center;
+  .hero-mobile-person-backdrop {
+    height: 60vh;
+    min-height: 380px;
   }
 
-  .hero-eyebrow {
-    margin-bottom: 15px;
+  .hero-mobile-person-image {
+    object-position: center 4%;
+    transform: scale(1.15);
+  }
 
-    font-size: 12px;
-
-    letter-spacing: 0.08em;
+  .hero-left {
+    margin-top: 100px;
   }
 
   .hero-title {
-    margin-bottom: 21px;
+    margin-bottom: 14px;
+    font-size: clamp(32px, 8.5vw, 42px);
+    line-height: 1.12;
+  }
 
-    font-size: clamp(
-      32px,
-      9.5vw,
-      40px
-    );
-
-    line-height: 1.14;
+  .hero-eyebrow {
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    margin-bottom: 14px;
   }
 
   .hero-sub {
-    margin-bottom: 26px;
-
     font-size: 15px;
-
-    line-height: 1.65;
+    line-height: 1.62;
+    margin-bottom: 28px;
   }
 
   .hero-actions {
     width: 100%;
-
     flex-direction: column;
-
     gap: 12px;
   }
 
   .hero-actions .btn {
     width: 100%;
+    border-radius: 14px;
   }
 
-  /* secondary button reads as an
-     outline in the reference, but the
-     hard 1px border made it look boxy —
-     soften it into a filled glass pill
-     with no visible border line */
   .hero-btn-glass {
-    border: none;
-
-    background: rgba(255, 255, 255, 0.09);
-
-    box-shadow: none;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    background: rgba(255, 255, 255, 0.08);
   }
-
-  .hero-btn-glass:hover {
-    border: none;
-
-    background: rgba(255, 255, 255, 0.13);
-  }
-
-
-  /* =========================
-     MOBILE PORTRAIT
-     Sits as a full-bleed backdrop
-     behind the nav/text, positioned
-     high and large like the reference,
-     fading into the background toward
-     the bottom so the text stays
-     readable.
-  ========================= */
-
-  .hero-person {
-    position: absolute;
-
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: auto;
-
-    width: 100%;
-    height: 58%;
-    min-width: 0;
-
-    z-index: 1;
-
-    margin-top: 0;
-
-    align-items: flex-start;
-    justify-content: center;
-  }
-
-  .hero-person-image {
-    width: 100%;
-    height: 100%;
-
-    object-fit: cover;
-
-    /* FIX: the face was sitting low because
-       there was empty headroom baked into the
-       source photo above the head — shifting
-       object-position alone can't remove that,
-       only zooming (scale) crops it out. Anchor
-       to the very top and zoom in harder so the
-       face/shoulders fill the frame instead of
-       floating in empty space. */
-    object-position: center 0%;
-    transform: scale(1.6);
-    transform-origin: center top;
-
-    /* keep the face bright/true to the
-       original photo — no grayscale or
-       darkening filter, no blend mode */
-    filter: none;
-    mix-blend-mode: normal;
-
-    /* only fade the bottom edge into
-       the background, where the text
-       overlaps — face and shoulders
-       stay fully visible */
-    -webkit-mask-image:
-      linear-gradient(
-        to bottom,
-        black 62%,
-        transparent 100%
-      );
-    mask-image:
-      linear-gradient(
-        to bottom,
-        black 62%,
-        transparent 100%
-      );
-
-    animation: none;
-  }
-
-  .hero-photo-glow {
-    display: none;
-  }
-
-
-  /* Text sits below the photo, its
-     top edge overlapping the photo's
-     fade-out zone like the reference */
-
-  .hero-left {
-    position: relative;
-
-    z-index: 5;
-
-    margin-top: 46vh;
-
-    max-width: 100%;
-  }
-
-
-  /* Background orbs */
 
   .hero-orb-one {
     width: 520px;
     height: 520px;
-
     top: -190px;
     right: -210px;
   }
@@ -1045,7 +589,6 @@
   .hero-orb-two {
     width: 500px;
     height: 500px;
-
     bottom: -240px;
     left: -220px;
   }
@@ -1055,22 +598,6 @@
   }
 }
 
-
-/* =========================
-   SMALL MOBILE
-========================= */
-
-@media (max-width: 380px) {
-  .hero-person {
-    height: 52%;
-  }
-
-  .hero-left {
-    margin-top: 42vh;
-  }
-}
-
-
 /* =========================
    REDUCED MOTION
 ========================= */
@@ -1079,7 +606,8 @@
   .hero-background-image,
   .hero-orb,
   .hero-photo-glow,
-  .hero-person-image {
+  .hero-person-image,
+  .hero-mobile-person-image {
     animation: none;
   }
 

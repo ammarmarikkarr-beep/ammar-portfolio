@@ -14,10 +14,9 @@ const containerAnimation = {
 const itemAnimation = {
   hidden: {
     opacity: 0,
-    y: 28,
-    filter: 'blur(6px)',
+    y: 24,
+    filter: 'blur(4px)',
   },
-
   show: {
     opacity: 1,
     y: 0,
@@ -32,17 +31,14 @@ const itemAnimation = {
 const photoAnimation = {
   hidden: {
     opacity: 0,
-    x: 60,
-    scale: 0.96,
+    scale: 0.95,
   },
-
   show: {
     opacity: 1,
-    x: 0,
     scale: 1,
     transition: {
       duration: 1,
-      delay: 0.2,
+      delay: 0.15,
       ease: [0.22, 1, 0.36, 1],
     },
   },
@@ -58,8 +54,14 @@ export default function Hero() {
           src="/images/Hero/Background.png"
           alt=""
           className="hero-background-image"
+          onError={(e) => { e.target.style.display = 'none'; }}
         />
       </div>
+
+      {/* Background Orbs */}
+      <div className="hero-orb hero-orb-one" aria-hidden="true" />
+      <div className="hero-orb hero-orb-two" aria-hidden="true" />
+      <div className="hero-orb hero-orb-three" aria-hidden="true" />
 
       {/* Photo glow */}
       <div className="hero-photo-glow" aria-hidden="true" />
@@ -67,7 +69,16 @@ export default function Hero() {
       {/* Dark overlay */}
       <div className="hero-overlay" aria-hidden="true" />
 
-      <div className="container hero-container">
+      {/* MOBILE BACKDROP PHOTO */}
+      <div className="hero-mobile-person-backdrop" aria-hidden="true">
+        <img
+          src="/images/Hero/My%20Photo.png"
+          alt=""
+          className="hero-mobile-person-image"
+        />
+      </div>
+
+      <div className="hero-container">
 
         {/* LEFT CONTENT */}
         <motion.div
@@ -76,20 +87,19 @@ export default function Hero() {
           initial="hidden"
           animate="show"
         >
-          <motion.p
-            className="hero-eyebrow"
-            variants={itemAnimation}
-          >
-            Digital Marketer &amp; Content Creator
-          </motion.p>
-
           <motion.h1
             className="hero-title"
             variants={itemAnimation}
           >
-            Elevate Your
-            <span>Digital Presence</span>
+            Elevate Your <span>Digital Presence</span>
           </motion.h1>
+
+          <motion.p
+            className="hero-eyebrow"
+            variants={itemAnimation}
+          >
+            DIGITAL MARKETER &amp; CONTENT CREATOR
+          </motion.p>
 
           <motion.p
             className="hero-sub"
@@ -97,7 +107,7 @@ export default function Hero() {
           >
             I help brands grow through data-driven strategies,
             compelling content, and creative campaigns that
-            deliver real results.
+            deliver real results
           </motion.p>
 
           <motion.div
@@ -107,46 +117,33 @@ export default function Hero() {
             <motion.a
               href="#portfolio"
               className="btn hero-btn-primary"
-              whileHover={{
-                y: -3,
-                scale: 1.015,
-              }}
-              whileTap={{
-                scale: 0.98,
-              }}
+              whileHover={{ y: -3, scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
             >
               <span>View My Work</span>
-              <span aria-hidden="true">→</span>
             </motion.a>
 
             <motion.a
               href="#contact"
               className="btn hero-btn-glass"
-              whileHover={{
-                y: -3,
-                scale: 1.015,
-              }}
-              whileTap={{
-                scale: 0.98,
-              }}
+              whileHover={{ y: -3, scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
             >
               <span>Let&apos;s Connect</span>
-              <span aria-hidden="true">✉</span>
             </motion.a>
           </motion.div>
         </motion.div>
 
-        {/* RIGHT SIDE PHOTO */}
+        {/* DESKTOP RIGHT SIDE PHOTO */}
         <motion.div
           className="hero-person"
           variants={photoAnimation}
           initial="hidden"
           animate="show"
-          aria-hidden="true"
         >
           <img
             src="/images/Hero/My%20Photo.png"
-            alt=""
+            alt="Manoj Lakpriya"
             className="hero-person-image"
           />
         </motion.div>
