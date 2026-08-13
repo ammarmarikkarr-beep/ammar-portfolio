@@ -27,6 +27,10 @@
 
   object-fit: cover;
 
+  /* toned down so the animated background reads
+     as a subtle shift, not a saturated color wash */
+  filter: brightness(0.9) saturate(0.8);
+
   transform: translate3d(0, 0, 0) scale(1);
 
   will-change: transform;
@@ -129,7 +133,8 @@
   top: -260px;
   right: -170px;
 
-  opacity: 0.46;
+  /* reduced from 0.46 - was too saturated/visible */
+  opacity: 0.3;
 
   background:
     radial-gradient(
@@ -154,7 +159,8 @@
   bottom: -320px;
   left: -240px;
 
-  opacity: 0.38;
+  /* reduced from 0.38 */
+  opacity: 0.26;
 
   background:
     radial-gradient(
@@ -179,7 +185,8 @@
   top: 27%;
   left: 44%;
 
-  opacity: 0.2;
+  /* reduced from 0.2 */
+  opacity: 0.14;
 
   background:
     radial-gradient(
@@ -201,49 +208,53 @@
    uses a mid-point so the
    drift reads as circular
    rather than back-and-forth)
+
+   Peak opacities also lowered
+   to match the reduced base
+   opacities above.
 ========================= */
 
 @keyframes heroOrbOne {
   0% {
-    opacity: 0.38;
+    opacity: 0.26;
     transform: translate3d(0, 0, 0) scale(1);
   }
   50% {
-    opacity: 0.5;
+    opacity: 0.36;
     transform: translate3d(-36px, 28px, 0) scale(1.06);
   }
   100% {
-    opacity: 0.38;
+    opacity: 0.26;
     transform: translate3d(0, 0, 0) scale(1);
   }
 }
 
 @keyframes heroOrbTwo {
   0% {
-    opacity: 0.3;
+    opacity: 0.2;
     transform: translate3d(0, 0, 0) scale(1);
   }
   50% {
-    opacity: 0.42;
+    opacity: 0.3;
     transform: translate3d(30px, -24px, 0) scale(1.05);
   }
   100% {
-    opacity: 0.3;
+    opacity: 0.2;
     transform: translate3d(0, 0, 0) scale(1);
   }
 }
 
 @keyframes heroOrbThree {
   0% {
-    opacity: 0.14;
+    opacity: 0.1;
     transform: translate3d(0, 0, 0) scale(0.96);
   }
   50% {
-    opacity: 0.24;
+    opacity: 0.18;
     transform: translate3d(24px, -18px, 0) scale(1.05);
   }
   100% {
-    opacity: 0.14;
+    opacity: 0.1;
     transform: translate3d(0, 0, 0) scale(0.96);
   }
 }
@@ -258,8 +269,11 @@
 
   z-index: 1;
 
-  width: 620px;
-  height: 620px;
+  /* shrunk + blurred harder so its own
+     circular edge doesn't read as a ring
+     behind the photo (the red oval mark) */
+  width: 560px;
+  height: 560px;
 
   right: -60px;
   top: 50%;
@@ -280,7 +294,7 @@
       transparent 72%
     );
 
-  filter: blur(40px);
+  filter: blur(70px);
 
   will-change: transform, opacity;
   backface-visibility: hidden;
@@ -291,15 +305,15 @@
 
 @keyframes photoGlow {
   0% {
-    opacity: 0.5;
+    opacity: 0.35;
     transform: translateY(-50%) scale(0.97);
   }
   50% {
-    opacity: 0.7;
+    opacity: 0.5;
     transform: translateY(-50%) scale(1.05);
   }
   100% {
-    opacity: 0.5;
+    opacity: 0.35;
     transform: translateY(-50%) scale(0.97);
   }
 }
@@ -403,6 +417,14 @@
   show through the photo, so it reads
   as part of the background rather
   than a pasted-on cutout.
+
+  NOTE: a right-side fade was added
+  below (previously missing), which
+  was the cause of the hard vertical
+  edge/ring marked in red — the mask
+  faded left/top/bottom but had a
+  hard, unfaded right edge sitting
+  right against the photo-glow circle.
 */
 
 .hero-person-image {
@@ -436,7 +458,10 @@
      so there's no hard rectangle —
      left + top fade the most since
      that's where it meets the text
-     and the top of the section */
+     and the top of the section, and
+     right is now faded too so it
+     doesn't show a hard edge against
+     the glow circle behind it */
   -webkit-mask-image:
     linear-gradient(
       to left,
@@ -444,6 +469,11 @@
       transparent 100%
     ),
     linear-gradient(
+      to right,
+      black 92%,
+      transparent 100%
+    ),
+    linear-gradient(
       to top,
       black 78%,
       transparent 100%
@@ -453,7 +483,7 @@
       black 88%,
       transparent 100%
     );
-  -webkit-mask-composite: source-in, source-in;
+  -webkit-mask-composite: source-in, source-in, source-in;
   mask-image:
     linear-gradient(
       to left,
@@ -461,6 +491,11 @@
       transparent 100%
     ),
     linear-gradient(
+      to right,
+      black 92%,
+      transparent 100%
+    ),
+    linear-gradient(
       to top,
       black 78%,
       transparent 100%
@@ -470,7 +505,7 @@
       black 88%,
       transparent 100%
     );
-  mask-composite: intersect, intersect;
+  mask-composite: intersect, intersect, intersect;
 
   transform-origin: center 20%;
 
@@ -939,12 +974,16 @@
 
     object-fit: cover;
 
-    /* higher + slightly wider crop so
-       more of the portrait is visible,
-       matching the reference's larger
-       photo */
-    object-position: center 14%;
-    transform: scale(1.08);
+    /* FIX: the face was sitting low because
+       there was empty headroom baked into the
+       source photo above the head — shifting
+       object-position alone can't remove that,
+       only zooming (scale) crops it out. Anchor
+       to the very top and zoom in harder so the
+       face/shoulders fill the frame instead of
+       floating in empty space. */
+    object-position: center 0%;
+    transform: scale(1.35);
     transform-origin: center top;
 
     /* keep the face bright/true to the
