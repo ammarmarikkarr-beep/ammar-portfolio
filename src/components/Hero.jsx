@@ -22,9 +22,27 @@ const itemAnimation = {
     opacity: 1,
     y: 0,
     filter: 'blur(0px)',
-
     transition: {
       duration: 0.7,
+      ease: [0.22, 1, 0.36, 1],
+    },
+  },
+}
+
+const photoAnimation = {
+  hidden: {
+    opacity: 0,
+    x: 60,
+    scale: 0.96,
+  },
+
+  show: {
+    opacity: 1,
+    x: 0,
+    scale: 1,
+    transition: {
+      duration: 1,
+      delay: 0.2,
       ease: [0.22, 1, 0.36, 1],
     },
   },
@@ -33,17 +51,25 @@ const itemAnimation = {
 export default function Hero() {
   return (
     <section className="hero" id="home">
-      {/* Lightweight animated background */}
+
+      {/* Animated Background Image */}
       <div className="hero-background" aria-hidden="true">
-        <span className="hero-orb hero-orb-one" />
-        <span className="hero-orb hero-orb-two" />
-        <span className="hero-orb hero-orb-three" />
+        <img
+          src="/images/Hero/Background.png"
+          alt=""
+          className="hero-background-image"
+        />
       </div>
 
-      {/* Dark overlay keeps the text readable */}
+      {/* Photo glow */}
+      <div className="hero-photo-glow" aria-hidden="true" />
+
+      {/* Dark overlay */}
       <div className="hero-overlay" aria-hidden="true" />
 
       <div className="container hero-container">
+
+        {/* LEFT CONTENT */}
         <motion.div
           className="hero-left"
           variants={containerAnimation}
@@ -109,6 +135,22 @@ export default function Hero() {
             </motion.a>
           </motion.div>
         </motion.div>
+
+        {/* RIGHT SIDE PHOTO */}
+        <motion.div
+          className="hero-person"
+          variants={photoAnimation}
+          initial="hidden"
+          animate="show"
+          aria-hidden="true"
+        >
+          <img
+            src="/images/Hero/My%20Photo.png"
+            alt=""
+            className="hero-person-image"
+          />
+        </motion.div>
+
       </div>
     </section>
   )

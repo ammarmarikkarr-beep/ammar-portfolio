@@ -1,4 +1,69 @@
 /* =========================
+   ANIMATED BACKGROUND IMAGE
+========================= */
+
+.hero-background {
+  position: absolute;
+  inset: 0;
+
+  z-index: 0;
+
+  overflow: hidden;
+  pointer-events: none;
+
+  background: #000000;
+}
+
+.hero-background-image {
+  position: absolute;
+
+  width: 112%;
+  height: 112%;
+
+  max-width: none;
+
+  left: -6%;
+  top: -6%;
+
+  object-fit: cover;
+
+  transform: translate3d(0, 0, 0) scale(1);
+
+  will-change: transform;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+
+  animation: backgroundAir 22s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+}
+
+
+/* =========================
+   SOFT AIR MOVEMENT
+   (loops back to start = no
+   dead-stop reversal, so it
+   never "sticks")
+========================= */
+
+@keyframes backgroundAir {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  25% {
+    transform: translate3d(-14px, 8px, 0) scale(1.015);
+  }
+  50% {
+    transform: translate3d(0, 14px, 0) scale(1.03);
+  }
+  75% {
+    transform: translate3d(14px, 6px, 0) scale(1.015);
+  }
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+
+/* =========================
    HERO SECTION
 ========================= */
 
@@ -6,7 +71,7 @@
   position: relative;
   min-height: 100svh;
 
-  padding: 145px 24px 80px;
+  padding: 145px 24px 70px;
 
   display: flex;
   align-items: center;
@@ -14,10 +79,6 @@
   overflow: hidden;
   isolation: isolate;
 
-  /*
-    The colour is placed directly on .hero,
-    so it stays visible even if animations stop.
-  */
   background:
     radial-gradient(
       circle at 78% 20%,
@@ -41,18 +102,8 @@
 
 
 /* =========================
-   ANIMATED BACKGROUND
+   ANIMATED BACKGROUND (orbs)
 ========================= */
-
-.hero-background {
-  position: absolute;
-  inset: 0;
-
-  z-index: 0;
-
-  overflow: hidden;
-  pointer-events: none;
-}
 
 .hero-orb {
   position: absolute;
@@ -64,10 +115,12 @@
   transform: translate3d(0, 0, 0);
 
   will-change: transform, opacity;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
 }
 
 
-/* Purple glow on the right */
+/* Right purple glow */
 
 .hero-orb-one {
   width: 760px;
@@ -88,11 +141,11 @@
     );
 
   animation:
-    heroOrbOne 22s ease-in-out infinite alternate;
+    heroOrbOne 34s cubic-bezier(0.45, 0, 0.55, 1) infinite;
 }
 
 
-/* Blue-purple glow on the left */
+/* Left blue-purple glow */
 
 .hero-orb-two {
   width: 720px;
@@ -113,11 +166,11 @@
     );
 
   animation:
-    heroOrbTwo 26s ease-in-out infinite alternate;
+    heroOrbTwo 40s cubic-bezier(0.45, 0, 0.55, 1) infinite;
 }
 
 
-/* Small soft glow near the centre */
+/* Center glow */
 
 .hero-orb-three {
   width: 560px;
@@ -137,66 +190,117 @@
     );
 
   animation:
-    heroOrbThree 30s ease-in-out infinite alternate;
+    heroOrbThree 46s cubic-bezier(0.45, 0, 0.55, 1) infinite;
 }
 
 
-/*
-  Only transform and opacity are animated.
-  This is much smoother than a WebGL shader.
-*/
+/* =========================
+   ORB ANIMATIONS
+   (each returns to its own
+   start value at 100%, and
+   uses a mid-point so the
+   drift reads as circular
+   rather than back-and-forth)
+========================= */
 
 @keyframes heroOrbOne {
   0% {
     opacity: 0.38;
-
-    transform:
-      translate3d(0, 0, 0)
-      scale(1);
+    transform: translate3d(0, 0, 0) scale(1);
   }
-
-  100% {
+  50% {
     opacity: 0.5;
-
-    transform:
-      translate3d(-36px, 28px, 0)
-      scale(1.06);
+    transform: translate3d(-36px, 28px, 0) scale(1.06);
+  }
+  100% {
+    opacity: 0.38;
+    transform: translate3d(0, 0, 0) scale(1);
   }
 }
 
 @keyframes heroOrbTwo {
   0% {
     opacity: 0.3;
-
-    transform:
-      translate3d(0, 0, 0)
-      scale(1);
+    transform: translate3d(0, 0, 0) scale(1);
   }
-
-  100% {
+  50% {
     opacity: 0.42;
-
-    transform:
-      translate3d(30px, -24px, 0)
-      scale(1.05);
+    transform: translate3d(30px, -24px, 0) scale(1.05);
+  }
+  100% {
+    opacity: 0.3;
+    transform: translate3d(0, 0, 0) scale(1);
   }
 }
 
 @keyframes heroOrbThree {
   0% {
     opacity: 0.14;
-
-    transform:
-      translate3d(0, 0, 0)
-      scale(0.96);
+    transform: translate3d(0, 0, 0) scale(0.96);
   }
-
-  100% {
+  50% {
     opacity: 0.24;
+    transform: translate3d(24px, -18px, 0) scale(1.05);
+  }
+  100% {
+    opacity: 0.14;
+    transform: translate3d(0, 0, 0) scale(0.96);
+  }
+}
 
-    transform:
-      translate3d(24px, -18px, 0)
-      scale(1.05);
+
+/* =========================
+   PHOTO GLOW
+========================= */
+
+.hero-photo-glow {
+  position: absolute;
+
+  z-index: 1;
+
+  width: 620px;
+  height: 620px;
+
+  right: -60px;
+  top: 50%;
+
+  transform:
+    translateY(-50%);
+
+  border-radius: 50%;
+
+  pointer-events: none;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(112, 91, 255, 0.22) 0%,
+      rgba(92, 69, 215, 0.12) 30%,
+      rgba(70, 50, 160, 0.05) 50%,
+      transparent 72%
+    );
+
+  filter: blur(40px);
+
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+
+  animation:
+    photoGlow 12s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+}
+
+@keyframes photoGlow {
+  0% {
+    opacity: 0.5;
+    transform: translateY(-50%) scale(0.97);
+  }
+  50% {
+    opacity: 0.7;
+    transform: translateY(-50%) scale(1.05);
+  }
+  100% {
+    opacity: 0.5;
+    transform: translateY(-50%) scale(0.97);
   }
 }
 
@@ -209,40 +313,182 @@
   position: absolute;
   inset: 0;
 
-  z-index: 1;
+  z-index: 2;
 
   pointer-events: none;
 
   background:
     linear-gradient(
       90deg,
-      rgba(5, 5, 13, 0.22) 0%,
-      rgba(5, 5, 13, 0.03) 50%,
-      rgba(5, 5, 13, 0.09) 100%
+      rgba(5, 5, 13, 0.2) 0%,
+      rgba(5, 5, 13, 0.02) 45%,
+      rgba(5, 5, 13, 0.05) 100%
     ),
     linear-gradient(
       180deg,
       rgba(5, 5, 13, 0.02) 0%,
-      transparent 58%,
-      rgba(5, 5, 13, 0.4) 100%
+      transparent 65%,
+      rgba(5, 5, 13, 0.5) 100%
     );
 }
 
 
 /* =========================
-   HERO LAYOUT
+   HERO CONTAINER
 ========================= */
 
 .hero-container {
   position: relative;
 
-  z-index: 2;
+  z-index: 3;
 
   width: 100%;
+
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1fr)
+    minmax(400px, 520px);
+
+  align-items: center;
+
+  gap: 25px;
 }
+
+
+/* =========================
+   LEFT CONTENT
+========================= */
 
 .hero-left {
   max-width: 760px;
+
+  position: relative;
+
+  z-index: 5;
+}
+
+
+/* =========================
+   PERSON IMAGE
+========================= */
+
+.hero-person {
+  position: absolute;
+
+  z-index: 1;
+
+  right: 0;
+  top: 0;
+  bottom: 0;
+
+  width: 46%;
+  min-width: 480px;
+
+  display: flex;
+
+  align-items: flex-end;
+  justify-content: center;
+
+  pointer-events: none;
+}
+
+
+/*
+  The image is intentionally NOT
+  inside a card or border. Instead,
+  a mask fades its own edges to
+  transparent and a luminosity blend
+  lets the hero's dark/purple tones
+  show through the photo, so it reads
+  as part of the background rather
+  than a pasted-on cutout.
+*/
+
+.hero-person-image {
+  width: 100%;
+  height: 100%;
+
+  display: block;
+
+  object-fit: cover;
+
+  object-position: center 20%;
+
+  /* desaturate + darken so the photo's
+     own colors don't fight the purple
+     background tones */
+  filter:
+    grayscale(0.55)
+    brightness(0.82)
+    contrast(1.12)
+    saturate(1.15);
+
+  /* lets the dark hero background
+     multiply through the image tones
+     instead of sitting on top of it */
+  mix-blend-mode: luminosity;
+
+  /* fade the photo's edges to nothing
+     so there's no hard rectangle —
+     left + top fade the most since
+     that's where it meets the text
+     and the top of the section */
+  -webkit-mask-image:
+    linear-gradient(
+      to left,
+      black 55%,
+      transparent 100%
+    ),
+    linear-gradient(
+      to top,
+      black 70%,
+      transparent 100%
+    ),
+    linear-gradient(
+      to bottom,
+      black 82%,
+      transparent 100%
+    );
+  -webkit-mask-composite: source-in, source-in;
+  mask-image:
+    linear-gradient(
+      to left,
+      black 55%,
+      transparent 100%
+    ),
+    linear-gradient(
+      to top,
+      black 70%,
+      transparent 100%
+    ),
+    linear-gradient(
+      to bottom,
+      black 82%,
+      transparent 100%
+    );
+  mask-composite: intersect, intersect;
+
+  transform-origin: center bottom;
+
+  will-change: transform;
+  backface-visibility: hidden;
+
+  animation:
+    personFloat 9s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+}
+
+
+@keyframes personFloat {
+  0% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-8px) scale(1.015);
+  }
+  100% {
+    transform: translateY(0) scale(1);
+  }
 }
 
 
@@ -349,6 +595,7 @@
   padding: 15px 27px;
 
   display: inline-flex;
+
   align-items: center;
   justify-content: center;
 
@@ -368,6 +615,9 @@
     border-color 220ms ease,
     box-shadow 220ms ease;
 }
+
+
+/* Primary button */
 
 .hero-btn-primary {
   color: #ffffff;
@@ -397,6 +647,9 @@
     inset 0 1px 0
     rgba(255, 255, 255, 0.17);
 }
+
+
+/* Glass button */
 
 .hero-btn-glass {
   color: rgba(255, 255, 255, 0.92);
@@ -430,6 +683,28 @@
    TABLET
 ========================= */
 
+@media (max-width: 1100px) {
+  .hero-container {
+    grid-template-columns:
+      minmax(0, 1fr)
+      minmax(340px, 430px);
+  }
+
+  .hero-person {
+    width: 50%;
+    min-width: 380px;
+  }
+
+  .hero-photo-glow {
+    right: -150px;
+  }
+}
+
+
+/* =========================
+   TABLET / SMALL DESKTOP
+========================= */
+
 @media (max-width: 980px) {
   .hero {
     padding:
@@ -438,6 +713,7 @@
 
   .hero-container {
     display: flex;
+
     justify-content: center;
 
     text-align: center;
@@ -463,6 +739,66 @@
   .hero-actions {
     justify-content: center;
   }
+
+  .hero-person {
+    position: relative;
+
+    top: auto;
+    right: auto;
+    bottom: auto;
+
+    width: 430px;
+    height: 520px;
+    min-width: 0;
+
+    margin-top: 5px;
+
+    order: 2;
+  }
+
+  .hero-person-image {
+    object-fit: contain;
+    object-position: center bottom;
+
+    /* stacked layout: image is centered
+       under the text now, so only fade
+       top/bottom, not the sides */
+    -webkit-mask-image:
+      linear-gradient(
+        to top,
+        black 75%,
+        transparent 100%
+      ),
+      linear-gradient(
+        to bottom,
+        black 88%,
+        transparent 100%
+      );
+    -webkit-mask-composite: source-in;
+    mask-image:
+      linear-gradient(
+        to top,
+        black 75%,
+        transparent 100%
+      ),
+      linear-gradient(
+        to bottom,
+        black 88%,
+        transparent 100%
+      );
+    mask-composite: intersect;
+  }
+
+  .hero-photo-glow {
+    width: 480px;
+    height: 480px;
+
+    right: 50%;
+    top: auto;
+    bottom: 20px;
+
+    transform: translateX(50%);
+  }
 }
 
 
@@ -473,7 +809,9 @@
 @media (max-width: 560px) {
   .hero {
     padding:
-      115px 18px 58px;
+      115px 18px 55px;
+
+    min-height: auto;
 
     background:
       radial-gradient(
@@ -492,6 +830,10 @@
         #0c091b 50%,
         #15102b 100%
       );
+  }
+
+  .hero-container {
+    gap: 25px;
   }
 
   .hero-eyebrow {
@@ -534,6 +876,27 @@
     width: 100%;
   }
 
+
+  /* Mobile image */
+
+  .hero-person {
+    width: 330px;
+    height: 430px;
+    min-width: 0;
+
+    margin-top: 10px;
+  }
+
+  .hero-photo-glow {
+    width: 350px;
+    height: 350px;
+
+    bottom: 15px;
+  }
+
+
+  /* Background orbs */
+
   .hero-orb-one {
     width: 520px;
     height: 520px;
@@ -557,11 +920,31 @@
 
 
 /* =========================
+   SMALL MOBILE
+========================= */
+
+@media (max-width: 380px) {
+  .hero-person {
+    width: 290px;
+    height: 390px;
+  }
+
+  .hero-photo-glow {
+    width: 310px;
+    height: 310px;
+  }
+}
+
+
+/* =========================
    REDUCED MOTION
 ========================= */
 
 @media (prefers-reduced-motion: reduce) {
-  .hero-orb {
+  .hero-background-image,
+  .hero-orb,
+  .hero-photo-glow,
+  .hero-person-image {
     animation: none;
   }
 
