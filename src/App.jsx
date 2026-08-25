@@ -12,7 +12,7 @@ import Tools from './components/Tools'
 import Contact from './components/Contact'
 import Footer from './components/Footer'
 import ProjectDetails from './components/ProjectDetails'
-import Portfolio from './pages/Portfolio'
+import Portfolio from "./components/Portfolio";
 
 function HomePage() {
   return (
