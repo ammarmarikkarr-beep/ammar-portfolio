@@ -12,6 +12,7 @@ import Tools from './components/Tools'
 import Contact from './components/Contact'
 import Footer from './components/Footer'
 import ProjectDetails from './components/ProjectDetails'
+import Portfolio from './pages/Portfolio'
 
 function HomePage() {
   return (
@@ -28,12 +29,27 @@ function HomePage() {
   )
 }
 
+function PortfolioPage() {
+  return (
+    <>
+      <Navbar />
+      <Portfolio />
+      <Footer />
+    </>
+  )
+}
+
 export default function App() {
   return (
     <Routes>
       <Route
         path="/"
         element={<HomePage />}
+      />
+
+      <Route
+        path="/portfolio"
+        element={<PortfolioPage />}
       />
 
       <Route
