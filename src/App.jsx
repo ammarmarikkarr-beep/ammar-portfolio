@@ -1,6 +1,8 @@
+import { useEffect } from 'react'
 import {
   Route,
   Routes,
+  useLocation,
 } from 'react-router-dom'
 
 import Navbar from './components/Navbar'
@@ -13,6 +15,16 @@ import Contact from './components/Contact'
 import Footer from './components/Footer'
 import ProjectDetails from './components/ProjectDetails'
 import Portfolio from "./components/Portfolio";
+
+function ScrollToTop() {
+  const { pathname } = useLocation()
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [pathname])
+
+  return null
+}
 
 function HomePage() {
   return (
@@ -41,21 +53,24 @@ function PortfolioPage() {
 
 export default function App() {
   return (
-    <Routes>
-      <Route
-        path="/"
-        element={<HomePage />}
-      />
+    <>
+      <ScrollToTop />
+      <Routes>
+        <Route
+          path="/"
+          element={<HomePage />}
+        />
 
-      <Route
-        path="/portfolio"
-        element={<PortfolioPage />}
-      />
+        <Route
+          path="/portfolio"
+          element={<PortfolioPage />}
+        />
 
-      <Route
-        path="/portfolio/:slug"
-        element={<ProjectDetails />}
-      />
-    </Routes>
+        <Route
+          path="/portfolio/:slug"
+          element={<ProjectDetails />}
+        />
+      </Routes>
+    </>
   )
 }

@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { useNavigate, useLocation } from 'react-router-dom'
 import './Navbar.css'
 
 const NAV_LINKS = [
@@ -16,6 +17,8 @@ export default function Navbar() {
   const [activeLink, setActiveLink] = useState('#home')
   const scrollLockRef = useRef(false)
   const scrollTimerRef = useRef(null)
+  const navigate = useNavigate()
+  const location = useLocation()
 
   const updateActiveSection = () => {
     if (scrollLockRef.current) return
@@ -45,6 +48,8 @@ export default function Navbar() {
   }
 
   useEffect(() => {
+    if (location.pathname !== '/') return
+
     updateActiveSection()
 
     window.addEventListener('scroll', updateActiveSection, { passive: true })
@@ -56,14 +61,20 @@ export default function Navbar() {
         clearTimeout(scrollTimerRef.current)
       }
     }
-  }, [])
+  }, [location.pathname])
 
-  const scrollToSection = (event, href) => {
-    event.preventDefault()
+  useEffect(() => {
+    if (location.pathname !== '/') return
 
-    setIsOpen(false)
+    const target = sessionStorage.getItem('scrollTarget')
+    if (target) {
+      sessionStorage.removeItem('scrollTarget')
+      setTimeout(() => performScroll(target), 150)
+    }
+  }, [location.pathname])
+
+  const performScroll = (href) => {
     setActiveLink(href)
-
     scrollLockRef.current = true
 
     if (scrollTimerRef.current) {
@@ -98,6 +109,19 @@ export default function Navbar() {
       scrollLockRef.current = false
       updateActiveSection()
     }, 900)
+  }
+
+  const scrollToSection = (event, href) => {
+    event.preventDefault()
+    setIsOpen(false)
+
+    if (location.pathname !== '/') {
+      sessionStorage.setItem('scrollTarget', href)
+      navigate('/')
+      return
+    }
+
+    performScroll(href)
   }
 
   return (
