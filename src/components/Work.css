@@ -216,9 +216,9 @@
 display:grid;
 
 grid-template-columns:
-repeat(2,1fr);
+repeat(3,1fr);
 
-gap:35px;
+gap:24px;
 
 }
 
@@ -228,11 +228,11 @@ gap:35px;
 
 position:relative;
 
-height:420px;
+height:260px;
 
 overflow:hidden;
 
-border-radius:20px;
+border-radius:16px;
 
 cursor:pointer;
 
@@ -402,14 +402,16 @@ text-decoration:none;
 
 .work-grid{
 
-grid-template-columns:1fr;
+grid-template-columns:1fr 1fr;
+
+gap:16px;
 
 }
 
 
 .work-card{
 
-height:380px;
+height:200px;
 
 }
 
