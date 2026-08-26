@@ -68,7 +68,7 @@ export default function Work(){
 
 return(
 
-<section className="work-section" id="portfolio">
+<section className="work-section" id="work">
 
 
 <div className="container work-container">
