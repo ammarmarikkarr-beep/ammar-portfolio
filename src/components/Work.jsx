@@ -11,7 +11,7 @@ image:"/images/portfolio/SEO/Backlink.png",
 
 slug:"full-stack-seo",
 
-category:"SEO",
+
 
 title:"Full Stack SEO",
 
@@ -21,7 +21,6 @@ description:
 
 {
 image:"/images/google-ads.jpg",
-category:"Paid Ads",
 title:"Google Ads Campaign",
 description:
 "Developed and optimized Google Ads campaigns driving quality traffic, consistent lead generation, and measurable ROI"
@@ -29,7 +28,6 @@ description:
 
 {
 image:"/images/social-media.jpg",
-category:"Social Media",
 title:"Social Media Growth",
 description:
 "Instagram growth strategies combining content optimization, influencer partnerships, and engagement tactics"
@@ -37,7 +35,6 @@ description:
 
 {
 image:"/images/content.jpg",
-category:"Content",
 title:"Content Marketing Strategy",
 description:
 "Data-driven content marketing strategies improving brand authority, organic reach and engagement"
@@ -45,7 +42,6 @@ description:
 
 {
 image:"/images/design.jpg",
-category:"Brand Design",
 title:"Logo & Collateral Design",
 description:
 "Brand-aligned logos and collateral crafted for fashion, tech, and retail clients"
@@ -53,7 +49,6 @@ description:
 
 {
 image:"/images/meta-ads.jpg",
-category:"Meta Ads",
 title:"Meta Ads Optimization",
 description:
 "Optimized Meta campaigns with audience segmentation, creative testing and conversion tracking"
