@@ -8,7 +8,6 @@ const works = [
 
 {
 image:"/images/portfolio/SEO/Backlink.png",
-
 slug:"full-stack-seo",
 
 

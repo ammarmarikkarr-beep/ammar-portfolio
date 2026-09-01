@@ -1,27 +1,15 @@
-import {
-  useEffect,
-} from 'react'
+import { useEffect } from 'react'
+import { Link, useParams } from 'react-router-dom'
+import { motion } from 'framer-motion'
 
-import {
-  Link,
-  useParams,
-} from 'react-router-dom'
-
-import {
-  motion,
-} from 'framer-motion'
-
-import './ProjectDetails.css'
+import { projects } from '../data/projects'
 
 import './ProjectDetails.css'
 
 export default function ProjectDetails() {
   const { slug } = useParams()
 
-  const project =
-    projects.find(
-      item => item.slug === slug
-    )
+  const project = projects.find((item) => item.slug === slug)
 
   useEffect(() => {
     window.scrollTo({
@@ -35,9 +23,7 @@ export default function ProjectDetails() {
       <main className="project-not-found">
         <h1>Project not found</h1>
 
-        <Link to="/#portfolio">
-          Return to Portfolio
-        </Link>
+        <Link to="/portfolio">Return to Portfolio</Link>
       </main>
     )
   }
@@ -45,16 +31,13 @@ export default function ProjectDetails() {
   return (
     <main className="project-detail-page">
       <nav className="project-detail-navigation">
-        <Link
-          className="project-detail-brand"
-          to="/"
-        >
+        <Link className="project-detail-brand" to="/">
           Ammar Marikkar
         </Link>
 
         <Link
           className="project-detail-back"
-          to={`/?category=${project.category}#portfolio`}
+          to={`/portfolio?category=${project.category}`}
         >
           ← Back to {project.categoryLabel}
         </Link>
@@ -62,18 +45,9 @@ export default function ProjectDetails() {
 
       <motion.header
         className="project-detail-hero"
-        initial={{
-          opacity: 0,
-          y: 25,
-        }}
-        animate={{
-          opacity: 1,
-          y: 0,
-        }}
-        transition={{
-          duration: 0.7,
-          ease: [0.22, 1, 0.36, 1],
-        }}
+        initial={{ opacity: 0, y: 25 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
       >
         <span className="project-detail-category">
           {project.categoryLabel}
@@ -81,29 +55,16 @@ export default function ProjectDetails() {
 
         <h1>{project.title}</h1>
 
-        <p className="project-detail-subtitle">
-          {project.subtitle}
-        </p>
+        <p className="project-detail-subtitle">{project.subtitle}</p>
 
-        <p className="project-detail-summary">
-          {project.summary}
-        </p>
+        <p className="project-detail-summary">{project.summary}</p>
       </motion.header>
 
       <motion.section
         className="project-detail-cover"
-        initial={{
-          opacity: 0,
-          scale: 0.98,
-        }}
-        animate={{
-          opacity: 1,
-          scale: 1,
-        }}
-        transition={{
-          duration: 0.7,
-          delay: 0.15,
-        }}
+        initial={{ opacity: 0, scale: 0.98 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.7, delay: 0.15 }}
       >
         <img
           src={project.image}
@@ -113,9 +74,7 @@ export default function ProjectDetails() {
 
       <section className="project-detail-content">
         <article className="project-detail-overview">
-          <p className="project-detail-label">
-            Project Overview
-          </p>
+          <p className="project-detail-label">Project Overview</p>
 
           <h2>About the project</h2>
 
@@ -123,12 +82,10 @@ export default function ProjectDetails() {
         </article>
 
         <aside className="project-detail-services">
-          <p className="project-detail-label">
-            Work Included
-          </p>
+          <p className="project-detail-label">Work Included</p>
 
           <ul>
-            {project.services.map(service => (
+            {project.services.map((service) => (
               <li key={service}>
                 <span aria-hidden="true">✓</span>
                 {service}
@@ -139,56 +96,46 @@ export default function ProjectDetails() {
       </section>
 
       <section className="project-detail-tools">
-        <p className="project-detail-label">
-          Tools and Platforms
-        </p>
+        <p className="project-detail-label">Tools and Platforms</p>
 
         <div className="project-detail-tool-list">
-          {project.tools.map(tool => (
-            <span key={tool}>
-              {tool}
-            </span>
+          {project.tools.map((tool) => (
+            <span key={tool}>{tool}</span>
           ))}
         </div>
       </section>
 
       <section className="project-detail-gallery">
         <div className="project-detail-gallery-heading">
-          <p className="project-detail-label">
-            Project Gallery
-          </p>
+          <p className="project-detail-label">Project Gallery</p>
 
           <h2>Full project view</h2>
         </div>
 
         <div className="project-detail-gallery-grid">
-          {project.gallery.map(
-            (image, index) => (
-              <a
-                key={`${image}-${index}`}
-                href={image}
-                target="_blank"
-                rel="noreferrer"
-              >
-                <img
-                  src={image}
-                  alt={`${project.title} project view ${index + 1}`}
-                  loading="lazy"
-                />
-              </a>
-            )
-          )}
+          {project.gallery.map((image, index) => (
+            <a
+              key={`${image}-${index}`}
+              href={image}
+              target="_blank"
+              rel="noreferrer"
+            >
+              <img
+                src={image}
+                alt={`${project.title} project view ${index + 1}`}
+                loading="lazy"
+              />
+            </a>
+          ))}
         </div>
       </section>
 
       <section className="project-detail-cta">
-        <h2>
-          Have a similar project?
-        </h2>
+        <h2>Have a similar project?</h2>
 
         <p>
-          Let’s discuss how I can help with your
-          digital marketing requirements.
+          Let's discuss how I can help with your digital marketing
+          requirements.
         </p>
 
         <Link to="/#contact">
