@@ -118,12 +118,33 @@
   line-height: 1.75;
 }
 
-.project-detail-cover {
+/* =========================
+   IMAGE CAROUSEL
+   Replaces the old full-size "Full project view" grid.
+   Shows one image at a time with side arrow buttons and
+   dot navigation, matching the reference screenshot style.
+========================= */
+
+.project-detail-carousel {
+  position: relative;
+
   width: min(1180px, 100%);
 
-  max-height: 720px;
-
   margin: 0 auto 75px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 18px;
+}
+
+.project-detail-carousel-frame {
+  position: relative;
+
+  flex: 1;
+
+  max-height: 640px;
 
   overflow: hidden;
 
@@ -140,12 +161,103 @@
     rgba(0, 0, 0, 0.38);
 }
 
-.project-detail-cover img {
+.project-detail-carousel-frame img {
   width: 100%;
 
   display: block;
 
   object-fit: contain;
+}
+
+.project-detail-carousel-badge {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 2;
+
+  padding: 10px 22px;
+
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+
+  color: #ffffff;
+  background: linear-gradient(135deg, #6558ed, #5044d7);
+
+  box-shadow: 0 12px 30px rgba(50, 40, 220, 0.4);
+
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+}
+
+.project-detail-carousel-arrow {
+  flex-shrink: 0;
+
+  width: 52px;
+  height: 52px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: none;
+  border-radius: 50%;
+
+  color: #ffffff;
+  background: linear-gradient(135deg, #6558ed, #5044d7);
+
+  box-shadow: 0 12px 28px rgba(50, 40, 220, 0.35);
+
+  font-size: 26px;
+  line-height: 1;
+
+  cursor: pointer;
+
+  transition:
+    transform 200ms ease,
+    box-shadow 200ms ease;
+}
+
+.project-detail-carousel-arrow:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 16px 36px rgba(50, 40, 220, 0.48);
+}
+
+.project-detail-carousel-dots {
+  position: absolute;
+  bottom: 18px;
+  left: 50%;
+
+  transform: translateX(-50%);
+
+  z-index: 2;
+
+  display: flex;
+  gap: 8px;
+}
+
+.project-detail-carousel-dot {
+  width: 8px;
+  height: 8px;
+
+  padding: 0;
+
+  border: none;
+  border-radius: 999px;
+
+  background: rgba(0, 0, 0, 0.25);
+
+  cursor: pointer;
+
+  transition:
+    background 200ms ease,
+    width 200ms ease;
+}
+
+.project-detail-carousel-dot.active {
+  width: 22px;
+
+  background: #5044d7;
 }
 
 .project-detail-content {
@@ -161,8 +273,7 @@
   gap: 65px;
 }
 
-.project-detail-overview h2,
-.project-detail-gallery-heading h2 {
+.project-detail-overview h2 {
   margin: 13px 0 20px;
 
   font-size:
@@ -254,56 +365,6 @@
   font-weight: 600;
 }
 
-.project-detail-gallery {
-  width: min(1180px, 100%);
-
-  margin: 0 auto 90px;
-}
-
-.project-detail-gallery-heading {
-  margin-bottom: 30px;
-
-  text-align: center;
-}
-
-.project-detail-gallery-grid {
-  display: grid;
-
-  grid-template-columns:
-    repeat(2, minmax(0, 1fr));
-
-  gap: 24px;
-}
-
-.project-detail-gallery-grid a {
-  overflow: hidden;
-
-  border:
-    1px solid
-    rgba(255, 255, 255, 0.1);
-
-  border-radius: 18px;
-
-  background: #ffffff;
-
-  box-shadow:
-    0 22px 55px
-    rgba(0, 0, 0, 0.3);
-}
-
-.project-detail-gallery-grid img {
-  width: 100%;
-  height: 100%;
-
-  display: block;
-
-  object-fit: contain;
-}
-
-.project-detail-gallery-grid a:only-child {
-  grid-column: 1 / -1;
-}
-
 .project-detail-cta {
   width: min(850px, 100%);
 
@@ -388,13 +449,31 @@
 
     gap: 35px;
   }
+}
 
-  .project-detail-gallery-grid {
-    grid-template-columns: 1fr;
+@media (max-width: 650px) {
+  .project-detail-carousel {
+    gap: 10px;
   }
 
-  .project-detail-gallery-grid a:only-child {
-    grid-column: auto;
+  .project-detail-carousel-arrow {
+    width: 40px;
+    height: 40px;
+
+    font-size: 20px;
+  }
+
+  .project-detail-carousel-frame {
+    max-height: 380px;
+  }
+
+  .project-detail-carousel-badge {
+    top: 12px;
+    right: 12px;
+
+    padding: 7px 16px;
+
+    font-size: 11px;
   }
 }
 
@@ -429,9 +508,7 @@
     font-size: 15px;
   }
 
-  .project-detail-cover {
-    margin-bottom: 55px;
-
+  .project-detail-carousel-frame {
     border-radius: 17px;
   }
 

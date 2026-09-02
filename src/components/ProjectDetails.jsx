@@ -1,10 +1,81 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 
 import { projects } from '../data/projects'
 
 import './ProjectDetails.css'
+
+function ProjectCarousel({ images, title, categoryLabel }) {
+  const [index, setIndex] = useState(0)
+  const hasMultiple = images.length > 1
+
+  const goPrev = () =>
+    setIndex((i) => (i === 0 ? images.length - 1 : i - 1))
+
+  const goNext = () =>
+    setIndex((i) => (i === images.length - 1 ? 0 : i + 1))
+
+  return (
+    <div className="project-detail-carousel">
+      {hasMultiple && (
+        <button
+          type="button"
+          className="project-detail-carousel-arrow project-detail-carousel-arrow-left"
+          onClick={goPrev}
+          aria-label="Previous image"
+        >
+          ‹
+        </button>
+      )}
+
+      <div className="project-detail-carousel-frame">
+        <span className="project-detail-carousel-badge">
+          {categoryLabel}
+        </span>
+
+        <AnimatePresence mode="wait">
+          <motion.img
+            key={images[index]}
+            src={images[index]}
+            alt={`${title} screenshot ${index + 1}`}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+          />
+        </AnimatePresence>
+      </div>
+
+      {hasMultiple && (
+        <button
+          type="button"
+          className="project-detail-carousel-arrow project-detail-carousel-arrow-right"
+          onClick={goNext}
+          aria-label="Next image"
+        >
+          ›
+        </button>
+      )}
+
+      {hasMultiple && (
+        <div className="project-detail-carousel-dots">
+          {images.map((img, i) => (
+            <button
+              key={img}
+              type="button"
+              className={`project-detail-carousel-dot${
+                i === index ? ' active' : ''
+              }`}
+              onClick={() => setIndex(i)}
+              aria-label={`Go to image ${i + 1}`}
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  )
+}
 
 export default function ProjectDetails() {
   const { slug } = useParams()
@@ -12,10 +83,7 @@ export default function ProjectDetails() {
   const project = projects.find((item) => item.slug === slug)
 
   useEffect(() => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'instant',
-    })
+    window.scrollTo({ top: 0, behavior: 'instant' })
   }, [slug])
 
   if (!project) {
@@ -61,14 +129,14 @@ export default function ProjectDetails() {
       </motion.header>
 
       <motion.section
-        className="project-detail-cover"
         initial={{ opacity: 0, scale: 0.98 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.7, delay: 0.15 }}
       >
-        <img
-          src={project.image}
-          alt={`${project.title} project screenshot`}
+        <ProjectCarousel
+          images={project.gallery}
+          title={project.title}
+          categoryLabel={project.categoryLabel}
         />
       </motion.section>
 
@@ -101,31 +169,6 @@ export default function ProjectDetails() {
         <div className="project-detail-tool-list">
           {project.tools.map((tool) => (
             <span key={tool}>{tool}</span>
-          ))}
-        </div>
-      </section>
-
-      <section className="project-detail-gallery">
-        <div className="project-detail-gallery-heading">
-          <p className="project-detail-label">Project Gallery</p>
-
-          <h2>Full project view</h2>
-        </div>
-
-        <div className="project-detail-gallery-grid">
-          {project.gallery.map((image, index) => (
-            <a
-              key={`${image}-${index}`}
-              href={image}
-              target="_blank"
-              rel="noreferrer"
-            >
-              <img
-                src={image}
-                alt={`${project.title} project view ${index + 1}`}
-                loading="lazy"
-              />
-            </a>
           ))}
         </div>
       </section>

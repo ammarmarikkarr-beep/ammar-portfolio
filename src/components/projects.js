@@ -25,6 +25,14 @@ export const categories = [
   },
 ]
 
+// NOTE: the 6 projects marked `featured: true` are the ones your
+// homepage "Work" section should pull from — one per category, using
+// the exact titles/summaries/slugs you gave me. `web-development` and
+// `graphic-design` are brand-new hub entries (there was no single
+// project representing those categories before). Swap the `image` /
+// `gallery` placeholder paths on those two once you have real
+// screenshots — everything else about them is real, wired data.
+
 export const projects = [
 {
   id: 1,
@@ -38,7 +46,7 @@ export const projects = [
   image: '/images/portfolio/SEO/Backlink.png',
 
   summary:
-    'An SEO backlink project focused on improving website authority and organic visibility.',
+    'End-to-end SEO strategy focused on improving search visibility, organic traffic, keyword rankings, and website performance through technical, on-page, and content optimization.',
 
   overview:
     'This project includes backlink research, competitor analysis and link-building opportunities.',
@@ -58,6 +66,8 @@ export const projects = [
 
   gallery: [
     '/images/portfolio/SEO/Backlink.png',
+    '/images/portfolio/SEO/Backlink-2.png',
+    '/images/portfolio/SEO/Backlink-3.png',
   ],
 },
 
@@ -93,6 +103,8 @@ export const projects = [
 
   gallery: [
     '/images/portfolio/SEO/Dashboard.png',
+    '/images/portfolio/SEO/Dashboard-2.png',
+    '/images/portfolio/SEO/Dashboard-3.png',
   ],
 },
 
@@ -107,7 +119,7 @@ export const projects = [
     image: '/images/portfolio/PaidAds/GoogleAds.png',
 
     summary:
-      'A Google Ads campaign structured around relevant keywords, focused landing pages and conversion tracking.',
+      'High-intent search campaigns focused on generating qualified enquiries, increasing website traffic, and improving conversion performance through continuous optimization.',
 
     overview:
       'This project shows the process of organizing paid-search campaigns and improving them using performance data.',
@@ -128,6 +140,8 @@ export const projects = [
 
     gallery: [
       '/images/portfolio/PaidAds/GoogleAds.png',
+      '/images/portfolio/PaidAds/GoogleAds-2.png',
+      '/images/portfolio/PaidAds/GoogleAds-3.png',
     ],
   },
 
@@ -142,7 +156,7 @@ export const projects = [
     image: '/images/portfolio/PaidAds/MetaAds.png',
 
     summary:
-      'A Meta advertising project focused on audience structure, creative testing and campaign optimization.',
+      'Paid social campaigns managed for different brands and businesses, using audience targeting, creative testing, campaign optimization, and conversion tracking to improve results.',
 
     overview:
       'This project presents how campaign data can be used to improve targeting, creative performance and budget allocation.',
@@ -163,6 +177,8 @@ export const projects = [
 
     gallery: [
       '/images/portfolio/PaidAds/MetaAds.png',
+      '/images/portfolio/PaidAds/MetaAds-2.png',
+      '/images/portfolio/PaidAds/MetaAds-3.png',
     ],
   },
 
@@ -197,24 +213,26 @@ export const projects = [
 
     gallery: [
       '/images/portfolio/PaidAds/TikTokAds.png',
+      '/images/portfolio/PaidAds/TikTokAds-2.png',
+      '/images/portfolio/PaidAds/TikTokAds-3.png',
     ],
   },
 
   {
     id: 6,
     featured: true,
-    slug: 'instagram-growth-strategy',
-    title: 'Instagram Growth Strategy',
+    slug: 'social-media-growth',
+    title: 'Social Media Growth',
     subtitle: 'Social Media Marketing',
     category: 'social-media',
     categoryLabel: 'Social Media',
     image: '/images/portfolio/SocialMedia/Instagram.png',
 
     summary:
-      'An Instagram strategy combining content planning, profile optimization and community engagement.',
+      'Social media strategies developed for multiple brands and businesses, combining content planning, creative optimization, audience engagement, and consistent platform growth.',
 
     overview:
-      'This project shows how consistent content and audience-focused planning can improve a brand’s social presence.',
+      'This project shows how consistent content and audience-focused planning can improve a brand\u2019s social presence across platforms.',
 
     services: [
       'Profile optimization',
@@ -232,6 +250,8 @@ export const projects = [
 
     gallery: [
       '/images/portfolio/SocialMedia/Instagram.png',
+      '/images/portfolio/SocialMedia/Instagram-2.png',
+      '/images/portfolio/SocialMedia/Instagram-3.png',
     ],
   },
 
@@ -266,6 +286,8 @@ export const projects = [
 
     gallery: [
       '/images/portfolio/SocialMedia/LinkedIn.png',
+      '/images/portfolio/SocialMedia/LinkedIn-2.png',
+      '/images/portfolio/SocialMedia/LinkedIn-3.png',
     ],
   },
 
@@ -300,6 +322,8 @@ export const projects = [
 
     gallery: [
       '/images/portfolio/SocialMedia/TikTok.png',
+      '/images/portfolio/SocialMedia/TikTok-2.png',
+      '/images/portfolio/SocialMedia/TikTok-3.png',
     ],
   },
 
@@ -334,12 +358,13 @@ export const projects = [
 
     gallery: [
       '/images/portfolio/SocialMedia/YouTube.png',
+      '/images/portfolio/SocialMedia/YouTube-2.png',
+      '/images/portfolio/SocialMedia/YouTube-3.png',
     ],
   },
 
   {
     id: 10,
-    featured: true,
     slug: 'content-marketing-strategy',
     title: 'Content Marketing Strategy',
     subtitle: 'Strategic Content Creation',
@@ -369,6 +394,8 @@ export const projects = [
 
     gallery: [
       '/images/portfolio/Content/Content.png',
+      '/images/portfolio/Content/Content-2.png',
+      '/images/portfolio/Content/Content-3.png',
     ],
   },
 
@@ -403,12 +430,53 @@ export const projects = [
 
     gallery: [
       '/images/portfolio/Content/Email.png',
+      '/images/portfolio/Content/Email-2.png',
+      '/images/portfolio/Content/Email-3.png',
     ],
   },
 
   {
     id: 12,
     featured: true,
+    slug: 'web-development',
+    title: 'Web Development',
+    subtitle: 'Websites & Landing Pages',
+    category: 'web-development',
+    categoryLabel: 'Web Development',
+
+    // TODO: replace with a real screenshot once you have one
+    image: '/images/portfolio/WebDevelopment/WebDevelopment.png',
+
+    summary:
+      'Modern and responsive websites developed for businesses and service-based clients, with a focus on user experience, performance, mobile responsiveness, and conversions.',
+
+    overview:
+      'This project covers the end-to-end process of planning, designing and building fast, responsive websites for service-based businesses — from wireframes to a live, conversion-focused site.',
+
+    services: [
+      'Website planning & wireframing',
+      'Responsive front-end development',
+      'Performance optimization',
+      'Conversion-focused UX',
+    ],
+
+    tools: [
+      'React',
+      'Figma',
+      'Vercel',
+      'Google PageSpeed Insights',
+    ],
+
+    // TODO: add 2–3 real screenshots here for the detail-page carousel
+    gallery: [
+      '/images/portfolio/WebDevelopment/WebDevelopment.png',
+      '/images/portfolio/WebDevelopment/WebDevelopment-2.png',
+      '/images/portfolio/WebDevelopment/WebDevelopment-3.png',
+    ],
+  },
+
+  {
+    id: 13,
     slug: 'logo-collateral-design',
     title: 'Logo and Collateral Design',
     subtitle: 'Logo Design and Branding',
@@ -438,11 +506,13 @@ export const projects = [
 
     gallery: [
       '/images/portfolio/Branding/Logo.png',
+      '/images/portfolio/Branding/Logo-2.png',
+      '/images/portfolio/Branding/Logo-3.png',
     ],
   },
 
   {
-    id: 13,
+    id: 14,
     slug: 'brand-identity-redesign',
     title: 'Complete Brand Identity Redesign',
     subtitle: 'Brand Design and Strategy',
@@ -473,6 +543,48 @@ export const projects = [
 
     gallery: [
       '/images/portfolio/Branding/BrandGuidelines.png',
+      '/images/portfolio/Branding/BrandGuidelines-2.png',
+      '/images/portfolio/Branding/BrandGuidelines-3.png',
+    ],
+  },
+
+  {
+    id: 15,
+    featured: true,
+    slug: 'graphic-design',
+    title: 'Graphic Design',
+    subtitle: 'Visual & Marketing Design',
+    category: 'graphic-design',
+    categoryLabel: 'Graphic Design',
+
+    // TODO: replace with a real screenshot once you have one
+    image: '/images/portfolio/GraphicDesign/GraphicDesign.png',
+
+    summary:
+      'Creative visual solutions for brands, businesses, and marketing campaigns, including social media designs, promotional banners, brochures, and digital marketing materials.',
+
+    overview:
+      'This project rounds up visual design work produced across brands and campaigns — social creative, promotional banners, brochures and other digital marketing assets built to a consistent visual standard.',
+
+    services: [
+      'Social media creative',
+      'Promotional banner design',
+      'Brochure & print collateral',
+      'Digital marketing assets',
+    ],
+
+    tools: [
+      'Adobe Illustrator',
+      'Adobe Photoshop',
+      'Canva',
+      'Figma',
+    ],
+
+    // TODO: add 2–3 real screenshots here for the detail-page carousel
+    gallery: [
+      '/images/portfolio/GraphicDesign/GraphicDesign.png',
+      '/images/portfolio/GraphicDesign/GraphicDesign-2.png',
+      '/images/portfolio/GraphicDesign/GraphicDesign-3.png',
     ],
   },
 ]
