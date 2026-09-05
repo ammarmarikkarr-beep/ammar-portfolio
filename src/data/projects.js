@@ -261,9 +261,9 @@ export const projects = [
   {
     id: 6,
     featured: true,
-    slug: 'social-media-growth',
-    title: 'Social Media Growth',
+    title: 'Instagram Growth Strategy',
     subtitle: 'Social Media Marketing',
+    link: 'https://www.instagram.com/universaltelecomfzco/',
     category: 'social-media',
     categoryLabel: 'Social Media',
     image: '/images/portfolio/SocialMedia/Instagram.png',
