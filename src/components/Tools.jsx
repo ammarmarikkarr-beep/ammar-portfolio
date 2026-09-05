@@ -62,14 +62,14 @@ const skills = [
   // Digital Marketing
   {
     name: 'Meta Business Suite',
-    percentage: 85,
+    percentage: 95,
     category: 'Digital Marketing',
     slug: 'meta',
     color: '#0866ff',
   },
   {
     name: 'TikTok Business Suite',
-    percentage: 85,
+    percentage: 90,
     category: 'Digital Marketing',
     slug: 'tiktok',
     color: '#25f4ee',
@@ -83,21 +83,21 @@ const skills = [
   },
   {
     name: 'Google Search Console',
-    percentage: 85,
+    percentage: 95,
     category: 'Digital Marketing',
     slug: 'googlesearchconsole',
     color: '#458cf5',
   },
   {
     name: 'Google Tag Manager',
-    percentage: 80,
+    percentage: 90,
     category: 'Digital Marketing',
     slug: 'googletagmanager',
     color: '#246fdb',
   },
   {
     name: 'SEMrush',
-    percentage: 70,
+    percentage: 80,
     category: 'Digital Marketing',
     slug: 'semrush',
     color: '#ff642d',
@@ -120,7 +120,7 @@ const skills = [
   },
   {
     name: 'TikTok Ads',
-    percentage: 80,
+    percentage: 90,
     category: 'PPC',
     slug: 'tiktok',
     color: '#fe2c55',
@@ -129,7 +129,7 @@ const skills = [
   // Business Solutions
   {
     name: 'Zoho CRM',
-    percentage: 50,
+    percentage: 60,
     category: 'Business Solutions',
     slug: 'zoho',
     color: '#e42527',
@@ -145,7 +145,7 @@ const skills = [
   // Web Development
   {
     name: 'WordPress',
-    percentage: 80,
+    percentage: 90,
     category: 'Web Development',
     slug: 'wordpress',
     color: '#21759b',
@@ -168,14 +168,14 @@ const skills = [
   },
   {
     name: 'Gemini',
-    percentage: 80,
+    percentage: 85,
     category: 'AI Tools',
     slug: 'googlegemini',
     color: '#8e75b2',
   },
   {
     name: 'Claude.ai',
-    percentage: 85,
+    percentage: 90,
     category: 'AI Tools',
     slug: 'claude',
     color: '#d97757',
