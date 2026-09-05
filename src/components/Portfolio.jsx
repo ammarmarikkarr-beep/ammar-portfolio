@@ -3,8 +3,10 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Link, useSearchParams } from 'react-router-dom'
 
 import { categories, projects } from '../data/projects'
+import SocialEmbed from './SocialEmbed'
 
 import './Portfolio.css'
+import './ProjectDetails.css' // reuses the .project-detail-preview-* styles that SocialEmbed renders with
 
 function PortfolioCardCarousel({ images, categoryLabel }) {
   const [index, setIndex] = useState(0)
@@ -201,6 +203,15 @@ export default function Portfolio() {
                         </span>
                       ))}
                     </div>
+
+                    {/* Live social preview — same SocialEmbed used to work
+                        on the (now removed) separate project page, shown
+                        directly inline in the card instead. */}
+                    {project.social && (
+                      <div className="portfolio-card-social">
+                        <SocialEmbed social={project.social} />
+                      </div>
+                    )}
                   </div>
                 </motion.article>
               ))}

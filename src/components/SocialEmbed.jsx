@@ -37,23 +37,55 @@ function FallbackCard({ message }) {
   )
 }
 
-function ProfileTabs({ profiles, activeIndex, onSelect }) {
+// Arrow + dot slider (no visible names), matching the look of the
+// image carousel already used on the portfolio cards.
+function ProfileSlider({ profiles, activeIndex, onChange }) {
   if (profiles.length <= 1) return null
 
+  const goPrev = (e) => {
+    e.stopPropagation()
+    onChange(activeIndex === 0 ? profiles.length - 1 : activeIndex - 1)
+  }
+
+  const goNext = (e) => {
+    e.stopPropagation()
+    onChange(activeIndex === profiles.length - 1 ? 0 : activeIndex + 1)
+  }
+
   return (
-    <div className="project-detail-preview-tabs">
-      {profiles.map((profile, i) => (
-        <button
-          key={profile.url}
-          type="button"
-          className={`project-detail-preview-tab${
-            i === activeIndex ? ' active' : ''
-          }`}
-          onClick={() => onSelect(i)}
-        >
-          {profile.name}
-        </button>
-      ))}
+    <div className="project-detail-preview-slider-controls">
+      <button
+        type="button"
+        className="portfolio-card-arrow portfolio-card-arrow-left"
+        onClick={goPrev}
+        aria-label="Previous profile"
+      >
+        ‹
+      </button>
+
+      <div className="portfolio-card-dots">
+        {profiles.map((profile, i) => (
+          <button
+            key={profile.url}
+            type="button"
+            className={`portfolio-card-dot${i === activeIndex ? ' active' : ''}`}
+            onClick={(e) => {
+              e.stopPropagation()
+              onChange(i)
+            }}
+            aria-label={`Go to profile ${i + 1}`}
+          />
+        ))}
+      </div>
+
+      <button
+        type="button"
+        className="portfolio-card-arrow portfolio-card-arrow-right"
+        onClick={goNext}
+        aria-label="Next profile"
+      >
+        ›
+      </button>
     </div>
   )
 }
@@ -72,27 +104,23 @@ function InstagramEmbed({ profiles }) {
 
   return (
     <>
-      <ProfileTabs
-        profiles={profiles}
-        activeIndex={activeIndex}
-        onSelect={setActiveIndex}
-      />
-
       <div className="project-detail-preview-frame project-detail-preview-frame-profile">
         <iframe
           key={current.url}
           src={embedSrc}
-          title={`${current.name} Instagram preview`}
+          title="Instagram preview"
           loading="lazy"
           allowTransparency="true"
         />
+
+        <ProfileSlider
+          profiles={profiles}
+          activeIndex={activeIndex}
+          onChange={setActiveIndex}
+        />
       </div>
 
-      <VisitButton
-        platform="instagram"
-        url={current.url}
-        label={`Visit ${current.name}`}
-      />
+      <VisitButton platform="instagram" url={current.url} />
     </>
   )
 }
@@ -119,7 +147,7 @@ function ProfileGrid({ platform, profiles, message }) {
             target="_blank"
             rel="noopener noreferrer"
           >
-            {profile.name} →
+            Visit Page →
           </a>
         ))}
       </div>
@@ -164,8 +192,6 @@ export default function SocialEmbed({ social }) {
   return (
     <section className="project-detail-preview">
       <p className="project-detail-label">Live Profile Preview</p>
-
-      <h2>{PLATFORM_LABELS[platform]}</h2>
 
       {platform === 'instagram' && (
         <InstagramEmbed profiles={social.profiles} />
