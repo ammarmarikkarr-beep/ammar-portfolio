@@ -1,6 +1,6 @@
 import './Tools.css'
 import { motion, AnimatePresence } from 'framer-motion'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 // All icons are local JPEGs at /public/images/icons/{Tool Name}.jpeg —
 // filename matches the tool's display name exactly, including spaces.
@@ -12,21 +12,17 @@ function getIconSrc(name) {
 // the progress-bar fill, so a card's color always reflects skill level
 // rather than the tool's brand color.
 //
-//   95%+ : Green
-//   90%+ : Green
-//   85%+ : Cyan / Teal
-//   80%+ : Blue
-//   75%+ : Purple
-//   70%+ : Orange
-//   <70% : neutral gray fallback (not specified — adjust if you want
-//          a specific color for this range)
+// Bands 70–95 are the ones you specified directly. 50–69 and below-50
+// are extensions of that same scale for tools that sit lower (e.g. a
+// 25% or 60% skill still needs a sensible color).
 function getTierColor(percentage) {
-  if (percentage >= 90) return '#22c55e' // 90–100%: Green
-  if (percentage >= 85) return '#14b8a6' // 85–89%: Cyan / Teal
-  if (percentage >= 80) return '#3b82f6' // 80–84%: Blue
-  if (percentage >= 75) return '#a855f7' // 75–79%: Purple
-  if (percentage >= 70) return '#f97316' // 70–74%: Orange
-  return '#64748b' // below 70%
+  if (percentage >= 90) return '#22c55e' // 90–100: Green
+  if (percentage >= 85) return '#14b8a6' // 85–89: Cyan / Teal
+  if (percentage >= 80) return '#3b82f6' // 80–84: Blue
+  if (percentage >= 75) return '#a855f7' // 75–79: Purple
+  if (percentage >= 70) return '#f97316' // 70–74: Orange
+  if (percentage >= 50) return '#eab308' // 50–69: Yellow (extended)
+  return '#ef4444' // below 50: Red (extended)
 }
 
 const skills = [
@@ -204,12 +200,57 @@ const categories = [
 ]
 
 // How many cards render fully sharp before the preview-blur kicks in
-// (3 columns x 3 rows = 9)
+// (3 columns x 3 rows = 9) — desktop only.
 const SHARP_COUNT = 9
+
+// Mobile "All Skills" view: a much shorter teaser instead of the full
+// list — MOBILE_SHARP_COUNT clear cards, then the rest of
+// MOBILE_TOTAL_COUNT rendered progressively blurred.
+const MOBILE_BREAKPOINT = 650
+const MOBILE_TOTAL_COUNT = 5
+const MOBILE_SHARP_COUNT = 2
 
 // Cap the entrance stagger so long lists don't feel sluggish
 const MAX_STAGGER_INDEX = 8
 const STAGGER_STEP = 0.035
+
+// Fisher–Yates shuffle — used to pick a random 5-tool sample for the
+// mobile "All Skills" teaser.
+function shuffleArray(array) {
+  const result = [...array]
+
+  for (let i = result.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1))
+    ;[result[i], result[j]] = [result[j], result[i]]
+  }
+
+  return result
+}
+
+// Tracks whether the viewport is at/below the mobile breakpoint.
+function useIsMobile(breakpoint) {
+  const [isMobile, setIsMobile] = useState(
+    typeof window !== 'undefined'
+      ? window.innerWidth <= breakpoint
+      : false
+  )
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia(
+      `(max-width: ${breakpoint}px)`
+    )
+
+    const handleChange = (event) => setIsMobile(event.matches)
+
+    setIsMobile(mediaQuery.matches)
+    mediaQuery.addEventListener('change', handleChange)
+
+    return () =>
+      mediaQuery.removeEventListener('change', handleChange)
+  }, [breakpoint])
+
+  return isMobile
+}
 
 function SkillIcon({ skill }) {
   return (
@@ -306,12 +347,26 @@ export default function Tools() {
     useState('All Skills')
 
   const isAllSkills = activeCategory === 'All Skills'
+  const isMobile = useIsMobile(MOBILE_BREAKPOINT)
+
+  // Picked once per visit (not reshuffled on every render/filter
+  // change) so the teaser doesn't jump around while someone's
+  // looking at it.
+  const [mobileTeaserSkills] = useState(() =>
+    shuffleArray(skills).slice(0, MOBILE_TOTAL_COUNT)
+  )
+
+  const showMobileTeaser = isAllSkills && isMobile
 
   const filteredSkills = isAllSkills
     ? skills
     : skills.filter(
         (skill) => skill.category === activeCategory
       )
+
+  const displaySkills = showMobileTeaser
+    ? mobileTeaserSkills
+    : filteredSkills
 
   return (
     <section
@@ -402,10 +457,19 @@ export default function Tools() {
         >
           <motion.div className="tech-skills-grid" layout>
             <AnimatePresence mode="popLayout">
-              {filteredSkills.map((skill, index) => {
+              {displaySkills.map((skill, index) => {
                 let previewLevel = 0
 
-                if (isAllSkills && index >= SHARP_COUNT) {
+                if (showMobileTeaser) {
+                  // Mobile "All Skills": first MOBILE_SHARP_COUNT
+                  // cards are sharp, the rest blur progressively.
+                  if (index >= MOBILE_SHARP_COUNT) {
+                    previewLevel = Math.min(
+                      index - MOBILE_SHARP_COUNT + 1,
+                      3
+                    )
+                  }
+                } else if (isAllSkills && index >= SHARP_COUNT) {
                   previewLevel = Math.min(
                     Math.floor((index - SHARP_COUNT) / 3) + 1,
                     4
