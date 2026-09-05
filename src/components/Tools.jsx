@@ -11,12 +11,22 @@ function getIconSrc(name) {
 // Proficiency tiers — one color function drives both the % label and
 // the progress-bar fill, so a card's color always reflects skill level
 // rather than the tool's brand color.
+//
+//   95%+ : Green
+//   90%+ : Green
+//   85%+ : Cyan / Teal
+//   80%+ : Blue
+//   75%+ : Purple
+//   70%+ : Orange
+//   <70% : neutral gray fallback (not specified — adjust if you want
+//          a specific color for this range)
 function getTierColor(percentage) {
-  if (percentage >= 90) return '#22c55e' // Strong / Expert
-  if (percentage >= 80) return '#4ade80' // Advanced
-  if (percentage >= 60) return '#eab308' // Good
-  if (percentage >= 40) return '#f97316' // Intermediate
-  return '#ef4444' // Basic
+  if (percentage >= 90) return '#22c55e' // 90–100%: Green
+  if (percentage >= 85) return '#14b8a6' // 85–89%: Cyan / Teal
+  if (percentage >= 80) return '#3b82f6' // 80–84%: Blue
+  if (percentage >= 75) return '#a855f7' // 75–79%: Purple
+  if (percentage >= 70) return '#f97316' // 70–74%: Orange
+  return '#64748b' // below 70%
 }
 
 const skills = [
@@ -83,14 +93,14 @@ const skills = [
   },
   {
     name: 'Google Search Console',
-    percentage: 95,
+    percentage: 90,
     category: 'Digital Marketing',
     slug: 'googlesearchconsole',
     color: '#458cf5',
   },
   {
     name: 'Google Tag Manager',
-    percentage: 90,
+    percentage: 85,
     category: 'Digital Marketing',
     slug: 'googletagmanager',
     color: '#246fdb',
