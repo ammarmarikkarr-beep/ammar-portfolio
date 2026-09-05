@@ -1,31 +1,594 @@
-/* Arrow/dot slider row sitting over the Instagram embed iframe,
-   replacing the old named-tab switcher. */
+/* =========================
+   NOTE ON COLORS
+   These values match the blue accent already used in your
+   Work.jsx overlay (rgba(20,40,255,.85)). If your site defines
+   CSS variables (e.g. --bg, --accent) in a global stylesheet,
+   swap the hex/rgba values below for those instead so the page
+   inherits your real theme automatically.
+========================= */
+
+/* =========================
+   HERO
+========================= */
+
+.portfolio-hero {
+  position: relative;
+  overflow: hidden;
+
+  padding: 150px 24px 90px;
+
+  text-align: center;
+
+  background:
+    radial-gradient(
+      circle at 50% 0%,
+      rgba(43, 63, 255, 0.35),
+      transparent 55%
+    ),
+    #05070f;
+}
+
+.portfolio-hero-container {
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.portfolio-eyebrow {
+  margin: 0 0 12px;
+
+  color: #9aa4ff;
+
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.portfolio-hero h1 {
+  margin: 0;
+
+  color: #f5f7ff;
+
+  font-size: clamp(38px, 6vw, 58px);
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+}
+
+.portfolio-hero-subtext {
+  max-width: 520px;
+  margin: 18px auto 0;
+
+  color: rgba(255, 255, 255, 0.72);
+
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.portfolio-title-line {
+  width: 59px;
+  height: 4px;
+
+  margin: 26px auto 0;
+
+  display: block;
+
+  border-radius: 999px;
+
+  background: linear-gradient(90deg, #2b3fff, #6b5bff);
+
+  box-shadow: 0 0 13px rgba(43, 63, 255, 0.4);
+}
+
+/* =========================
+   SECTION / GRID
+========================= */
+
+.portfolio-section {
+  position: relative;
+
+  padding: 90px 24px 60px;
+
+  background: #05070f;
+}
+
+.portfolio-container {
+  max-width: 1160px;
+  margin: 0 auto;
+}
+
+.portfolio-filters {
+  margin-bottom: 46px;
+
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+}
+
+.portfolio-filter {
+  min-width: 95px;
+
+  padding: 10px 19px;
+
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 999px;
+
+  color: rgba(255, 255, 255, 0.75);
+  background: rgba(255, 255, 255, 0.025);
+
+  font: inherit;
+  font-size: 14px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    color 200ms ease,
+    background 200ms ease,
+    border-color 200ms ease,
+    transform 200ms ease,
+    box-shadow 200ms ease;
+}
+
+.portfolio-filter:hover {
+  color: #ffffff;
+  border-color: rgba(107, 91, 255, 0.55);
+  transform: translateY(-2px);
+}
+
+.portfolio-filter.active {
+  color: #ffffff;
+  border-color: rgba(120, 130, 255, 0.7);
+
+  background: linear-gradient(135deg, #2b3fff, #4d3fe0);
+
+  box-shadow: 0 10px 27px rgba(43, 63, 255, 0.3);
+}
+
+.portfolio-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 32px;
+}
+
+/* =========================
+   CARD
+========================= */
+
+.portfolio-card {
+  display: flex;
+  flex-direction: column;
+
+  overflow: hidden;
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+
+  background: #0b1020;
+
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.35);
+
+  transition:
+    transform 300ms ease,
+    box-shadow 300ms ease,
+    border-color 300ms ease;
+}
+
+.portfolio-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(107, 91, 255, 0.35);
+  box-shadow: 0 26px 60px rgba(20, 30, 255, 0.22);
+}
+
+.portfolio-card-media {
+  position: relative;
+
+  height: 220px;
+
+  overflow: hidden;
+}
+
+.portfolio-card-media img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+}
+
+.portfolio-card-badge {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 2;
+
+  padding: 7px 15px;
+
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+
+  color: #ffffff;
+  background: linear-gradient(135deg, #2b3fff, #5540d8);
+
+  box-shadow: 0 8px 24px rgba(20, 30, 190, 0.4);
+
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* =========================
+   CARD IMAGE SLIDER
+   Arrows fade in on hover, dots always visible when there's
+   more than one image. Nothing here opens a bigger view —
+   it's a fixed-size slider inside the card.
+========================= */
+
+.portfolio-card-arrow {
+  position: absolute;
+  top: 50%;
+  z-index: 2;
+
+  transform: translateY(-50%);
+
+  width: 34px;
+  height: 34px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: none;
+  border-radius: 50%;
+
+  color: #ffffff;
+  background: rgba(5, 7, 15, 0.55);
+
+  backdrop-filter: blur(4px);
+
+  font-size: 20px;
+  line-height: 1;
+
+  cursor: pointer;
+
+  opacity: 0;
+
+  transition:
+    opacity 200ms ease,
+    background 200ms ease;
+}
+
+.portfolio-card-media:hover .portfolio-card-arrow {
+  opacity: 1;
+}
+
+.portfolio-card-arrow-left {
+  left: 10px;
+}
+
+.portfolio-card-arrow-right {
+  right: 10px;
+}
+
+.portfolio-card-arrow:hover {
+  background: rgba(43, 63, 255, 0.85);
+}
+
+.portfolio-card-dots {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  z-index: 2;
+
+  transform: translateX(-50%);
+
+  display: flex;
+  gap: 6px;
+}
+
+.portfolio-card-dot {
+  width: 6px;
+  height: 6px;
+
+  padding: 0;
+
+  border: none;
+  border-radius: 999px;
+
+  background: rgba(255, 255, 255, 0.45);
+
+  cursor: pointer;
+
+  transition:
+    background 200ms ease,
+    width 200ms ease;
+}
+
+.portfolio-card-dot.active {
+  width: 16px;
+
+  background: #ffffff;
+}
+
+.portfolio-card-body {
+  display: flex;
+  flex-direction: column;
+
+  padding: 26px 26px 28px;
+}
+
+.portfolio-card-body h3 {
+  margin: 0;
+
+  color: #f5f7ff;
+
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.portfolio-card-subtitle {
+  margin: 6px 0 18px;
+
+  color: #9aa4ff;
+
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.portfolio-card-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+
+  margin-bottom: 18px;
+  padding-bottom: 18px;
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.portfolio-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.portfolio-stat-label {
+  color: rgba(255, 255, 255, 0.5);
+
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.portfolio-stat-value {
+  color: #b8c0ff;
+
+  font-size: 16px;
+  font-weight: 800;
+}
+
+.portfolio-card-description {
+  margin: 0 0 18px;
+
+  color: rgba(255, 255, 255, 0.68);
+
+  font-size: 14.5px;
+  line-height: 1.65;
+}
+
+.portfolio-card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.portfolio-tag {
+  padding: 6px 13px;
+
+  border: 1px solid rgba(154, 164, 255, 0.25);
+  border-radius: 999px;
+
+  color: #b8c0ff;
+  background: rgba(107, 91, 255, 0.08);
+
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* =========================
+   FEATURED / SINGLE-CARD-IN-CATEGORY
+========================= */
+
+.portfolio-grid .portfolio-card:only-child {
+  grid-column: 1 / -1;
+}
+
+/* =========================
+   CLOSING CTA
+========================= */
+
+.portfolio-cta {
+  max-width: 640px;
+  margin: 90px auto 0;
+
+  padding: 0 24px;
+
+  text-align: center;
+}
+
+.portfolio-cta h2 {
+  margin: 0 0 12px;
+
+  color: #f5f7ff;
+
+  font-size: clamp(28px, 4vw, 38px);
+  font-weight: 800;
+}
+
+.portfolio-cta p {
+  margin: 0 0 26px;
+
+  color: rgba(255, 255, 255, 0.68);
+
+  font-size: 15.5px;
+  line-height: 1.6;
+}
+
+.portfolio-cta-button {
+  display: inline-flex;
+  align-items: center;
+
+  padding: 15px 29px;
+
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 14px;
+
+  color: #ffffff;
+  background: linear-gradient(135deg, #2b3fff, #5043df);
+
+  box-shadow: 0 15px 37px rgba(20, 30, 205, 0.33);
+
+  font-size: 15px;
+  font-weight: 700;
+  text-decoration: none;
+
+  transition:
+    transform 220ms ease,
+    box-shadow 220ms ease;
+}
+
+.portfolio-cta-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 20px 47px rgba(20, 30, 205, 0.44);
+}
+
+/* =========================
+   TABLET
+========================= */
+
+@media (max-width: 1000px) {
+  .portfolio-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
+  }
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 650px) {
+  .portfolio-hero {
+    padding: 120px 18px 60px;
+  }
+
+  .portfolio-section {
+    padding: 60px 18px 40px;
+  }
+
+  .portfolio-filters {
+    margin-bottom: 32px;
+    gap: 8px;
+  }
+
+  .portfolio-filter {
+    min-width: 0;
+    padding: 9px 13px;
+    font-size: 12px;
+  }
+
+  .portfolio-grid {
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+
+  .portfolio-card-media {
+    height: 190px;
+  }
+
+  .portfolio-card-body {
+    padding: 22px 20px 24px;
+  }
+
+  .portfolio-card-stats {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+
+  .portfolio-stat-value {
+    font-size: 14px;
+  }
+}
+
+/* =========================
+   REDUCED MOTION
+========================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .portfolio-card,
+  .portfolio-card-media img,
+  .portfolio-filter,
+  .portfolio-cta-button {
+    transition: none;
+  }
+}
+
+/* =========================
+   SOCIAL EMBED INSIDE GRID CARD
+   Overrides the .project-detail-preview-* sizing (built for a
+   full-width detail page) so it fits naturally inside a
+   .portfolio-card, which is much narrower.
+========================= */
+
+.portfolio-card-social {
+  margin-top: 18px;
+}
+
+.portfolio-card-social .project-detail-preview {
+  width: 100%;
+  margin: 0;
+  padding: 18px;
+  border-radius: 16px;
+}
+
+.portfolio-card-social .project-detail-preview h2 {
+  font-size: 16px;
+  margin: 4px 0 14px;
+}
+
+.portfolio-card-social .project-detail-preview-frame-profile {
+  height: 320px;
+}
+
+.portfolio-card-social .project-detail-preview-frame-video {
+  aspect-ratio: 16 / 9;
+}
+
+.portfolio-card-social .project-detail-preview-grid {
+  grid-template-columns: 1fr;
+  gap: 8px;
+}
+
+.portfolio-card-social .project-detail-preview-visit {
+  margin-top: 16px;
+  padding: 11px 20px;
+  font-size: 13px;
+}
+
+/* Arrow + dot slider over the Instagram embed, matching the existing
+   image-carousel arrows exactly (hidden until hover, same position). */
 .project-detail-preview-frame-profile {
   position: relative;
 }
 
-.project-detail-preview-slider-controls {
-  position: absolute;
-  bottom: 10px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 3;
-
-  display: flex;
-  align-items: center;
-  gap: 10px;
-
-  padding: 6px 10px;
-  border-radius: 999px;
-  background: rgba(5, 7, 15, 0.55);
-  backdrop-filter: blur(4px);
+.project-detail-preview-frame-profile:hover .portfolio-card-arrow {
+  opacity: 1;
 }
 
-.project-detail-preview-slider-controls .portfolio-card-arrow {
-  position: static;
-  transform: none;
-  opacity: 1;
-  width: 26px;
-  height: 26px;
-  font-size: 15px;
+.project-detail-preview-frame-profile .portfolio-card-dots {
+  z-index: 3;
 }

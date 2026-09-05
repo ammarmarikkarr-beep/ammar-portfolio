@@ -37,8 +37,10 @@ function FallbackCard({ message }) {
   )
 }
 
-// Arrow + dot slider (no visible names), matching the look of the
-// image carousel already used on the portfolio cards.
+// Arrow + dot slider using the EXACT same classes/positions as the
+// image carousel already on the portfolio cards (arrows on the
+// left/right edges, hidden until hover; dots centered at the bottom)
+// — no separate pill bar, no visible names.
 function ProfileSlider({ profiles, activeIndex, onChange }) {
   if (profiles.length <= 1) return null
 
@@ -53,7 +55,7 @@ function ProfileSlider({ profiles, activeIndex, onChange }) {
   }
 
   return (
-    <div className="project-detail-preview-slider-controls">
+    <>
       <button
         type="button"
         className="portfolio-card-arrow portfolio-card-arrow-left"
@@ -61,6 +63,15 @@ function ProfileSlider({ profiles, activeIndex, onChange }) {
         aria-label="Previous profile"
       >
         ‹
+      </button>
+
+      <button
+        type="button"
+        className="portfolio-card-arrow portfolio-card-arrow-right"
+        onClick={goNext}
+        aria-label="Next profile"
+      >
+        ›
       </button>
 
       <div className="portfolio-card-dots">
@@ -77,16 +88,7 @@ function ProfileSlider({ profiles, activeIndex, onChange }) {
           />
         ))}
       </div>
-
-      <button
-        type="button"
-        className="portfolio-card-arrow portfolio-card-arrow-right"
-        onClick={goNext}
-        aria-label="Next profile"
-      >
-        ›
-      </button>
-    </div>
+    </>
   )
 }
 
