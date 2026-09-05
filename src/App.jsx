@@ -14,7 +14,7 @@ import Tools from './components/Tools'
 import Contact from './components/Contact'
 import Footer from './components/Footer'
 import Portfolio from "./components/Portfolio";
-import ScrollToTopButton from './components/Scrolltotopbutton'
+import ScrollToTopButton from './components/ScrollToTopButton'
 
 function ScrollToTop() {
   const { pathname } = useLocation()
