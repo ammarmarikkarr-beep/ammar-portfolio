@@ -29,7 +29,7 @@ export const categories = [
   PLACEHOLDER CONTENT NOTICE:
   `stats` values (percentages, counts, timelines) are clearly-marked
   placeholders — swap in your real numbers before this goes live.
-  `gallery` holds the 2–3 images that slide inside each card — drop
+  `gallery` holds the 2-3 images that slide inside each card — drop
   matching files into public/images/portfolio/... or update the paths.
 */
 
@@ -261,9 +261,9 @@ export const projects = [
   {
     id: 6,
     featured: true,
+    slug: 'instagram-growth-strategy',
     title: 'Instagram Growth Strategy',
     subtitle: 'Social Media Marketing',
-    link: 'https://www.instagram.com/universaltelecomfzco/',
     category: 'social-media',
     categoryLabel: 'Social Media',
     image: '/images/portfolio/SocialMedia/Instagram.png',
@@ -295,6 +295,28 @@ export const projects = [
       'Canva',
       'CapCut',
     ],
+
+    // Instagram's public oEmbed API needs a Meta access token now, so a
+    // true auto-updating feed isn't available without your own API app.
+    // The most reliable no-login option is Instagram's own compact
+    // profile-preview iframe, shown per-brand with a tab switcher below.
+    social: {
+      platform: 'instagram',
+      profiles: [
+        {
+          name: 'Universal Telecom FZCO',
+          url: 'https://www.instagram.com/universaltelecomfzco/',
+        },
+        {
+          name: 'Wijitha Group',
+          url: 'https://www.instagram.com/wijithagroup/',
+        },
+        {
+          name: 'Jayasiri Motor Parts',
+          url: 'https://www.instagram.com/jayasiri_motor_parts/',
+        },
+      ],
+    },
 
     gallery: [
       '/images/portfolio/SocialMedia/Instagram.png',
@@ -340,6 +362,27 @@ export const projects = [
       'Buffer',
     ],
 
+    // LinkedIn has no public feed-embed for company pages at all — this
+    // is a hard platform limit, not something code can work around.
+    // Each brand gets its own card + button that opens the real page.
+    social: {
+      platform: 'linkedin',
+      profiles: [
+        {
+          name: 'Universal Telecom FZCO',
+          url: 'https://www.linkedin.com/company/universal-telecom-fzco/',
+        },
+        {
+          name: 'Kiota Architectural Studio',
+          url: 'https://www.linkedin.com/company/kiota-architectural-studio/',
+        },
+        {
+          name: 'Comaxx Co',
+          url: 'https://www.linkedin.com/company/comaxxco/',
+        },
+      ],
+    },
+
     gallery: [
       '/images/portfolio/SocialMedia/LinkedIn.png',
       '/images/portfolio/SocialMedia/LinkedIn-2.png',
@@ -384,6 +427,28 @@ export const projects = [
       'TikTok Analytics',
     ],
 
+    // TikTok's official embed only supports one video at a time — there
+    // is no profile-feed embed. Each brand gets a card + button here.
+    // To feature a live video for a brand, add a `videoUrl` field to
+    // that profile object (e.g. videoUrl: 'https://www.tiktok.com/...').
+    social: {
+      platform: 'tiktok',
+      profiles: [
+        {
+          name: 'Universal Telecom FZCO',
+          url: 'https://www.tiktok.com/@universaltelecomfzco',
+        },
+        {
+          name: 'Wijitha Group',
+          url: 'https://www.tiktok.com/@wijithagroup.com',
+        },
+        {
+          name: 'Kiota',
+          url: 'https://www.tiktok.com/@kiota.lk',
+        },
+      ],
+    },
+
     gallery: [
       '/images/portfolio/SocialMedia/TikTok.png',
       '/images/portfolio/SocialMedia/TikTok-2.png',
@@ -427,6 +492,15 @@ export const projects = [
       'CapCut',
       'Google Trends',
     ],
+
+    // Real auto-updating embed: this shows the channel's "uploads"
+    // playlist, so the newest video is always first with zero
+    // manual updates needed.
+    social: {
+      platform: 'youtube',
+      profileUrl: 'https://www.youtube.com/@universaltelecomfzco',
+      channelId: 'UCitgF1HJhY9AkPhpHRqtxhQ',
+    },
 
     gallery: [
       '/images/portfolio/SocialMedia/YouTube.png',
@@ -475,7 +549,7 @@ export const projects = [
       'Google PageSpeed Insights',
     ],
 
-    // TODO: add 2–3 real screenshots here for the card slider
+    // TODO: add 2-3 real screenshots here for the card slider
     gallery: [
       '/images/portfolio/WebDevelopment/WebDevelopment.png',
       '/images/portfolio/WebDevelopment/WebDevelopment-2.png',
@@ -523,7 +597,7 @@ export const projects = [
       'Figma',
     ],
 
-    // TODO: add 2–3 real screenshots here for the card slider
+    // TODO: add 2-3 real screenshots here for the card slider
     gallery: [
       '/images/portfolio/GraphicDesign/GraphicDesign.png',
       '/images/portfolio/GraphicDesign/GraphicDesign-2.png',

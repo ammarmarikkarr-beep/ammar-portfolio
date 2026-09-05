@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 
 import { projects } from '../data/projects'
+import SocialEmbed from './SocialEmbed'
 
 import './ProjectDetails.css'
 
@@ -128,11 +129,27 @@ export default function ProjectDetails() {
         <p className="project-detail-summary">{project.summary}</p>
       </motion.header>
 
+      {project.social && (
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.1 }}
+        >
+          <SocialEmbed social={project.social} />
+        </motion.div>
+      )}
+
       <motion.section
         initial={{ opacity: 0, scale: 0.98 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.7, delay: 0.15 }}
       >
+        {project.social && (
+          <p className="project-detail-label project-detail-gallery-label">
+            Portfolio Preview
+          </p>
+        )}
+
         <ProjectCarousel
           images={project.gallery}
           title={project.title}

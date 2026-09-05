@@ -119,6 +119,199 @@
 }
 
 /* =========================
+   SOCIAL EMBED
+========================= */
+
+.project-detail-preview {
+  width: min(720px, 100%);
+
+  margin: 0 auto 40px;
+
+  padding: 32px;
+
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 22px;
+
+  background: rgba(255, 255, 255, 0.045);
+
+  text-align: center;
+}
+
+.project-detail-preview h2 {
+  margin: 8px 0 22px;
+
+  font-size: clamp(24px, 3vw, 32px);
+
+  letter-spacing: -0.03em;
+}
+
+.project-detail-preview-tabs {
+  margin-bottom: 22px;
+
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+.project-detail-preview-tab {
+  padding: 9px 17px;
+
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 999px;
+
+  color: rgba(255, 255, 255, 0.75);
+  background: rgba(255, 255, 255, 0.025);
+
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    color 200ms ease,
+    background 200ms ease,
+    border-color 200ms ease;
+}
+
+.project-detail-preview-tab:hover {
+  color: #ffffff;
+  border-color: rgba(107, 91, 255, 0.55);
+}
+
+.project-detail-preview-tab.active {
+  color: #ffffff;
+  border-color: rgba(120, 130, 255, 0.7);
+
+  background: linear-gradient(135deg, #6558ed, #5044d7);
+}
+
+.project-detail-preview-frame {
+  overflow: hidden;
+
+  border-radius: 16px;
+
+  background: #ffffff;
+}
+
+.project-detail-preview-frame-video {
+  position: relative;
+
+  width: 100%;
+  aspect-ratio: 16 / 9;
+}
+
+.project-detail-preview-frame-video iframe {
+  position: absolute;
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  border: 0;
+}
+
+.project-detail-preview-frame-profile {
+  height: 500px;
+}
+
+.project-detail-preview-frame-profile iframe {
+  width: 100%;
+  height: 100%;
+
+  border: 0;
+}
+
+.project-detail-preview-fallback {
+  padding: 40px 24px;
+
+  border: 1px dashed rgba(255, 255, 255, 0.16);
+  border-radius: 16px;
+
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.project-detail-preview-fallback p {
+  margin: 0;
+
+  color: rgba(255, 255, 255, 0.6);
+
+  font-size: 14.5px;
+  line-height: 1.65;
+}
+
+.project-detail-preview-grid {
+  margin-top: 22px;
+
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+}
+
+.project-detail-preview-grid-item {
+  padding: 14px 18px;
+
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 14px;
+
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.04);
+
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+
+  transition:
+    transform 200ms ease,
+    border-color 200ms ease,
+    background 200ms ease;
+}
+
+.project-detail-preview-grid-item:hover {
+  transform: translateY(-2px);
+  border-color: rgba(107, 91, 255, 0.5);
+  background: rgba(107, 91, 255, 0.1);
+}
+
+.project-detail-preview-visit {
+  margin-top: 24px;
+
+  padding: 13px 26px;
+
+  display: inline-flex;
+  align-items: center;
+
+  border-radius: 12px;
+
+  color: #ffffff;
+  background: linear-gradient(135deg, #6558ed, #5044d7);
+
+  box-shadow: 0 12px 30px rgba(50, 40, 220, 0.32);
+
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+
+  transition:
+    transform 200ms ease,
+    box-shadow 200ms ease;
+}
+
+.project-detail-preview-visit:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 38px rgba(50, 40, 220, 0.42);
+}
+
+.project-detail-gallery-label {
+  width: min(820px, 100%);
+
+  margin: 0 auto 18px;
+
+  text-align: center;
+}
+
+/* =========================
    IMAGE CAROUSEL
    Fixed, moderate size (16:10, object-fit: cover) instead of
    a huge letterboxed full-height screenshot on a white panel.
@@ -452,6 +645,14 @@
 }
 
 @media (max-width: 650px) {
+  .project-detail-preview {
+    padding: 22px 16px;
+  }
+
+  .project-detail-preview-frame-profile {
+    height: 400px;
+  }
+
   .project-detail-carousel {
     gap: 10px;
   }
