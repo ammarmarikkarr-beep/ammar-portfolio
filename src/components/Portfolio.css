@@ -592,3 +592,33 @@
 .project-detail-preview-frame-profile .portfolio-card-dots {
   z-index: 3;
 }
+
+/* Hover-reveal "Visit Profile" overlay on the Instagram embed frame,
+   replacing the static button that used to sit below it. */
+.project-detail-preview-visit-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #ffffff;
+  background: rgba(5, 7, 15, 0.55);
+  backdrop-filter: blur(2px);
+
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+
+  opacity: 0;
+  pointer-events: none;
+
+  transition: opacity 200ms ease;
+}
+
+.project-detail-preview-frame-profile:hover .project-detail-preview-visit-overlay {
+  opacity: 1;
+  pointer-events: auto;
+}

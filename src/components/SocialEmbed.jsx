@@ -14,7 +14,7 @@ function isPlaceholder(value) {
   return !value || value.startsWith('PASTE_')
 }
 
-function VisitButton({ platform, url, label }) {
+function VisitButton({ url, label }) {
   if (isPlaceholder(url)) return null
 
   return (
@@ -24,7 +24,23 @@ function VisitButton({ platform, url, label }) {
       target="_blank"
       rel="noopener noreferrer"
     >
-      {label || `Visit ${PLATFORM_LABELS[platform]}`} →
+      {label || 'Visit Channel'} →
+    </a>
+  )
+}
+
+function VisitOverlay({ url, label }) {
+  if (isPlaceholder(url)) return null
+
+  return (
+    <a
+      className="project-detail-preview-visit-overlay"
+      href={url}
+      target="_blank"
+      rel="noopener noreferrer"
+      onClick={(e) => e.stopPropagation()}
+    >
+      {label || 'Visit Profile'} →
     </a>
   )
 }
@@ -115,14 +131,14 @@ function InstagramEmbed({ profiles }) {
           allowTransparency="true"
         />
 
+        <VisitOverlay url={current.url} />
+
         <ProfileSlider
           profiles={profiles}
           activeIndex={activeIndex}
           onChange={setActiveIndex}
         />
       </div>
-
-      <VisitButton platform="instagram" url={current.url} />
     </>
   )
 }
@@ -181,7 +197,7 @@ function YouTubeEmbed({ channelId, profileUrl }) {
         />
       </div>
 
-      <VisitButton platform="youtube" url={profileUrl} />
+      <VisitButton url={profileUrl} />
     </>
   )
 }
