@@ -25,13 +25,13 @@ export const categories = [
   },
 ]
 
-// NOTE: the 6 projects marked `featured: true` are the ones your
-// homepage "Work" section should pull from — one per category, using
-// the exact titles/summaries/slugs you gave me. `web-development` and
-// `graphic-design` are brand-new hub entries (there was no single
-// project representing those categories before). Swap the `image` /
-// `gallery` placeholder paths on those two once you have real
-// screenshots — everything else about them is real, wired data.
+/*
+  PLACEHOLDER CONTENT NOTICE:
+  `stats` values (percentages, counts, timelines) are clearly-marked
+  placeholders — swap in your real numbers before this goes live.
+  `gallery` holds the 2–3 images that slide inside each card — drop
+  matching files into public/images/portfolio/... or update the paths.
+*/
 
 export const projects = [
 {
@@ -50,6 +50,14 @@ export const projects = [
 
   overview:
     'This project includes backlink research, competitor analysis and link-building opportunities.',
+
+  stats: [
+    { label: 'Organic Traffic', value: 'Add %' },
+    { label: 'Keywords Ranked', value: 'Add #' },
+    { label: 'Timeline', value: 'Add mo' },
+  ],
+
+  tags: ['On-Page SEO', 'Technical SEO', 'Link Building'],
 
   services: [
     'Competitor backlink research',
@@ -86,6 +94,14 @@ export const projects = [
 
   overview:
     'The audit was created to identify SEO problems and provide prioritized recommendations.',
+
+  stats: [
+    { label: 'Issues Found', value: 'Add #' },
+    { label: 'Fixes Implemented', value: 'Add #' },
+    { label: 'Traffic Gain', value: 'Add %' },
+  ],
+
+  tags: ['SEO Audit', 'Technical Analysis', 'Recommendations'],
 
   services: [
     'Website health analysis',
@@ -124,6 +140,14 @@ export const projects = [
     overview:
       'This project shows the process of organizing paid-search campaigns and improving them using performance data.',
 
+    stats: [
+      { label: 'ROAS', value: 'Add x' },
+      { label: 'Leads Generated', value: 'Add #' },
+      { label: 'CPA Reduced', value: 'Add %' },
+    ],
+
+    tags: ['Search Ads', 'A/B Testing', 'Bid Strategy'],
+
     services: [
       'Keyword planning',
       'Campaign structure',
@@ -161,6 +185,14 @@ export const projects = [
     overview:
       'This project presents how campaign data can be used to improve targeting, creative performance and budget allocation.',
 
+    stats: [
+      { label: 'CPA Reduction', value: 'Add %' },
+      { label: 'ROAS', value: 'Add x' },
+      { label: 'Conversions', value: 'Add #' },
+    ],
+
+    tags: ['Meta Ads', 'Audience Targeting', 'Creative Testing'],
+
     services: [
       'Audience research',
       'Campaign setup',
@@ -196,6 +228,14 @@ export const projects = [
 
     overview:
       'The project focuses on creating advertising that matches the platform while maintaining clear campaign objectives.',
+
+    stats: [
+      { label: 'Cost Per Result', value: 'Add %' },
+      { label: 'Campaign ROAS', value: 'Add x' },
+      { label: 'Results Generated', value: 'Add #' },
+    ],
+
+    tags: ['TikTok Ads', 'Video Creative', 'Trend Optimization'],
 
     services: [
       'Campaign planning',
@@ -234,6 +274,14 @@ export const projects = [
     overview:
       'This project shows how consistent content and audience-focused planning can improve a brand\u2019s social presence across platforms.',
 
+    stats: [
+      { label: 'Followers Growth', value: 'Add #' },
+      { label: 'Engagement Rate', value: 'Add %' },
+      { label: 'Timeline', value: 'Add mo' },
+    ],
+
+    tags: ['Content Strategy', 'Community Management', 'Influencer Outreach'],
+
     services: [
       'Profile optimization',
       'Content planning',
@@ -269,6 +317,14 @@ export const projects = [
 
     overview:
       'The strategy combines company-page optimization, industry-focused content and consistent engagement.',
+
+    stats: [
+      { label: 'Network Growth', value: 'Add %' },
+      { label: 'Monthly Views', value: 'Add #' },
+      { label: 'Lead Quality', value: 'Add %' },
+    ],
+
+    tags: ['B2B Marketing', 'Thought Leadership', 'Lead Generation'],
 
     services: [
       'LinkedIn page review',
@@ -306,6 +362,14 @@ export const projects = [
     overview:
       'This project demonstrates how content ideas can be adapted into consistent, platform-appropriate videos.',
 
+    stats: [
+      { label: 'Followers', value: 'Add #' },
+      { label: 'Engagement Rate', value: 'Add %' },
+      { label: 'Video Views', value: 'Add #' },
+    ],
+
+    tags: ['Short-Form Video', 'Trend Leveraging', 'Viral Content'],
+
     services: [
       'Content research',
       'Video planning',
@@ -341,6 +405,14 @@ export const projects = [
 
     overview:
       'The project focuses on creating a consistent channel structure that makes content easier to discover and watch.',
+
+    stats: [
+      { label: 'Subscribers', value: 'Add %' },
+      { label: 'Monthly Views', value: 'Add #' },
+      { label: 'Avg Watch Time', value: 'Add min' },
+    ],
+
+    tags: ['Video Production', 'Channel Optimization', 'Content Series'],
 
     services: [
       'Channel review',
@@ -378,6 +450,14 @@ export const projects = [
     overview:
       'This project demonstrates how content can be organized around audience questions and marketing objectives.',
 
+    stats: [
+      { label: 'Blog Posts', value: 'Add #' },
+      { label: 'Monthly Reach', value: 'Add #' },
+      { label: 'Topics Covered', value: 'Add #' },
+    ],
+
+    tags: ['Blog Strategy', 'SEO Writing', 'Editorial Calendar'],
+
     services: [
       'Topic research',
       'Editorial planning',
@@ -413,6 +493,14 @@ export const projects = [
 
     overview:
       'The project presents how email content can be organized for different audience groups and campaign stages.',
+
+    stats: [
+      { label: 'Open Rate', value: 'Add %' },
+      { label: 'Click Rate', value: 'Add %' },
+      { label: 'ROI', value: 'Add %' },
+    ],
+
+    tags: ['Email Automation', 'Segmentation', 'Personalization'],
 
     services: [
       'Campaign planning',
@@ -453,6 +541,14 @@ export const projects = [
     overview:
       'This project covers the end-to-end process of planning, designing and building fast, responsive websites for service-based businesses — from wireframes to a live, conversion-focused site.',
 
+    stats: [
+      { label: 'Pages Built', value: 'Add #' },
+      { label: 'Load Time', value: 'Add s' },
+      { label: 'Timeline', value: 'Add wks' },
+    ],
+
+    tags: ['Responsive Design', 'UX/UI', 'Performance'],
+
     services: [
       'Website planning & wireframing',
       'Responsive front-end development',
@@ -467,7 +563,7 @@ export const projects = [
       'Google PageSpeed Insights',
     ],
 
-    // TODO: add 2–3 real screenshots here for the detail-page carousel
+    // TODO: add 2–3 real screenshots here for the card slider
     gallery: [
       '/images/portfolio/WebDevelopment/WebDevelopment.png',
       '/images/portfolio/WebDevelopment/WebDevelopment-2.png',
@@ -489,6 +585,14 @@ export const projects = [
 
     overview:
       'This project demonstrates how a central visual identity can be applied across practical brand materials.',
+
+    stats: [
+      { label: 'Logos Designed', value: 'Add #' },
+      { label: 'Industries', value: 'Add #' },
+      { label: 'Client Approval', value: 'Add %' },
+    ],
+
+    tags: ['Logo Design', 'Brand Mark', 'Visual Identity'],
 
     services: [
       'Logo concept development',
@@ -526,6 +630,14 @@ export const projects = [
 
     overview:
       'This project presents the rules and visual components needed to keep a brand consistent across platforms.',
+
+    stats: [
+      { label: 'Design Elements', value: 'Add #' },
+      { label: 'Brand Touchpoints', value: 'Multi-platform' },
+      { label: 'Client Satisfaction', value: 'Add %' },
+    ],
+
+    tags: ['Logo Redesign', 'Brand Guidelines', 'Visual Systems'],
 
     services: [
       'Brand identity review',
@@ -566,6 +678,14 @@ export const projects = [
     overview:
       'This project rounds up visual design work produced across brands and campaigns — social creative, promotional banners, brochures and other digital marketing assets built to a consistent visual standard.',
 
+    stats: [
+      { label: 'Assets Delivered', value: 'Add #' },
+      { label: 'Campaigns Supported', value: 'Add #' },
+      { label: 'Client Approval', value: 'Add %' },
+    ],
+
+    tags: ['Social Creative', 'Banner Design', 'Brochure Design'],
+
     services: [
       'Social media creative',
       'Promotional banner design',
@@ -580,7 +700,7 @@ export const projects = [
       'Figma',
     ],
 
-    // TODO: add 2–3 real screenshots here for the detail-page carousel
+    // TODO: add 2–3 real screenshots here for the card slider
     gallery: [
       '/images/portfolio/GraphicDesign/GraphicDesign.png',
       '/images/portfolio/GraphicDesign/GraphicDesign-2.png',

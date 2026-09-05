@@ -1,19 +1,83 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Link, useSearchParams } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 import { categories, projects } from '../data/projects'
 
 import './Portfolio.css'
 
+function PortfolioCardCarousel({ images, categoryLabel }) {
+  const [index, setIndex] = useState(0)
+  const hasMultiple = images.length > 1
+
+  const goPrev = (e) => {
+    e.stopPropagation()
+    setIndex((i) => (i === 0 ? images.length - 1 : i - 1))
+  }
+
+  const goNext = (e) => {
+    e.stopPropagation()
+    setIndex((i) => (i === images.length - 1 ? 0 : i + 1))
+  }
+
+  return (
+    <div className="portfolio-card-media">
+      <span className="portfolio-card-badge">{categoryLabel}</span>
+
+      <AnimatePresence mode="wait">
+        <motion.img
+          key={images[index]}
+          src={images[index]}
+          alt=""
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.25 }}
+        />
+      </AnimatePresence>
+
+      {hasMultiple && (
+        <>
+          <button
+            type="button"
+            className="portfolio-card-arrow portfolio-card-arrow-left"
+            onClick={goPrev}
+            aria-label="Previous image"
+          >
+            ‹
+          </button>
+
+          <button
+            type="button"
+            className="portfolio-card-arrow portfolio-card-arrow-right"
+            onClick={goNext}
+            aria-label="Next image"
+          >
+            ›
+          </button>
+
+          <div className="portfolio-card-dots">
+            {images.map((img, i) => (
+              <button
+                key={img}
+                type="button"
+                className={`portfolio-card-dot${i === index ? ' active' : ''}`}
+                onClick={(e) => {
+                  e.stopPropagation()
+                  setIndex(i)
+                }}
+                aria-label={`Go to image ${i + 1}`}
+              />
+            ))}
+          </div>
+        </>
+      )}
+    </div>
+  )
+}
+
 export default function Portfolio() {
-  const [searchParams] = useSearchParams()
-
-  // Lets links like /portfolio?category=seo (used by the
-  // "Back to SEO" link on a project detail page) preselect a filter.
-  const initialCategory = searchParams.get('category') || 'all'
-
-  const [activeFilter, setActiveFilter] = useState(initialCategory)
+  const [activeFilter, setActiveFilter] = useState('all')
 
   const visibleProjects =
     activeFilter === 'all'
@@ -91,12 +155,10 @@ export default function Portfolio() {
                   viewport={{ once: true }}
                   transition={{ duration: 0.4, delay: index * 0.05 }}
                 >
-                  <div className="portfolio-card-media">
-                    <img src={project.image} alt={project.title} />
-                    <span className="portfolio-card-badge">
-                      {project.categoryLabel}
-                    </span>
-                  </div>
+                  <PortfolioCardCarousel
+                    images={project.gallery}
+                    categoryLabel={project.categoryLabel}
+                  />
 
                   <div className="portfolio-card-body">
                     <h3>{project.title}</h3>
@@ -104,16 +166,30 @@ export default function Portfolio() {
                       {project.subtitle}
                     </p>
 
+                    <div className="portfolio-card-stats">
+                      {project.stats.map((stat) => (
+                        <div className="portfolio-stat" key={stat.label}>
+                          <span className="portfolio-stat-label">
+                            {stat.label}
+                          </span>
+                          <span className="portfolio-stat-value">
+                            {stat.value}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+
                     <p className="portfolio-card-description">
                       {project.summary}
                     </p>
 
-                    <Link
-                      className="portfolio-card-cta"
-                      to={`/portfolio/${project.slug}`}
-                    >
-                      View Project →
-                    </Link>
+                    <div className="portfolio-card-tags">
+                      {project.tags.map((tag) => (
+                        <span className="portfolio-tag" key={tag}>
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
                   </div>
                 </motion.article>
               ))}

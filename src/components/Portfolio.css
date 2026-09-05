@@ -194,18 +194,13 @@
   height: 100%;
 
   object-fit: cover;
-
-  transition: transform 500ms ease;
-}
-
-.portfolio-card:hover .portfolio-card-media img {
-  transform: scale(1.06);
 }
 
 .portfolio-card-badge {
   position: absolute;
   top: 14px;
   right: 14px;
+  z-index: 2;
 
   padding: 7px 15px;
 
@@ -221,6 +216,99 @@
   font-weight: 800;
   letter-spacing: 0.04em;
   text-transform: uppercase;
+}
+
+/* =========================
+   CARD IMAGE SLIDER
+   Arrows fade in on hover, dots always visible when there's
+   more than one image. Nothing here opens a bigger view —
+   it's a fixed-size slider inside the card.
+========================= */
+
+.portfolio-card-arrow {
+  position: absolute;
+  top: 50%;
+  z-index: 2;
+
+  transform: translateY(-50%);
+
+  width: 34px;
+  height: 34px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: none;
+  border-radius: 50%;
+
+  color: #ffffff;
+  background: rgba(5, 7, 15, 0.55);
+
+  backdrop-filter: blur(4px);
+
+  font-size: 20px;
+  line-height: 1;
+
+  cursor: pointer;
+
+  opacity: 0;
+
+  transition:
+    opacity 200ms ease,
+    background 200ms ease;
+}
+
+.portfolio-card-media:hover .portfolio-card-arrow {
+  opacity: 1;
+}
+
+.portfolio-card-arrow-left {
+  left: 10px;
+}
+
+.portfolio-card-arrow-right {
+  right: 10px;
+}
+
+.portfolio-card-arrow:hover {
+  background: rgba(43, 63, 255, 0.85);
+}
+
+.portfolio-card-dots {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  z-index: 2;
+
+  transform: translateX(-50%);
+
+  display: flex;
+  gap: 6px;
+}
+
+.portfolio-card-dot {
+  width: 6px;
+  height: 6px;
+
+  padding: 0;
+
+  border: none;
+  border-radius: 999px;
+
+  background: rgba(255, 255, 255, 0.45);
+
+  cursor: pointer;
+
+  transition:
+    background 200ms ease,
+    width 200ms ease;
+}
+
+.portfolio-card-dot.active {
+  width: 16px;
+
+  background: #ffffff;
 }
 
 .portfolio-card-body {
@@ -296,8 +384,6 @@
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-
-  margin-bottom: 20px;
 }
 
 .portfolio-tag {
@@ -311,22 +397,6 @@
 
   font-size: 12px;
   font-weight: 600;
-}
-
-.portfolio-card-cta {
-  margin-top: auto;
-
-  color: #ffffff;
-
-  font-size: 14px;
-  font-weight: 700;
-  text-decoration: none;
-
-  transition: opacity 200ms ease;
-}
-
-.portfolio-card-cta:hover {
-  opacity: 0.75;
 }
 
 /* =========================

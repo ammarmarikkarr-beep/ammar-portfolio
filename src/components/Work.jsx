@@ -1,60 +1,27 @@
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 
+import { projects } from '../data/projects'
+
 import './Work.css'
 
-
-const works = [
-
-{
-image:"/images/portfolio/SEO/Backlink.png",
-slug:"full-stack-seo",
-
-
-
-title:"Full Stack SEO",
-
-description:
-"Comprehensive SEO strategy covering on-page, off-page, and technical optimization across fashion, events, jewellery, and electronics brands"
-},
-
-{
-image:"/images/google-ads.jpg",
-title:"Google Ads Campaign",
-description:
-"Developed and optimized Google Ads campaigns driving quality traffic, consistent lead generation, and measurable ROI"
-},
-
-{
-image:"/images/social-media.jpg",
-title:"Social Media Growth",
-description:
-"Instagram growth strategies combining content optimization, influencer partnerships, and engagement tactics"
-},
-
-{
-image:"/images/content.jpg",
-title:"Content Marketing Strategy",
-description:
-"Data-driven content marketing strategies improving brand authority, organic reach and engagement"
-},
-
-{
-image:"/images/design.jpg",
-title:"Logo & Collateral Design",
-description:
-"Brand-aligned logos and collateral crafted for fashion, tech, and retail clients"
-},
-
-{
-image:"/images/meta-ads.jpg",
-title:"Meta Ads Optimization",
-description:
-"Optimized Meta campaigns with audience segmentation, creative testing and conversion tracking"
-}
-
-
+/*
+  Homepage highlights — pulls these specific projects (by slug) out of
+  the shared data file in src/data/projects.js. To swap which projects
+  show here, just edit the slugs below; the slug must exist there.
+*/
+const featuredSlugs = [
+  'full-stack-seo',
+  'google-ads-campaign',
+  'social-media-growth',
+  'web-development',
+  'graphic-design',
+  'meta-ads-optimization',
 ]
+
+const works = featuredSlugs
+  .map((slug) => projects.find((p) => p.slug === slug))
+  .filter(Boolean)
 
 
 export default function Work(){
@@ -98,7 +65,7 @@ works.map((work,index)=>(
 
 className="work-card"
 
-key={index}
+key={work.slug}
 
 initial={{
 opacity:0,
@@ -133,7 +100,7 @@ alt={work.title}
 
 
 <span>
-{work.category}
+{work.categoryLabel}
 </span>
 
 
@@ -143,11 +110,15 @@ alt={work.title}
 
 
 <p>
-{work.description}
+{work.summary}
 </p>
 
 
-<Link to={`/portfolio/${work.slug}`}>
+{/*
+  No individual project pages anymore — this now goes to the
+  full portfolio page instead of /portfolio/<slug>.
+*/}
+<Link to="/portfolio">
 View Project →
 </Link>
 
