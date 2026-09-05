@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Link } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 
 import { categories, projects } from '../data/projects'
 
@@ -77,7 +77,18 @@ function PortfolioCardCarousel({ images, categoryLabel }) {
 }
 
 export default function Portfolio() {
-  const [activeFilter, setActiveFilter] = useState('all')
+  const [searchParams] = useSearchParams()
+
+  // If arriving as /portfolio?category=seo (etc.), open already
+  // filtered to that category — otherwise default to "All Projects".
+  const categoryFromUrl = searchParams.get('category')
+  const initialFilter = categories.some(
+    (cat) => cat.value === categoryFromUrl
+  )
+    ? categoryFromUrl
+    : 'all'
+
+  const [activeFilter, setActiveFilter] = useState(initialFilter)
 
   const visibleProjects =
     activeFilter === 'all'

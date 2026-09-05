@@ -115,10 +115,11 @@ alt={work.title}
 
 
 {/*
-  No individual project pages anymore — this now goes to the
-  full portfolio page instead of /portfolio/<slug>.
+  Lands on the Portfolio page with this project's category
+  already selected — e.g. /portfolio?category=seo opens the
+  Portfolio page filtered to SEO. No individual project pages.
 */}
-<Link to="/portfolio">
+<Link to={`/portfolio?category=${work.category}`}>
 View Project →
 </Link>
 

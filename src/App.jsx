@@ -13,7 +13,6 @@ import Work from './components/Work'
 import Tools from './components/Tools'
 import Contact from './components/Contact'
 import Footer from './components/Footer'
-import ProjectDetails from './components/ProjectDetails'
 import Portfolio from "./components/Portfolio";
 
 function ScrollToTop() {
@@ -64,11 +63,6 @@ export default function App() {
         <Route
           path="/portfolio"
           element={<PortfolioPage />}
-        />
-
-        <Route
-          path="/portfolio/:slug"
-          element={<ProjectDetails />}
         />
       </Routes>
     </>
