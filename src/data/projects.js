@@ -370,15 +370,15 @@ export const projects = [
       profiles: [
         {
           name: 'Universal Telecom FZCO',
-          url: 'https://www.linkedin.com/company/universal-telecom-fzco/',
+          url: 'https://www.linkedin.com/company/universal-telecom-fzco/?viewAsMember=true',
         },
         {
           name: 'Kiota Architectural Studio',
-          url: 'https://www.linkedin.com/company/kiota-architectural-studio/',
+          url: 'https://www.linkedin.com/company/kiota-architectural-studio/?viewAsMember=true',
         },
         {
           name: 'Comaxx Co',
-          url: 'https://www.linkedin.com/company/comaxxco/',
+          url: 'https://www.linkedin.com/company/comaxxco/?viewAsMember=true',
         },
       ],
     },
@@ -437,14 +437,6 @@ export const projects = [
         {
           name: 'Universal Telecom FZCO',
           url: 'https://www.tiktok.com/@universaltelecomfzco',
-        },
-        {
-          name: 'Wijitha Group',
-          url: 'https://www.tiktok.com/@wijithagroup.com',
-        },
-        {
-          name: 'Kiota',
-          url: 'https://www.tiktok.com/@kiota.lk',
         },
       ],
     },
