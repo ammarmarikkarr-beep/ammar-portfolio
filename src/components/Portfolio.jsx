@@ -3,29 +3,195 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Link, useSearchParams } from 'react-router-dom'
 
 import { categories, projects } from '../data/projects'
-import SocialEmbed from './SocialEmbed'
 
 import './Portfolio.css'
-import './ProjectDetails.css' // reuses the .project-detail-preview-* styles that SocialEmbed renders with
 
-function PortfolioCardCarousel({ images, categoryLabel }) {
-  const [index, setIndex] = useState(0)
-  const hasMultiple = images.length > 1
+function isPlaceholder(value) {
+  return !value || value.startsWith('PASTE_')
+}
 
+// Shared prev/next arrows + dots, reused by every frame type below.
+function CarouselControls({ length, index, setIndex, labelPrefix }) {
   const goPrev = (e) => {
     e.stopPropagation()
-    setIndex((i) => (i === 0 ? images.length - 1 : i - 1))
+    setIndex((i) => (i === 0 ? length - 1 : i - 1))
   }
 
   const goNext = (e) => {
     e.stopPropagation()
-    setIndex((i) => (i === images.length - 1 ? 0 : i + 1))
+    setIndex((i) => (i === length - 1 ? 0 : i + 1))
   }
 
   return (
-    <div className="portfolio-card-media">
-      <span className="portfolio-card-badge">{categoryLabel}</span>
+    <>
+      <button
+        type="button"
+        className="portfolio-card-arrow portfolio-card-arrow-left"
+        onClick={goPrev}
+        aria-label={`Previous ${labelPrefix}`}
+      >
+        ‹
+      </button>
 
+      <button
+        type="button"
+        className="portfolio-card-arrow portfolio-card-arrow-right"
+        onClick={goNext}
+        aria-label={`Next ${labelPrefix}`}
+      >
+        ›
+      </button>
+
+      <div className="portfolio-card-dots">
+        {Array.from({ length }).map((_, i) => (
+          <button
+            key={i}
+            type="button"
+            className={`portfolio-card-dot${i === index ? ' active' : ''}`}
+            onClick={(e) => {
+              e.stopPropagation()
+              setIndex(i)
+            }}
+            aria-label={`Go to ${labelPrefix} ${i + 1}`}
+          />
+        ))}
+      </div>
+    </>
+  )
+}
+
+// Instagram: real live embed, cycle between your profiles with
+// arrows/dots, "Visit Instagram" only appears as a hover overlay —
+// never a permanent button — and never blocks the embed itself.
+function InstagramFrame({ profiles }) {
+  const [index, setIndex] = useState(0)
+
+  if (!profiles || profiles.length === 0) return null
+
+  const current = profiles[index]
+  const embedSrc = current.url.replace(/\/?$/, '/embed')
+  const hasMultiple = profiles.length > 1
+
+  return (
+    <>
+      <AnimatePresence mode="wait">
+        <motion.iframe
+          key={current.url}
+          src={embedSrc}
+          title={`${current.name} Instagram preview`}
+          loading="lazy"
+          allowTransparency="true"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.25 }}
+        />
+      </AnimatePresence>
+
+      <a
+        className="portfolio-card-media-visit"
+        href={current.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        onClick={(e) => e.stopPropagation()}
+      >
+        Visit Instagram →
+      </a>
+
+      {hasMultiple && (
+        <CarouselControls
+          length={profiles.length}
+          index={index}
+          setIndex={setIndex}
+          labelPrefix="profile"
+        />
+      )}
+    </>
+  )
+}
+
+// YouTube: auto-updating "latest uploads" playlist embed, same
+// hover-only visit link as Instagram — never blocks the play button.
+function YouTubeFrame({ channelId, profileUrl }) {
+  if (isPlaceholder(channelId)) return null
+
+  const uploadsPlaylistId = `UU${channelId.slice(2)}`
+
+  return (
+    <>
+      <iframe
+        src={`https://www.youtube.com/embed/videoseries?list=${uploadsPlaylistId}`}
+        title="Latest YouTube uploads"
+        loading="lazy"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowFullScreen
+      />
+
+      <a
+        className="portfolio-card-media-visit"
+        href={profileUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        onClick={(e) => e.stopPropagation()}
+      >
+        Visit YouTube →
+      </a>
+    </>
+  )
+}
+
+// LinkedIn / TikTok: neither platform allows any kind of feed embed,
+// so this shows your screenshot(s) as a plain clickable image — the
+// picture itself is the link, no visible button or message text.
+// Gallery image N pairs with profile N, in the same order.
+function LinkImageFrame({ images, profiles }) {
+  const [index, setIndex] = useState(0)
+
+  if (!profiles || profiles.length === 0) return null
+
+  const slideCount = Math.max(images.length, profiles.length)
+  const hasMultiple = slideCount > 1
+  const clampedIndex = Math.min(index, slideCount - 1)
+  const url = profiles[Math.min(clampedIndex, profiles.length - 1)]?.url
+  const image = images[Math.min(clampedIndex, images.length - 1)]
+
+  return (
+    <>
+      <AnimatePresence mode="wait">
+        <motion.a
+          key={`${image}-${url}`}
+          href={url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="portfolio-card-media-frame-link"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.25 }}
+        >
+          <img src={image} alt="" />
+        </motion.a>
+      </AnimatePresence>
+
+      {hasMultiple && (
+        <CarouselControls
+          length={slideCount}
+          index={clampedIndex}
+          setIndex={setIndex}
+          labelPrefix="profile"
+        />
+      )}
+    </>
+  )
+}
+
+// No social data at all: the original plain screenshot slider.
+function PlainGalleryFrame({ images }) {
+  const [index, setIndex] = useState(0)
+  const hasMultiple = images.length > 1
+
+  return (
+    <>
       <AnimatePresence mode="wait">
         <motion.img
           key={images[index]}
@@ -39,41 +205,43 @@ function PortfolioCardCarousel({ images, categoryLabel }) {
       </AnimatePresence>
 
       {hasMultiple && (
-        <>
-          <button
-            type="button"
-            className="portfolio-card-arrow portfolio-card-arrow-left"
-            onClick={goPrev}
-            aria-label="Previous image"
-          >
-            ‹
-          </button>
-
-          <button
-            type="button"
-            className="portfolio-card-arrow portfolio-card-arrow-right"
-            onClick={goNext}
-            aria-label="Next image"
-          >
-            ›
-          </button>
-
-          <div className="portfolio-card-dots">
-            {images.map((img, i) => (
-              <button
-                key={img}
-                type="button"
-                className={`portfolio-card-dot${i === index ? ' active' : ''}`}
-                onClick={(e) => {
-                  e.stopPropagation()
-                  setIndex(i)
-                }}
-                aria-label={`Go to image ${i + 1}`}
-              />
-            ))}
-          </div>
-        </>
+        <CarouselControls
+          length={images.length}
+          index={index}
+          setIndex={setIndex}
+          labelPrefix="image"
+        />
       )}
+    </>
+  )
+}
+
+// Single top frame for every card — picks the right content type per
+// project instead of a separate box below the text.
+function PortfolioCardMedia({ project }) {
+  const { social, gallery, categoryLabel } = project
+
+  return (
+    <div className="portfolio-card-media">
+      <span className="portfolio-card-badge">{categoryLabel}</span>
+
+      {social?.platform === 'instagram' && (
+        <InstagramFrame profiles={social.profiles} />
+      )}
+
+      {social?.platform === 'youtube' && (
+        <YouTubeFrame
+          channelId={social.channelId}
+          profileUrl={social.profileUrl}
+        />
+      )}
+
+      {(social?.platform === 'linkedin' ||
+        social?.platform === 'tiktok') && (
+        <LinkImageFrame images={gallery} profiles={social.profiles} />
+      )}
+
+      {!social && <PlainGalleryFrame images={gallery} />}
     </div>
   )
 }
@@ -168,10 +336,7 @@ export default function Portfolio() {
                   viewport={{ once: true }}
                   transition={{ duration: 0.4, delay: index * 0.05 }}
                 >
-                  <PortfolioCardCarousel
-                    images={project.gallery}
-                    categoryLabel={project.categoryLabel}
-                  />
+                  <PortfolioCardMedia project={project} />
 
                   <div className="portfolio-card-body">
                     <h3>{project.title}</h3>
@@ -203,15 +368,6 @@ export default function Portfolio() {
                         </span>
                       ))}
                     </div>
-
-                    {/* Live social preview — same SocialEmbed used to work
-                        on the (now removed) separate project page, shown
-                        directly inline in the card instead. */}
-                    {project.social && (
-                      <div className="portfolio-card-social">
-                        <SocialEmbed social={project.social} />
-                      </div>
-                    )}
                   </div>
                 </motion.article>
               ))}

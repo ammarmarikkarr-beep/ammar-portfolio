@@ -13,9 +13,9 @@ import './Work.css'
 const featuredSlugs = [
   'full-stack-seo',
   'google-ads-campaign',
-  'social-media-growth',
   'web-development',
   'graphic-design',
+  'content-creation',
   'meta-ads-optimization',
 ]
 

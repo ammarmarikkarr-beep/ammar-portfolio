@@ -23,6 +23,10 @@ export const categories = [
     label: 'Graphic Design',
     value: 'graphic-design',
   },
+  {
+    label: 'Content Creation',
+    value: 'content-creation',
+  },
 ]
 
 /*
@@ -594,6 +598,54 @@ export const projects = [
       '/images/portfolio/GraphicDesign/GraphicDesign.png',
       '/images/portfolio/GraphicDesign/GraphicDesign-2.png',
       '/images/portfolio/GraphicDesign/GraphicDesign-3.png',
+    ],
+  },
+
+  {
+    id: 16,
+    featured: true,
+    slug: 'content-creation',
+    title: 'Content Creation',
+    subtitle: 'Photography & Video Production',
+    category: 'content-creation',
+    categoryLabel: 'Content Creation',
+
+    // TODO: replace with a real screenshot once you have one
+    image: '/images/portfolio/ContentCreation/ContentCreation.png',
+
+    summary:
+      'Photo and video content produced for brands and businesses, covering product shoots, short-form video, and campaign creative used across websites, social media, and ads.',
+
+    overview:
+      'End-to-end content production — planning the shoot, capturing photo and video, and editing it into ready-to-post assets for a brand\u2019s website, social channels, and ad campaigns.',
+
+    stats: [
+      { label: 'Content Pieces', value: 'Add #' },
+      { label: 'Brands Served', value: 'Add #' },
+      { label: 'Turnaround', value: 'Add days' },
+    ],
+
+    tags: ['Photography', 'Videography', 'Reels & Shorts'],
+
+    services: [
+      'Photo & video shoot planning',
+      'Product and lifestyle photography',
+      'Short-form video (Reels/TikTok)',
+      'Editing & post-production',
+    ],
+
+    tools: [
+      'Adobe Premiere Pro',
+      'CapCut',
+      'Adobe Lightroom',
+      'Canva',
+    ],
+
+    // TODO: add 2-3 real screenshots/photos here for the card slider
+    gallery: [
+      '/images/portfolio/ContentCreation/ContentCreation.png',
+      '/images/portfolio/ContentCreation/ContentCreation-2.png',
+      '/images/portfolio/ContentCreation/ContentCreation-3.png',
     ],
   },
 ]

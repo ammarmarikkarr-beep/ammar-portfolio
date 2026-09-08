@@ -184,7 +184,7 @@
 .portfolio-card-media {
   position: relative;
 
-  height: 220px;
+  height: 300px;
 
   overflow: hidden;
 }
@@ -196,11 +196,22 @@
   object-fit: cover;
 }
 
+.portfolio-card-media iframe {
+  width: 100%;
+  height: 100%;
+
+  border: 0;
+
+  display: block;
+
+  background: #ffffff;
+}
+
 .portfolio-card-badge {
   position: absolute;
   top: 14px;
   right: 14px;
-  z-index: 2;
+  z-index: 3;
 
   padding: 7px 15px;
 
@@ -507,7 +518,7 @@
   }
 
   .portfolio-card-media {
-    height: 190px;
+    height: 240px;
   }
 
   .portfolio-card-body {
@@ -538,67 +549,19 @@
 }
 
 /* =========================
-   SOCIAL EMBED INSIDE GRID CARD
-   Overrides the .project-detail-preview-* sizing (built for a
-   full-width detail page) so it fits naturally inside a
-   .portfolio-card, which is much narrower.
+   SOCIAL MEDIA IN-FRAME CONTENT
+   Everything (Instagram/YouTube embeds, LinkedIn/TikTok
+   screenshots) renders inside the same top .portfolio-card-media
+   frame as a normal screenshot would — no separate box below.
 ========================= */
 
-.portfolio-card-social {
-  margin-top: 18px;
-}
-
-.portfolio-card-social .project-detail-preview {
-  width: 100%;
-  margin: 0;
-  padding: 18px;
-  border-radius: 16px;
-}
-
-.portfolio-card-social .project-detail-preview h2 {
-  font-size: 16px;
-  margin: 4px 0 14px;
-}
-
-.portfolio-card-social .project-detail-preview-frame-profile {
-  height: 320px;
-}
-
-.portfolio-card-social .project-detail-preview-frame-video {
-  aspect-ratio: 16 / 9;
-}
-
-.portfolio-card-social .project-detail-preview-grid {
-  grid-template-columns: 1fr;
-  gap: 8px;
-}
-
-.portfolio-card-social .project-detail-preview-visit {
-  margin-top: 16px;
-  padding: 11px 20px;
-  font-size: 13px;
-}
-
-/* Arrow + dot slider over the Instagram embed, matching the existing
-   image-carousel arrows exactly (hidden until hover, same position). */
-.project-detail-preview-frame-profile {
-  position: relative;
-}
-
-.project-detail-preview-frame-profile:hover .portfolio-card-arrow {
-  opacity: 1;
-}
-
-.project-detail-preview-frame-profile .portfolio-card-dots {
-  z-index: 3;
-}
-
-/* Hover-reveal "Visit Profile" overlay on the Instagram embed frame,
-   replacing the static button that used to sit below it. */
-.project-detail-preview-visit-overlay {
+/* Instagram/YouTube: "Visit X" only appears as a hover overlay over
+   the iframe, never a permanent button, and never blocks the embed's
+   own play/scroll interactions except while actively hovered. */
+.portfolio-card-media-visit {
   position: absolute;
   inset: 0;
-  z-index: 2;
+  z-index: 1;
 
   display: flex;
   align-items: center;
@@ -618,7 +581,22 @@
   transition: opacity 200ms ease;
 }
 
-.project-detail-preview-frame-profile:hover .project-detail-preview-visit-overlay {
+.portfolio-card-media:hover .portfolio-card-media-visit {
   opacity: 1;
   pointer-events: auto;
+}
+
+/* LinkedIn/TikTok: the screenshot itself is the link — fills the
+   frame exactly like a plain <img> would, no visible button/text. */
+.portfolio-card-media-frame-link {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+}
+
+@media (max-width: 650px) {
+  .portfolio-card-media-visit {
+    font-size: 13px;
+  }
 }
