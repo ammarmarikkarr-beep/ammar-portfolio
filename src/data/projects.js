@@ -664,9 +664,12 @@ export const projects = [
     //      { type: 'direct', src: '/videos/reel-1.mp4', title: 'Reel 1' }
     // Until real entries replace the PASTE_ placeholders below, this
     // card falls back to the plain `gallery` screenshots instead.
-    videos: [
-      { type: 'youtube', id: 'PASTE_YOUTUBE_VIDEO_ID', title: 'Reel 1' },
-      { type: 'youtube', id: 'PASTE_YOUTUBE_VIDEO_ID', title: 'Reel 2' },
+            videos: [
+      { type: 'direct', src: '/videos/portfolio/ContentCreation/ContentCreation.mp4', title: 'Reel 1' },
+      { type: 'direct', src: '/videos/portfolio/ContentCreation/ContentCreation-2.mp4', title: 'Reel 2' },
+      { type: 'direct', src: '/videos/portfolio/ContentCreation/ContentCreation-3.mp4', title: 'Reel 3' },
+      { type: 'direct', src: '/videos/portfolio/ContentCreation/ContentCreation-4.mp4', title: 'Reel 4' },
+      { type: 'direct', src: '/videos/portfolio/ContentCreation/ContentCreation-5.mp4', title: 'Reel 5' },
     ],
 
     // Used only as a fallback until `videos` above has real entries.

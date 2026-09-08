@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Link, useSearchParams } from 'react-router-dom'
 
@@ -60,11 +60,9 @@ function CarouselControls({ length, index, setIndex, labelPrefix }) {
   )
 }
 
-// Shared "Visit X" control used by every live/real platform frame
-// (Instagram, LinkedIn, TikTok, YouTube) — a full overlay that only
-// appears on hover on real pointer devices, and a small always-on
-// pill on touch devices (see Portfolio.css for that split). Same
-// look everywhere, so switching between cards feels consistent.
+// Hover-reveal "Visit X" — used ONLY for platforms with a real live
+// embed underneath (Instagram, YouTube), where a permanent button
+// would sit on top of interactive content.
 function VisitOverlay({ url, label }) {
   if (isPlaceholder(url)) return null
 
@@ -81,8 +79,46 @@ function VisitOverlay({ url, label }) {
   )
 }
 
+// Always-visible "Visit Page" pill — used for LinkedIn/TikTok, which
+// show a static screenshot or fallback card instead of a live embed,
+// so there's nothing to hover-reveal over; the button needs to be
+// visible without any interaction.
+function VisitButtonStatic({ url, label }) {
+  if (isPlaceholder(url)) return null
+
+  return (
+    <a
+      className="portfolio-card-visit-static"
+      href={url}
+      target="_blank"
+      rel="noopener noreferrer"
+      onClick={(e) => e.stopPropagation()}
+    >
+      {label} →
+    </a>
+  )
+}
+
+// Small speaker icon button for toggling sound on self-hosted
+// (type: 'direct') videos, which autoplay muted like Reels/TikTok.
+function MuteToggle({ muted, onToggle }) {
+  return (
+    <button
+      type="button"
+      className="portfolio-card-mute-toggle"
+      onClick={(e) => {
+        e.stopPropagation()
+        onToggle()
+      }}
+      aria-label={muted ? 'Unmute video' : 'Mute video'}
+    >
+      {muted ? '🔇' : '🔊'}
+    </button>
+  )
+}
+
 // Instagram: real live embed, cycle between your profiles with
-// arrows/dots, "Visit Profile" appears via VisitOverlay.
+// arrows/dots, "Visit Profile" appears via hover overlay.
 function InstagramFrame({ profiles }) {
   const [index, setIndex] = useState(0)
 
@@ -146,10 +182,10 @@ function YouTubeFrame({ channelId, profileUrl }) {
 
 // LinkedIn: no public feed embed exists for company pages — a real
 // platform limit. Each profile shows your real screenshot, cycling
-// with the same arrows as every other frame, plus the same hover
-// "Visit Page" overlay pattern as everything else. If a profile has
-// no screenshot yet, it shows a plain named placeholder instead of a
-// blank tile.
+// with the same arrows as every other frame, plus an ALWAYS-VISIBLE
+// "Visit Page" button (there's no live embed here to hover-reveal
+// over). If a profile has no screenshot yet, it shows a plain named
+// placeholder instead of a blank tile.
 function LinkedInFrame({ profiles, images }) {
   const [index, setIndex] = useState(0)
 
@@ -190,7 +226,7 @@ function LinkedInFrame({ profiles, images }) {
         )}
       </AnimatePresence>
 
-      <VisitOverlay url={current.url} label="Visit Page" />
+      <VisitButtonStatic url={current.url} label="Visit Page" />
 
       {hasMultiple && (
         <CarouselControls
@@ -207,13 +243,12 @@ function LinkedInFrame({ profiles, images }) {
 // TikTok: TikTok has no live profile-feed embed at all — that's a
 // real platform limit, not something code can work around. What
 // TikTok *does* support is embedding one specific real, live video
-// per profile (via their official widget script). So: if a profile
-// has a `videoUrl` set in projects.js, this shows that video as a
-// real live embed; otherwise it falls back to your screenshot (never
-// a blank tile either way). The script is re-appended on mount
-// because it only scans the page for `.tiktok-embed` blockquotes
-// once on load, and in a single-page app the blockquote usually
-// appears *after* that initial scan.
+// per profile (via their official widget script). If a profile has
+// a `videoUrl` set in projects.js, this shows that video as a real
+// live embed; otherwise it falls back to your screenshot (never a
+// blank tile either way). Either way, "Visit Page" is an
+// ALWAYS-VISIBLE button, matching LinkedIn, since there's no
+// consistent hoverable embed here across both states.
 function TikTokFrame({ profiles, images }) {
   const [index, setIndex] = useState(0)
 
@@ -267,7 +302,7 @@ function TikTokFrame({ profiles, images }) {
         </div>
       )}
 
-      <VisitOverlay url={current.url} label="Visit Profile" />
+      <VisitButtonStatic url={current.url} label="Visit Page" />
 
       {hasMultiple && (
         <CarouselControls
@@ -284,9 +319,15 @@ function TikTokFrame({ profiles, images }) {
 // Multiple self-produced videos in one card (e.g. Content Creation) —
 // cycles with the same arrows/dots as every other frame. Add entries
 // to `project.videos` in projects.js: either a YouTube video id, or a
-// direct hosted video file src.
+// direct hosted .mp4 file (public/videos/...).
+//
+// Direct videos autoplay MUTED and looped (browsers block audible
+// autoplay), with a small speaker button to unmute — same pattern as
+// Instagram Reels / TikTok.
 function VideoGalleryFrame({ videos }) {
   const [index, setIndex] = useState(0)
+  const [muted, setMuted] = useState(true)
+  const videoRef = useRef(null)
 
   const readyVideos = videos.filter((v) =>
     v.type === 'direct' ? !isPlaceholder(v.src) : !isPlaceholder(v.id)
@@ -297,14 +338,25 @@ function VideoGalleryFrame({ videos }) {
   const hasMultiple = readyVideos.length > 1
   const current = readyVideos[Math.min(index, readyVideos.length - 1)]
 
+  useEffect(() => {
+    // Reset to muted whenever we switch to a new direct video, so
+    // autoplay on the newly-shown clip is never blocked by the
+    // browser for being audible.
+    setMuted(true)
+  }, [current?.src])
+
   return (
     <>
       <AnimatePresence mode="wait">
         {current.type === 'direct' ? (
           <motion.video
             key={current.src}
+            ref={videoRef}
             src={current.src}
-            controls
+            autoPlay
+            loop
+            muted={muted}
+            playsInline
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -326,6 +378,10 @@ function VideoGalleryFrame({ videos }) {
         )}
       </AnimatePresence>
 
+      {current.type === 'direct' && (
+        <MuteToggle muted={muted} onToggle={() => setMuted((m) => !m)} />
+      )}
+
       {hasMultiple && (
         <CarouselControls
           length={readyVideos.length}
@@ -339,8 +395,8 @@ function VideoGalleryFrame({ videos }) {
 }
 
 // No social data and no videos: the original plain screenshot
-// slider — now shown in full via object-fit:contain (see CSS)
-// instead of being cropped.
+// slider — shown in full via object-fit:contain (see CSS) instead of
+// being cropped.
 function PlainGalleryFrame({ images }) {
   const [index, setIndex] = useState(0)
   const hasMultiple = images.length > 1
@@ -382,8 +438,18 @@ function PortfolioCardMedia({ project }) {
       v.type === 'direct' ? !isPlaceholder(v.src) : !isPlaceholder(v.id)
     )
 
+  // Only self-hosted (direct .mp4) reels get the true 9:16 vertical
+  // frame — YouTube-embed videos and every other frame type stay
+  // landscape like the rest of the grid.
+  const hasDirectVideo =
+    videos && videos.some((v) => v.type === 'direct' && !isPlaceholder(v.src))
+
   return (
-    <div className="portfolio-card-media">
+    <div
+      className={`portfolio-card-media${
+        hasDirectVideo ? ' portfolio-card-media-portrait' : ''
+      }`}
+    >
       <span className="portfolio-card-badge">{categoryLabel}</span>
 
       {social?.platform === 'instagram' && (
