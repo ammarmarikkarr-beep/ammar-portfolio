@@ -609,8 +609,8 @@ export const projects = [
     // TODO: add 2-3 real screenshots here for the card slider
     gallery: [
       '/images/portfolio/GraphicDesign/GraphicDesign.png',
+      '/images/portfolio/GraphicDesign/GraphicDesign-1.png',
       '/images/portfolio/GraphicDesign/GraphicDesign-2.png',
-      '/images/portfolio/GraphicDesign/GraphicDesign-3.png',
     ],
   },
 
