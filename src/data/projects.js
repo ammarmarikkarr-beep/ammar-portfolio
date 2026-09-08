@@ -563,7 +563,6 @@ export const projects = [
 
   {
     id: 15,
-    featured: true,
     slug: 'graphic-design',
     title: 'Graphic Design',
     subtitle: 'Visual & Marketing Design',
@@ -616,7 +615,6 @@ export const projects = [
 
   {
     id: 16,
-    featured: true,
     slug: 'content-creation',
     title: 'Content Creation',
     subtitle: 'Photography & Video Production',

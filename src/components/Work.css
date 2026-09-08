@@ -174,9 +174,9 @@
   display:grid;
 
   grid-template-columns:
-  repeat(3,1fr);
+  repeat(2, minmax(0,1fr));
 
-  gap:24px;
+  gap:30px;
 
 }
 
@@ -216,10 +216,7 @@
 
 position:relative;
 
-display: flex;
-flex-direction: column;
-
-height:260px;
+aspect-ratio: 16 / 9;
 
 overflow:hidden;
 
@@ -227,9 +224,7 @@ border-radius:16px;
 
 cursor:pointer;
 
-background: #0b1020;
-
-border: 1px solid rgba(255, 255, 255, 0.08);
+background: #0d172b;
 
 }
 
@@ -406,7 +401,9 @@ gap:16px;
 
 .work-card{
 
-height:200px;
+aspect-ratio: 5 / 4;
+
+background: #0d172b;
 
 }
 
@@ -730,4 +727,18 @@ height:200px;
   font-weight: 800;
 
   text-transform: uppercase;
+}
+/* Touch devices have no real hover — trigger the same zoom while the
+   card is actively being pressed, so tapping feels the same as
+   hovering on desktop. */
+@media not all and (hover: hover) {
+  .work-card:active img {
+    transform: scale(1.1);
+
+    filter:
+      brightness(0.45)
+      sepia(1)
+      hue-rotate(190deg)
+      saturate(4);
+  }
 }

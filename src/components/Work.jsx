@@ -14,8 +14,6 @@ const featuredSlugs = [
   'full-stack-seo',
   'google-ads-campaign',
   'web-development',
-  'graphic-design',
-  'content-creation',
   'meta-ads-optimization',
 ]
 
