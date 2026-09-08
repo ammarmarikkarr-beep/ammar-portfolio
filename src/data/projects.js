@@ -303,7 +303,7 @@ export const projects = [
     // Instagram's public oEmbed API needs a Meta access token now, so a
     // true auto-updating feed isn't available without your own API app.
     // The most reliable no-login option is Instagram's own compact
-    // profile-preview iframe, shown per-brand with a tab switcher below.
+    // profile-preview iframe, shown per-brand with arrows/dots.
     social: {
       platform: 'instagram',
       profiles: [
@@ -368,7 +368,10 @@ export const projects = [
 
     // LinkedIn has no public feed-embed for company pages at all — this
     // is a hard platform limit, not something code can work around.
-    // Each brand gets its own card + button that opens the real page.
+    // Each profile cycles through with the same arrows as every other
+    // card, showing the matching screenshot from `gallery` below (put
+    // profile N's screenshot at gallery index N) plus a hover "Visit
+    // Page" link — same pattern as Instagram/TikTok/YouTube now.
     social: {
       platform: 'linkedin',
       profiles: [
@@ -431,16 +434,21 @@ export const projects = [
       'TikTok Analytics',
     ],
 
-    // TikTok's official embed only supports one video at a time — there
-    // is no profile-feed embed. Each brand gets a card + button here.
-    // To feature a live video for a brand, add a `videoUrl` field to
-    // that profile object (e.g. videoUrl: 'https://www.tiktok.com/...').
+    // TikTok has NO live profile-feed embed — that's a real platform
+    // limit, confirmed in their own embed docs, not something any
+    // code can work around. What TikTok DOES support is embedding one
+    // specific, real, live video per profile. To show a real live
+    // TikTok video here, set `videoUrl` to a real video link, e.g.
+    // videoUrl: 'https://www.tiktok.com/@universaltelecomfzco/video/7123456789012345678'
+    // Until you add that, this profile falls back to the matching
+    // screenshot in `gallery` below (never a blank tile).
     social: {
       platform: 'tiktok',
       profiles: [
         {
           name: 'Universal Telecom FZCO',
           url: 'https://www.tiktok.com/@universaltelecomfzco',
+          videoUrl: 'PASTE_TIKTOK_VIDEO_URL',
         },
       ],
     },
@@ -562,7 +570,12 @@ export const projects = [
     category: 'graphic-design',
     categoryLabel: 'Graphic Design',
 
-    // TODO: replace with a real screenshot once you have one
+    // TODO: replace with a real screenshot once you have one. The
+    // frame now shows the whole image centered (object-fit: contain)
+    // instead of cropping it, so design work won't get cut off —
+    // just make sure the files you add are landscape-ish (roughly
+    // 4:3 to 16:9) so they fill the frame nicely without huge empty
+    // bars on the sides.
     image: '/images/portfolio/GraphicDesign/GraphicDesign.png',
 
     summary:
@@ -641,7 +654,22 @@ export const projects = [
       'Canva',
     ],
 
-    // TODO: add 2-3 real screenshots/photos here for the card slider
+    // Multiple videos in one card, cycling with the same arrows/dots
+    // as every other frame. Two ways to add one:
+    //   1) A YouTube video — just its 11-character id (the part after
+    //      "v=" or "youtu.be/"):
+    //      { type: 'youtube', id: 'dQw4w9WgXcQ', title: 'Reel 1' }
+    //   2) A self-hosted video file (mp4 etc.) — put the file in
+    //      public/videos/... and reference it here:
+    //      { type: 'direct', src: '/videos/reel-1.mp4', title: 'Reel 1' }
+    // Until real entries replace the PASTE_ placeholders below, this
+    // card falls back to the plain `gallery` screenshots instead.
+    videos: [
+      { type: 'youtube', id: 'PASTE_YOUTUBE_VIDEO_ID', title: 'Reel 1' },
+      { type: 'youtube', id: 'PASTE_YOUTUBE_VIDEO_ID', title: 'Reel 2' },
+    ],
+
+    // Used only as a fallback until `videos` above has real entries.
     gallery: [
       '/images/portfolio/ContentCreation/ContentCreation.png',
       '/images/portfolio/ContentCreation/ContentCreation-2.png',

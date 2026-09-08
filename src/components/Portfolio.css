@@ -181,22 +181,31 @@
   box-shadow: 0 26px 60px rgba(20, 30, 255, 0.22);
 }
 
+/* Bigger frame overall (was 300px) so embeds and screenshots have
+   real room to breathe on desktop/laptop. */
 .portfolio-card-media {
   position: relative;
 
-  height: 300px;
+  height: 360px;
 
   overflow: hidden;
+
+  background: #0b1020;
 }
 
 .portfolio-card-media img {
   width: 100%;
   height: 100%;
 
-  object-fit: cover;
+  /* Show the whole image, centered, instead of cropping — cover was
+     cutting off screenshot content and making it look off-center. */
+  object-fit: contain;
+
+  background: #0b1020;
 }
 
-.portfolio-card-media iframe {
+.portfolio-card-media iframe,
+.portfolio-card-media video {
   width: 100%;
   height: 100%;
 
@@ -205,6 +214,11 @@
   display: block;
 
   background: #ffffff;
+}
+
+.portfolio-card-media video {
+  object-fit: contain;
+  background: #000000;
 }
 
 .portfolio-card-badge {
@@ -227,6 +241,64 @@
   font-weight: 800;
   letter-spacing: 0.04em;
   text-transform: uppercase;
+}
+
+/* A named profile with no image/embed yet — shown instead of a
+   blank tile, so a missing screenshot never looks like the whole
+   card is broken or "not showing". */
+.portfolio-card-media-fallback {
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 24px;
+
+  text-align: center;
+
+  background:
+    radial-gradient(
+      circle at 50% 30%,
+      rgba(43, 63, 255, 0.18),
+      transparent 60%
+    ),
+    #0b1020;
+}
+
+.portfolio-card-media-fallback span {
+  color: #b8c0ff;
+
+  font-size: 14px;
+  font-weight: 700;
+}
+
+/* TikTok's official embed renders its own fixed-ish width widget —
+   this centers and scrolls it gracefully instead of letting it
+   overflow the card on narrow layouts. */
+.portfolio-card-media-tiktok {
+  position: relative;
+
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: auto;
+
+  background: #0b1020;
+}
+
+.portfolio-card-media-tiktok .tiktok-embed {
+  max-width: 100% !important;
+}
+
+.portfolio-card-media-tiktok img {
+  width: 100%;
+  height: 100%;
 }
 
 /* =========================
@@ -400,8 +472,6 @@
   font-size: 16px;
   font-weight: 800;
 
-  /* Long real values like "15K → 60K+" shouldn't force the grid
-     column wider than its share, or overflow past the card edge. */
   overflow-wrap: break-word;
 }
 
@@ -509,6 +579,10 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 24px;
   }
+
+  .portfolio-card-media {
+    height: 320px;
+  }
 }
 
 /* =========================
@@ -541,7 +615,7 @@
   }
 
   .portfolio-card-media {
-    height: 240px;
+    height: 280px;
   }
 
   .portfolio-card-body {
@@ -588,9 +662,8 @@
 
 /* =========================
    SOCIAL MEDIA IN-FRAME CONTENT
-   Everything (Instagram/YouTube embeds, LinkedIn/TikTok
-   screenshots) renders inside the same top .portfolio-card-media
-   frame as a normal screenshot would — no separate box below.
+   Instagram/LinkedIn/TikTok/YouTube all share the same "Visit X"
+   control so every platform feels consistent.
 ========================= */
 
 /* Desktop/mouse: "Visit X" is a full overlay that only appears on
@@ -627,9 +700,9 @@
 }
 
 /* Touch devices: a full permanent overlay would block the live
-   Instagram/YouTube preview underneath it forever, since there's no
-   hover to fade it out. Instead it becomes a small, always-visible
-   pill in the corner — visible, tappable, and out of the way. */
+   preview underneath it forever, since there's no hover to fade it
+   out. Instead it becomes a small, always-visible pill in the
+   corner — visible, tappable, and out of the way. */
 @media not all and (hover: hover) {
   .portfolio-card-media-visit {
     position: absolute;
@@ -653,20 +726,9 @@
     text-decoration: none;
   }
 
-  /* Dots sit bottom-center, so nudge the visit pill out of their way
-     when both are present on the same frame. */
   .portfolio-card-dots {
     bottom: 12px;
   }
-}
-
-/* LinkedIn/TikTok: the screenshot itself is the link — fills the
-   frame exactly like a plain <img> would, no visible button/text. */
-.portfolio-card-media-frame-link {
-  display: block;
-
-  width: 100%;
-  height: 100%;
 }
 
 @media (max-width: 650px) {

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Link, useSearchParams } from 'react-router-dom'
 
@@ -60,9 +60,29 @@ function CarouselControls({ length, index, setIndex, labelPrefix }) {
   )
 }
 
+// Shared "Visit X" control used by every live/real platform frame
+// (Instagram, LinkedIn, TikTok, YouTube) — a full overlay that only
+// appears on hover on real pointer devices, and a small always-on
+// pill on touch devices (see Portfolio.css for that split). Same
+// look everywhere, so switching between cards feels consistent.
+function VisitOverlay({ url, label }) {
+  if (isPlaceholder(url)) return null
+
+  return (
+    <a
+      className="portfolio-card-media-visit"
+      href={url}
+      target="_blank"
+      rel="noopener noreferrer"
+      onClick={(e) => e.stopPropagation()}
+    >
+      {label} →
+    </a>
+  )
+}
+
 // Instagram: real live embed, cycle between your profiles with
-// arrows/dots, "Visit Instagram" only appears as a hover overlay —
-// never a permanent button — and never blocks the embed itself.
+// arrows/dots, "Visit Profile" appears via VisitOverlay.
 function InstagramFrame({ profiles }) {
   const [index, setIndex] = useState(0)
 
@@ -88,15 +108,7 @@ function InstagramFrame({ profiles }) {
         />
       </AnimatePresence>
 
-      <a
-        className="portfolio-card-media-visit"
-        href={current.url}
-        target="_blank"
-        rel="noopener noreferrer"
-        onClick={(e) => e.stopPropagation()}
-      >
-        Visit Instagram →
-      </a>
+      <VisitOverlay url={current.url} label="Visit Profile" />
 
       {hasMultiple && (
         <CarouselControls
@@ -127,55 +139,62 @@ function YouTubeFrame({ channelId, profileUrl }) {
         allowFullScreen
       />
 
-      <a
-        className="portfolio-card-media-visit"
-        href={profileUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-        onClick={(e) => e.stopPropagation()}
-      >
-        Visit YouTube →
-      </a>
+      <VisitOverlay url={profileUrl} label="Visit Channel" />
     </>
   )
 }
 
-// LinkedIn / TikTok: neither platform allows any kind of feed embed,
-// so this shows your screenshot(s) as a plain clickable image — the
-// picture itself is the link, no visible button or message text.
-// Gallery image N pairs with profile N, in the same order.
-function LinkImageFrame({ images, profiles }) {
+// LinkedIn: no public feed embed exists for company pages — a real
+// platform limit. Each profile shows your real screenshot, cycling
+// with the same arrows as every other frame, plus the same hover
+// "Visit Page" overlay pattern as everything else. If a profile has
+// no screenshot yet, it shows a plain named placeholder instead of a
+// blank tile.
+function LinkedInFrame({ profiles, images }) {
   const [index, setIndex] = useState(0)
 
   if (!profiles || profiles.length === 0) return null
 
-  const slideCount = Math.max(images.length, profiles.length)
-  const hasMultiple = slideCount > 1
-  const clampedIndex = Math.min(index, slideCount - 1)
-  const url = profiles[Math.min(clampedIndex, profiles.length - 1)]?.url
-  const image = images[Math.min(clampedIndex, images.length - 1)]
+  const hasMultiple = profiles.length > 1
+  const clampedIndex = Math.min(index, profiles.length - 1)
+  const current = profiles[clampedIndex]
+  const image =
+    images && images.length > 0
+      ? images[Math.min(clampedIndex, images.length - 1)]
+      : null
 
   return (
     <>
       <AnimatePresence mode="wait">
-        <motion.a
-          key={`${image}-${url}`}
-          href={url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="portfolio-card-media-frame-link"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.25 }}
-        >
-          <img src={image} alt="" />
-        </motion.a>
+        {image ? (
+          <motion.img
+            key={image}
+            src={image}
+            alt={current.name || 'LinkedIn preview'}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
+          />
+        ) : (
+          <motion.div
+            key={`fallback-${current.url}`}
+            className="portfolio-card-media-fallback"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
+          >
+            <span>{current.name}</span>
+          </motion.div>
+        )}
       </AnimatePresence>
+
+      <VisitOverlay url={current.url} label="Visit Page" />
 
       {hasMultiple && (
         <CarouselControls
-          length={slideCount}
+          length={profiles.length}
           index={clampedIndex}
           setIndex={setIndex}
           labelPrefix="profile"
@@ -185,7 +204,143 @@ function LinkImageFrame({ images, profiles }) {
   )
 }
 
-// No social data at all: the original plain screenshot slider.
+// TikTok: TikTok has no live profile-feed embed at all — that's a
+// real platform limit, not something code can work around. What
+// TikTok *does* support is embedding one specific real, live video
+// per profile (via their official widget script). So: if a profile
+// has a `videoUrl` set in projects.js, this shows that video as a
+// real live embed; otherwise it falls back to your screenshot (never
+// a blank tile either way). The script is re-appended on mount
+// because it only scans the page for `.tiktok-embed` blockquotes
+// once on load, and in a single-page app the blockquote usually
+// appears *after* that initial scan.
+function TikTokFrame({ profiles, images }) {
+  const [index, setIndex] = useState(0)
+
+  const hasMultiple = profiles && profiles.length > 1
+  const current =
+    profiles && profiles.length > 0
+      ? profiles[Math.min(index, profiles.length - 1)]
+      : null
+
+  const hasVideo = current && !isPlaceholder(current.videoUrl)
+  const videoId = hasVideo
+    ? current.videoUrl.match(/\/video\/(\d+)/)?.[1]
+    : null
+
+  useEffect(() => {
+    if (!hasVideo) return undefined
+
+    const script = document.createElement('script')
+    script.src = 'https://www.tiktok.com/embed.js'
+    script.async = true
+    document.body.appendChild(script)
+
+    return () => {
+      document.body.removeChild(script)
+    }
+  }, [hasVideo, current?.videoUrl])
+
+  if (!current) return null
+
+  const image =
+    images && images.length > 0
+      ? images[Math.min(index, images.length - 1)]
+      : null
+
+  return (
+    <div className="portfolio-card-media-tiktok">
+      {hasVideo ? (
+        <blockquote
+          key={current.videoUrl}
+          className="tiktok-embed"
+          cite={current.videoUrl}
+          data-video-id={videoId || ''}
+        >
+          <section />
+        </blockquote>
+      ) : image ? (
+        <img src={image} alt={current.name || 'TikTok preview'} />
+      ) : (
+        <div className="portfolio-card-media-fallback">
+          <span>{current.name}</span>
+        </div>
+      )}
+
+      <VisitOverlay url={current.url} label="Visit Profile" />
+
+      {hasMultiple && (
+        <CarouselControls
+          length={profiles.length}
+          index={index}
+          setIndex={setIndex}
+          labelPrefix="profile"
+        />
+      )}
+    </div>
+  )
+}
+
+// Multiple self-produced videos in one card (e.g. Content Creation) —
+// cycles with the same arrows/dots as every other frame. Add entries
+// to `project.videos` in projects.js: either a YouTube video id, or a
+// direct hosted video file src.
+function VideoGalleryFrame({ videos }) {
+  const [index, setIndex] = useState(0)
+
+  const readyVideos = videos.filter((v) =>
+    v.type === 'direct' ? !isPlaceholder(v.src) : !isPlaceholder(v.id)
+  )
+
+  if (readyVideos.length === 0) return null
+
+  const hasMultiple = readyVideos.length > 1
+  const current = readyVideos[Math.min(index, readyVideos.length - 1)]
+
+  return (
+    <>
+      <AnimatePresence mode="wait">
+        {current.type === 'direct' ? (
+          <motion.video
+            key={current.src}
+            src={current.src}
+            controls
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
+          />
+        ) : (
+          <motion.iframe
+            key={current.id}
+            src={`https://www.youtube.com/embed/${current.id}`}
+            title={current.title || 'Video'}
+            loading="lazy"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
+          />
+        )}
+      </AnimatePresence>
+
+      {hasMultiple && (
+        <CarouselControls
+          length={readyVideos.length}
+          index={index}
+          setIndex={setIndex}
+          labelPrefix="video"
+        />
+      )}
+    </>
+  )
+}
+
+// No social data and no videos: the original plain screenshot
+// slider — now shown in full via object-fit:contain (see CSS)
+// instead of being cropped.
 function PlainGalleryFrame({ images }) {
   const [index, setIndex] = useState(0)
   const hasMultiple = images.length > 1
@@ -219,7 +374,13 @@ function PlainGalleryFrame({ images }) {
 // Single top frame for every card — picks the right content type per
 // project instead of a separate box below the text.
 function PortfolioCardMedia({ project }) {
-  const { social, gallery, categoryLabel } = project
+  const { social, gallery, videos, categoryLabel } = project
+
+  const hasReadyVideos =
+    videos &&
+    videos.some((v) =>
+      v.type === 'direct' ? !isPlaceholder(v.src) : !isPlaceholder(v.id)
+    )
 
   return (
     <div className="portfolio-card-media">
@@ -236,12 +397,17 @@ function PortfolioCardMedia({ project }) {
         />
       )}
 
-      {(social?.platform === 'linkedin' ||
-        social?.platform === 'tiktok') && (
-        <LinkImageFrame images={gallery} profiles={social.profiles} />
+      {social?.platform === 'linkedin' && (
+        <LinkedInFrame profiles={social.profiles} images={gallery} />
       )}
 
-      {!social && <PlainGalleryFrame images={gallery} />}
+      {social?.platform === 'tiktok' && (
+        <TikTokFrame profiles={social.profiles} images={gallery} />
+      )}
+
+      {!social && hasReadyVideos && <VideoGalleryFrame videos={videos} />}
+
+      {!social && !hasReadyVideos && <PlainGalleryFrame images={gallery} />}
     </div>
   )
 }
