@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 
@@ -24,6 +25,10 @@ const works = featuredSlugs
 
 export default function Work(){
 
+  // Touch devices have no real :hover, so tapping a card toggles the
+  // same "revealed" look the mouse gets on desktop hover — tap once
+  // to show the overlay + zoom, tap again (or the link) to proceed.
+  const [activeIndex, setActiveIndex] = useState(null)
 
 return(
 
@@ -61,9 +66,13 @@ works.map((work,index)=>(
 
 <motion.article
 
-className="work-card"
+className={`work-card${activeIndex === index ? ' is-active' : ''}`}
 
 key={work.slug}
+
+onClick={() =>
+  setActiveIndex((current) => (current === index ? null : index))
+}
 
 initial={{
 opacity:0,
