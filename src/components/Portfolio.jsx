@@ -60,35 +60,17 @@ function CarouselControls({ length, index, setIndex, labelPrefix }) {
   )
 }
 
-// Hover-reveal "Visit X" — used ONLY for platforms with a real live
-// embed underneath (Instagram, YouTube), where a permanent button
-// would sit on top of interactive content.
+// Hover-reveal "Visit X" — used for EVERY platform now (Instagram,
+// YouTube, LinkedIn, TikTok). On real hover devices it fades in
+// centered over the frame; on touch devices (see CSS) it becomes a
+// small always-visible corner pill instead, since there's no hover
+// to reveal it with there.
 function VisitOverlay({ url, label }) {
   if (isPlaceholder(url)) return null
 
   return (
     <a
       className="portfolio-card-media-visit"
-      href={url}
-      target="_blank"
-      rel="noopener noreferrer"
-      onClick={(e) => e.stopPropagation()}
-    >
-      {label} →
-    </a>
-  )
-}
-
-// Always-visible "Visit Page" pill — used for LinkedIn/TikTok, which
-// show a static screenshot or fallback card instead of a live embed,
-// so there's nothing to hover-reveal over; the button needs to be
-// visible without any interaction.
-function VisitButtonStatic({ url, label }) {
-  if (isPlaceholder(url)) return null
-
-  return (
-    <a
-      className="portfolio-card-visit-static"
       href={url}
       target="_blank"
       rel="noopener noreferrer"
@@ -114,6 +96,17 @@ function MuteToggle({ muted, onToggle }) {
     >
       {muted ? '🔇' : '🔊'}
     </button>
+  )
+}
+
+// A single named placeholder tile — shown whenever a screenshot is
+// either missing entirely or present but fails to actually load
+// (404, wrong path, etc). Never shows a broken image icon.
+function MediaFallback({ label }) {
+  return (
+    <div className="portfolio-card-media-fallback">
+      <span>{label}</span>
+    </div>
   )
 }
 
@@ -182,12 +175,14 @@ function YouTubeFrame({ channelId, profileUrl }) {
 
 // LinkedIn: no public feed embed exists for company pages — a real
 // platform limit. Each profile shows your real screenshot, cycling
-// with the same arrows as every other frame, plus an ALWAYS-VISIBLE
-// "Visit Page" button (there's no live embed here to hover-reveal
-// over). If a profile has no screenshot yet, it shows a plain named
-// placeholder instead of a blank tile.
+// with the same arrows as every other frame. If a profile has no
+// screenshot path at all, OR the path is set but the file 404s
+// (doesn't exist yet / typo'd), it shows a plain named placeholder
+// instead — never a broken image icon. "Visit Page" is now the same
+// hover-centered overlay as every other platform.
 function LinkedInFrame({ profiles, images }) {
   const [index, setIndex] = useState(0)
+  const [failed, setFailed] = useState(false)
 
   if (!profiles || profiles.length === 0) return null
 
@@ -199,34 +194,44 @@ function LinkedInFrame({ profiles, images }) {
       ? images[Math.min(clampedIndex, images.length - 1)]
       : null
 
+  // Reset "did it fail to load" whenever we switch to a different
+  // profile/image, so a broken image on profile #1 doesn't
+  // permanently hide a perfectly good image on profile #2.
+  useEffect(() => {
+    setFailed(false)
+  }, [clampedIndex])
+
+  const showFallback = !image || failed
+
   return (
     <>
       <AnimatePresence mode="wait">
-        {image ? (
+        {showFallback ? (
+          <motion.div
+            key={`fallback-${current.url}`}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
+            style={{ width: '100%', height: '100%' }}
+          >
+            <MediaFallback label={current.name} />
+          </motion.div>
+        ) : (
           <motion.img
             key={image}
             src={image}
             alt={current.name || 'LinkedIn preview'}
+            onError={() => setFailed(true)}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.25 }}
           />
-        ) : (
-          <motion.div
-            key={`fallback-${current.url}`}
-            className="portfolio-card-media-fallback"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.25 }}
-          >
-            <span>{current.name}</span>
-          </motion.div>
         )}
       </AnimatePresence>
 
-      <VisitButtonStatic url={current.url} label="Visit Page" />
+      <VisitOverlay url={current.url} label="Visit Page" />
 
       {hasMultiple && (
         <CarouselControls
@@ -245,12 +250,14 @@ function LinkedInFrame({ profiles, images }) {
 // TikTok *does* support is embedding one specific real, live video
 // per profile (via their official widget script). If a profile has
 // a `videoUrl` set in projects.js, this shows that video as a real
-// live embed; otherwise it falls back to your screenshot (never a
-// blank tile either way). Either way, "Visit Page" is an
-// ALWAYS-VISIBLE button, matching LinkedIn, since there's no
-// consistent hoverable embed here across both states.
+// live embed; otherwise it falls back to your screenshot — and if
+// that screenshot file 404s too, it falls back again to a named
+// placeholder, so this can never render as visibly blank/broken.
+// "Visit Page" is the same hover-centered overlay as every other
+// platform now.
 function TikTokFrame({ profiles, images }) {
   const [index, setIndex] = useState(0)
+  const [imgFailed, setImgFailed] = useState(false)
 
   const hasMultiple = profiles && profiles.length > 1
   const current =
@@ -262,6 +269,11 @@ function TikTokFrame({ profiles, images }) {
   const videoId = hasVideo
     ? current.videoUrl.match(/\/video\/(\d+)/)?.[1]
     : null
+
+  // Reset "did the screenshot fail" whenever the profile changes.
+  useEffect(() => {
+    setImgFailed(false)
+  }, [index])
 
   useEffect(() => {
     if (!hasVideo) return undefined
@@ -283,6 +295,8 @@ function TikTokFrame({ profiles, images }) {
       ? images[Math.min(index, images.length - 1)]
       : null
 
+  const showImageFallback = !image || imgFailed
+
   return (
     <div className="portfolio-card-media-tiktok">
       {hasVideo ? (
@@ -294,15 +308,17 @@ function TikTokFrame({ profiles, images }) {
         >
           <section />
         </blockquote>
-      ) : image ? (
-        <img src={image} alt={current.name || 'TikTok preview'} />
+      ) : showImageFallback ? (
+        <MediaFallback label={current.name} />
       ) : (
-        <div className="portfolio-card-media-fallback">
-          <span>{current.name}</span>
-        </div>
+        <img
+          src={image}
+          alt={current.name || 'TikTok preview'}
+          onError={() => setImgFailed(true)}
+        />
       )}
 
-      <VisitButtonStatic url={current.url} label="Visit Page" />
+      <VisitOverlay url={current.url} label="Visit Page" />
 
       {hasMultiple && (
         <CarouselControls
