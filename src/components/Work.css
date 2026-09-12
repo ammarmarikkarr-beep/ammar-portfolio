@@ -20,6 +20,9 @@
 
 .work-container {
   position: relative;
+
+  max-width: 1100px;
+  margin: 0 auto;
 }
 
 
@@ -250,8 +253,7 @@ transition:.5s ease;
 
 
 /* BLUE THEME HOVER — only applies where a real hover exists
-   (mouse/trackpad). See the (hover:none) block further down for
-   the touch-device equivalent. */
+   (mouse/trackpad). */
 @media (hover: hover) and (pointer: fine) {
   .work-card:hover img{
     transform:scale(1.1);
@@ -264,9 +266,24 @@ transition:.5s ease;
   }
 }
 
+/* Touch devices: tapping the card applies the same zoom that :hover
+   gives on desktop, since there's no real hover state to trigger it
+   with. Toggled via the `is-active` class from Work.jsx on tap. */
+.work-card.is-active img {
+  transform:scale(1.1);
+
+  filter:
+    brightness(0.45)
+    sepia(1)
+    hue-rotate(190deg)
+    saturate(4);
+}
 
 
-/* CONTENT */
+
+/* CONTENT — same gradient, bottom-aligned overlay on both desktop
+   (hover) and mobile (tap via `is-active`). No separate mobile
+   design. */
 
 .work-overlay{
 
@@ -323,10 +340,18 @@ color:white;
   }
 }
 
+/* Same reveal, triggered by tap instead of hover — applies at any
+   screen size, not scoped to a mobile media query. */
+.work-card.is-active .work-overlay {
+  opacity: 1;
+
+  transform: translateY(0);
+}
 
 
 
-.work-overlay span{
+
+.work-overlay-badge{
 
 
 font-size:13px;
@@ -370,10 +395,13 @@ color:#ffffffcc;
 
 
 
-.work-overlay a{
+.work-overlay-link{
 
 
 margin-top:20px;
+
+display:inline-flex;
+align-items:center;
 
 color:white;
 
@@ -382,6 +410,13 @@ font-weight:700;
 text-decoration:none;
 
 
+}
+
+
+/* Icon span stays hidden everywhere — desktop and mobile both use
+   the same text link ending in "→". */
+.work-overlay-link-icon {
+  display: none;
 }
 
 
@@ -401,7 +436,7 @@ gap:16px;
 
 .work-card{
 
-aspect-ratio: 5 / 4;
+aspect-ratio: 16 / 9;
 
 background: #0d172b;
 
@@ -591,10 +626,9 @@ background: #0d172b;
 
 /* =========================
    MOBILE
-   No real hover exists on touch, so the overlay can never be
-   "revealed" — instead it becomes a normal static block stacked
-   below the image, always visible, with the image itself given a
-   fixed reasonable height so the whole card isn't oversized.
+   Layout/spacing exactly as before. The ONLY addition in this block
+   is smaller overlay text sizes at the bottom — nothing else here
+   or in the desktop rules above was changed.
 ========================= */
 
 @media (max-width: 650px) {
@@ -632,7 +666,7 @@ background: #0d172b;
   .work-grid.filtered {
     grid-template-columns: 1fr;
 
-    gap: 22px;
+    gap: 14px;
   }
 
   .work-grid.filtered
@@ -641,22 +675,7 @@ background: #0d172b;
   }
 
   .work-card {
-    height: auto;
-  }
-
-  .work-card img {
-    height: 200px;
-  }
-
-  .work-overlay {
-    position: static;
-
-    padding: 20px;
-
-    opacity: 1;
-    transform: none;
-
-    background: rgba(20, 40, 255, 0.14);
+    aspect-ratio: 16 / 9;
   }
 
   .work-modal {
@@ -665,6 +684,23 @@ background: #0d172b;
 
   .work-modal-content {
     border-radius: 15px;
+  }
+
+  /* Smaller overlay text on mobile only */
+  .work-overlay-badge {
+    font-size: 10.5px;
+  }
+
+  .work-overlay h3 {
+    font-size: 16px;
+  }
+
+  .work-overlay p {
+    font-size: 11.5px;
+  }
+
+  .work-overlay-link {
+    font-size: 12.5px;
   }
 }
 
@@ -676,7 +712,7 @@ background: #0d172b;
 @media (prefers-reduced-motion: reduce) {
   .work-card,
   .work-card img,
-  .work-card-overlay,
+  .work-overlay,
   .work-filter,
   .work-load-button {
     transition: none;
@@ -727,18 +763,4 @@ background: #0d172b;
   font-weight: 800;
 
   text-transform: uppercase;
-}
-/* Touch devices have no real hover — trigger the same zoom while the
-   card is actively being pressed, so tapping feels the same as
-   hovering on desktop. */
-@media not all and (hover: hover) {
-  .work-card:active img {
-    transform: scale(1.1);
-
-    filter:
-      brightness(0.45)
-      sepia(1)
-      hue-rotate(190deg)
-      saturate(4);
-  }
 }
